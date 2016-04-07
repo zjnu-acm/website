@@ -1,0 +1,30 @@
+$paginationHeight :28px;
+.m-pagination {
+  @extend .clearfix;
+  display: inline-block;
+  text-align:center;
+  list-style:none;
+  padding-top:(48px - $paginationHeight)/2;
+  padding-bottom:(48px - $paginationHeight)/2;
+  li a{
+    text-decoration:none;
+    display:block;
+    color:inherit;
+    line-height:$paginationHeight;
+    height: $paginationHeight;
+    padding: 0 12px;
+  }
+  li{
+    border-radius:2px;
+    float:left;
+    color: #666;
+    &.active{
+      background-color:$primaryColor;
+      color:#fff;
+      transition:all 0.2s ease-out;
+    }
+    &.disabled{
+      color:#ccc;
+    }
+  }
+}
