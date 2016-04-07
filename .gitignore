@@ -1,0 +1,5 @@
+.directory
+node_modules/
+dist/
+.idea/
+lessons/

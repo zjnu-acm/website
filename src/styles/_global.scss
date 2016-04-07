@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: visible;
+  background-color: #f5f5f5;
+}
+
+.clearfix:after {
+  content: " ";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+a.unstyle {
+  color: inherit;
+}
+
+.container {
+  @extend .clearfix;
+  width: 1200px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.body-wrapper {
+  min-height: 100%;
+  padding-top: $navbar1Height + 48px;
+  padding-bottom: $footerHeight +30px;
+  position: relative;
+}
+
+.content-wrapper {
+  padding-top: 50px;
+  padding-bottom: 30px;
+  position:relative;
+}
+
+.u-panel {
+  padding: 10px 30px;
+  margin-bottom: 30px;
+}
+
+ul.list-float {
+  @extend .clearfix;
+  list-style: none;
+  padding-left: 0;
+  & > li {
+    float: left;
+  }
+}
+
+table td, table th {
+  text-align: center !important;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #212121 !important;
+  color: #999999;
+  text-align: center;
+  line-height: $footerHeight;
+  height: $footerHeight;
+  span {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+.m-stickbar{
+  position:fixed;
+  top:88px + $navbar1Height;
+  left:50%;
+  margin-left:(- $containerWidth)/2;
+  width:$containerWidth;
+  transition:top .3s ease !important;
+}
+.f-hide-nav .m-stickbar{
+  top:88px;
+}

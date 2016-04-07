@@ -1,0 +1,50 @@
+
+.m-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  //NavInfo
+  .u-navinfo {
+    overflow:hidden;
+    transition:height .3s ease;
+    background-color: $primaryColor;
+    height: $navbar1Height;
+    color: #fff;
+    h1 {
+      font-size: 22px;
+      font-weight: normal;
+      line-height: $navbar1Height;
+      float: left;
+    }
+    ul.u-tools {
+      float: right;
+      line-height: $navbar1Height;
+      .item {
+        display: inline-block;
+        vertical-align: middle;
+        //display:flex !important;
+        //align-items:center;
+        margin-top: ($navbar1Height - 48px)/2;
+      }
+      & svg {
+        fill: #fff !important;
+      }
+    }
+  }
+
+  //NavMenu
+  .u-navmenu > div {
+    background-color: #fff !important;
+  }
+  .u-navmenu button {
+    background-color: #fff !important;
+    color: #666 !important;
+  }
+}
+
+.f-hide-nav .u-navinfo{
+  height:0;
+}
+
