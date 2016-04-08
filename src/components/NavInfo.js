@@ -4,7 +4,6 @@
 import React from 'react';
 
 
-
 import IconButton from 'material-ui/lib/icon-button';
 
 import PersonIcon from 'material-ui/lib/svg-icons/social/person';
@@ -16,14 +15,18 @@ import Notifications from './Notifications';
 import UserAvatar from './UserAvatar';
 
 
-export default class extends React.Component {
+export default class NavInfo extends React.Component {
     state = {
         isLogin: false
     };
-    componentDidMount=()=>{
+    componentDidMount = ()=> {
         window.autoHideNavBar();
     };
+    static propTypes={
+        openLoginDialog:React.PropTypes.func.isRequired
+    }
     render() {
+        const {openLoginDialog} = this.props;
         return (
             <div className="u-navinfo">
                 <div className="container">
@@ -46,11 +49,12 @@ export default class extends React.Component {
                         </li>
                         <li style={{display:!this.state.isLogin?'block':'none'}}>
                             <IconButton className="item"
-                                        onTouchTap={this.handleDialogOpen}><PersonIcon/></IconButton>
+                                        onTouchTap={openLoginDialog}><PersonIcon/></IconButton>
                         </li>
                     </ul>
                 </div>
             </div>
         )
     }
+
 }

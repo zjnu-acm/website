@@ -16,12 +16,14 @@ import SearchIcon from 'material-ui/lib/svg-icons/action/search';
 
 import Verdict from '../components/Verdict';
 
-import Pagination from '../components/Pagination';
+import VerdictStr from '../constants/Verdicts';
 
+import Pagination from '../components/Pagination';
 
 export default class extends React.Component {
     render() {
-        const verdictList = Object.keys(window.verdict);
+        const verdictList = Object.keys(VerdictStr);
+        
         const len = verdictList.length;
         let TabRows = [];
         for (let i = 0; i < 50; i++) {
@@ -30,7 +32,7 @@ export default class extends React.Component {
                     <TableRowColumn width="140px">vjudge{i + 1}</TableRowColumn>
                     <TableRowColumn>{1000 + i}</TableRowColumn>
                     <TableRowColumn width="200px"><Verdict
-                        result={window.verdict[verdictList[Math.floor(Math.random()*len)]]}/></TableRowColumn>
+                        result={VerdictStr[verdictList[Math.floor(Math.random()*len)]]}/></TableRowColumn>
                     <TableRowColumn>600 MS</TableRowColumn>
                     <TableRowColumn>9492 KB</TableRowColumn>
                     <TableRowColumn><a href="#">C++</a></TableRowColumn>

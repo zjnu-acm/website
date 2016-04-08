@@ -4,42 +4,34 @@
 import React from 'react';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
-export default class extends React.Component{
-    state={
-        dialogOpen: false
+export default class extends React.Component {
+    static propTypes = {
+        dialogOpen: React.PropTypes.bool.isRequired,
+        closeLoginDialog: React.PropTypes.func.isRequired,
+        onSubmit: React.PropTypes.func
     }
-    handleDialogClose = ()=> {
-        this.setState({
-            dialogOpen: false
-        })
-    };
-    handleDialogOpen = ()=> {
-        this.setState({
-            dialogOpen: true
-        })
-    };
-    handleLoginSuccess = ()=> {
-        this.handleDialogClose();
-    };
-    render(){
+
+    render() {
+        const {closeLoginDialog,onSubmit, dialogOpen, ...others} = this.props;
         const actions = [
             <FlatButton
                 label="Cancel"
                 secondary={true}
-                onTouchTap={this.handleDialogClose}
+                onTouchTap={closeLoginDialog}
             />,
             <FlatButton
                 label="Submit"
                 primary={true}
-                onTouchTap={this.handleLoginSuccess}
+                onTouchTap={onSubmit}
             />,
         ];
         return (
             <Dialog
+                {...others}
                 title="Login"
                 actions={actions}
                 modal={true}
-                open={this.state.dialogOpen}>
+                open={dialogOpen}>
                 something...
             </Dialog>
         )

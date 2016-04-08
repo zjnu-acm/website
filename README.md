@@ -1,10 +1,11 @@
+<<<<<<< HEAD
 # WebSite
 
 ZJNU-ACM OnlineJudge Web Front-End works. 
 ## Tools
 - React
 - React-Router
-- Fluxxor
+- Redux
 - Material-ui
 - Webpack
 
@@ -21,5 +22,5 @@ ZJNU-ACM OnlineJudge Web Front-End works.
 ```
 ## Build Static Webpages
 ```bash
-  node server -p
+  node server -c
 ```
