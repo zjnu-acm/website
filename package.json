@@ -32,6 +32,7 @@
     "copy-webpack-plugin": "^1.1.1",
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
+    "express-history-api-fallback": "^2.0.0",
     "fs-extra": "^0.26.7",
     "html-webpack-plugin": "^2.15.0",
     "http-server": "^0.8.5",
