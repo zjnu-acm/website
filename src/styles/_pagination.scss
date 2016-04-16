@@ -7,6 +7,7 @@ $paginationHeight :28px;
   padding-top:(48px - $paginationHeight)/2;
   padding-bottom:(48px - $paginationHeight)/2;
   li a{
+    cursor:pointer;
     text-decoration:none;
     display:block;
     color:inherit;

@@ -29,8 +29,8 @@ export default class extends React.Component {
         for (let i = 0; i < 50; i++) {
             TabRows.push(
                 <TableRow key={"row"+i}>
-                    <TableRowColumn width="140px">vjudge{i + 1}</TableRowColumn>
-                    <TableRowColumn>{1000 + i}</TableRowColumn>
+                    <TableRowColumn width="140px"><a  className="unstyle" href="'#">vjudge{i + 1}</a></TableRowColumn>
+                    <TableRowColumn><a href="#">{1000 + i}</a></TableRowColumn>
                     <TableRowColumn width="200px"><Verdict
                         result={VerdictStr[verdictList[Math.floor(Math.random()*len)]]}/></TableRowColumn>
                     <TableRowColumn>600 MS</TableRowColumn>
@@ -44,8 +44,9 @@ export default class extends React.Component {
 
         return (
             <div>
+
                 <Paper className="u-panel">
-                    <Table style={{marginBottom:'20px'}}>
+                    <Table className="text-center" style={{marginBottom:'20px'}}>
                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                             <TableRow>
                                 <TableHeaderColumn width="140px">User</TableHeaderColumn>

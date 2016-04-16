@@ -22,8 +22,8 @@ export default class extends React.Component {
     render() {
 
         return (
-            <ReactPaginate previousLabel="previous"
-                           nextLabel="next"
+            <ReactPaginate previousLabel="&laquo;"
+                           nextLabel="&raquo;"
                            breakLabel={<a href="">...</a>}
                            pageNum={this.props.totPages}
                            initialSelected={this.props.activeIndex}

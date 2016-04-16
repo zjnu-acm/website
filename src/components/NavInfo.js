@@ -16,17 +16,15 @@ import UserAvatar from './UserAvatar';
 
 
 export default class NavInfo extends React.Component {
-    state = {
-        isLogin: false
-    };
     componentDidMount = ()=> {
         window.autoHideNavBar();
     };
     static propTypes={
-        openLoginDialog:React.PropTypes.func.isRequired
+        openLoginDialog:React.PropTypes.func.isRequired,
+        isLogin:React.PropTypes.bool.isRequired
     }
     render() {
-        const {openLoginDialog} = this.props;
+        const {isLogin,openLoginDialog} = this.props;
         return (
             <div className="u-navinfo">
                 <div className="container">
@@ -41,13 +39,13 @@ export default class NavInfo extends React.Component {
                             </div>
                         </li>
 
-                        <li style={{display:this.state.isLogin?'block':'none'}}>
+                        <li style={{display:isLogin?'block':'none'}}>
                             <Notifications/>
                         </li>
-                        <li style={{display:this.state.isLogin?'block':'none'}}>
+                        <li style={{display:isLogin?'block':'none'}}>
                             <UserAvatar />
                         </li>
-                        <li style={{display:!this.state.isLogin?'block':'none'}}>
+                        <li style={{display:!isLogin?'block':'none'}}>
                             <IconButton className="item"
                                         onTouchTap={openLoginDialog}><PersonIcon/></IconButton>
                         </li>

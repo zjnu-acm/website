@@ -17,12 +17,12 @@ import SearchIcon from 'material-ui/lib/svg-icons/action/search';
 import Pagination from '../components/Pagination';
 
 export default class extends React.Component {
-    componentDidMount=()=>{
+    componentDidMount = ()=> {
         //add
         // console.log('add body event');
         // document.addEventListener('scroll',this.handleWinScroll);
     }
-    handleWinScroll=(e)=>{
+    handleWinScroll = (e)=> {
         // const target = document.getElementsByClassName('stickyTop')[0];
         // const top = target.getBoundingClientRect().top;
         // console.log(document.body.scrollTop,top);
@@ -32,21 +32,41 @@ export default class extends React.Component {
         //     target.classList.remove('fixed');
         // }
     }
+
     render() {
         let TabRows = [];
         for (let i = 0; i < 50; i++) {
             TabRows.push(
                 <TableRow key={"row"+i}>
                     <TableRowColumn width="100px">{1000 + i}</TableRowColumn>
-                    <TableRowColumn width="600px">A + B Problem ({i + 1})</TableRowColumn>
-                    <TableRowColumn>ACdream</TableRowColumn>
+                    <TableRowColumn width="600px">A + B Problem ({i + 1})
+                        <span className="pull-right">
+                            <span className="label">Math</span>
+                            <span className="label">Brute Force</span>
+                        </span>
+                    </TableRowColumn>
+                    <TableRowColumn>Tester</TableRowColumn>
                     <TableRowColumn>57.39% (1235/2152)</TableRowColumn>
                 </TableRow>
             )
         }
         return (
             <div>
-                <Paper className="u-panel" style={{marginTop:'88px'}}>
+                <Paper className="u-panel clearfix">
+                    <Pagination className="pull-left" totPages={10} activeIndex={2}/>
+                    <div className="pull-right">
+                        <SearchIcon style={{
+                        fill:'#888',
+                        padding:'12px',
+                        height:'48px',
+                        width:'48px',
+                        verticalAlign:'middle',
+                        marginRight:'-48px'}}/>
+                        <TextField inputStyle={{paddingLeft:'48px',verticalAlign:'middle'}}
+                                   hintStyle={{paddingLeft:'48px'}} hintText="Filter"/>
+                    </div>
+                </Paper>
+                <Paper className="u-panel">
                     <Table style={{marginBottom:'20px'}}>
                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                             <TableRow>
@@ -62,20 +82,7 @@ export default class extends React.Component {
                     </Table>
                 </Paper>
 
-                <Paper className="m-stickbar u-panel u-pl-tools">
-                    <Pagination className="pull-left" totPages={10} activeIndex={2}/>
-                    <div className="pull-right">
-                        <SearchIcon style={{
-                        fill:'#888',
-                        padding:'12px',
-                        height:'48px',
-                        width:'48px',
-                        verticalAlign:'middle',
-                        marginRight:'-48px'}}/>
-                        <TextField inputStyle={{paddingLeft:'48px',verticalAlign:'middle'}}
-                                   hintStyle={{paddingLeft:'48px'}} hintText="Filter"/>
-                    </div>
-                </Paper>
+
             </div>
         )
     }

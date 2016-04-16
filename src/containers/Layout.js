@@ -20,18 +20,19 @@ class Layout extends React.Component {
     constructor(props) {
         super(props);
     }
+    
     static propTypes={
         openLoginDialog:React.PropTypes.func.isRequired,
         closeLoginDialog:React.PropTypes.func.isRequired,
         dialogOpen:React.PropTypes.bool.isRequired
     }
+    
     render() {
-        const {openLoginDialog,dialogOpen,closeLoginDialog}=this.props;
+        const {openLoginDialog,isLogin,dialogOpen,closeLoginDialog}=this.props;
         return (
-            //min-height child height bug of webkit: http://stackoverflow.com/questions/8468066/child-inside-parent-with-min-height-100-not-inheriting-height
             <div className="body-wrapper">
                 <Paper rounded={false} zDepth={1} className="m-navbar">
-                    <NavInfo openLoginDialog={openLoginDialog}/>
+                    <NavInfo isLogin={isLogin} openLoginDialog={openLoginDialog}/>
                     <NavMenu />
                 </Paper>
                 {this.props.children}
@@ -44,12 +45,15 @@ class Layout extends React.Component {
         )
     }
 }
-//将state.counter绑定到props的counter
+
+
 function mapStateToProps(state) {
     return {
-        dialogOpen: state.dialogOpen
+        dialogOpen: state.dialogOpen,
+        isLogin: state.isLogin
     }
 }
+
 //将action的所有方法绑定到props上
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(NavBarActions, dispatch)

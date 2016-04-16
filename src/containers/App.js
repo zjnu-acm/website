@@ -8,7 +8,7 @@ import About from './About';
 import Repos from './Repos';
 import Repo from './Repo';
 import Home from './Home';
-import ProblemList from './ProblemList';
+import Problems from './Problems';
 import Status from './Status';
 import Main from './Main';
 
@@ -21,7 +21,7 @@ export default class App extends React.Component {
                     <IndexRoute component={Home}/>
                     <Route path="/Home" component={Home}/>
                     <Route component={Main}>
-                        <Route path="/problemList" component={ProblemList}/>
+                        <Route path="/Problems" component={Problems}/>
                         <Route path="/status" component={Status}/>
                     </Route>
                     <Route path="/repos" component={Repos}>

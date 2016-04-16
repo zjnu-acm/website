@@ -8,7 +8,6 @@ export default class extends React.Component {
     static propTypes = {
         dialogOpen: React.PropTypes.bool.isRequired,
         closeLoginDialog: React.PropTypes.func.isRequired,
-        onSubmit: React.PropTypes.func
     }
 
     render() {

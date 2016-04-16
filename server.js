@@ -21,17 +21,20 @@ if(compile){
     });
 }else{
     //start webpack dev server
-    webpackConfig.entry.app.unshift('webpack-dev-server/client?http://localhost:8080/', 'webpack/hot/dev-server');
+    webpackConfig.entry.app.unshift('webpack-hot-middleware/client');
     webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
     const compiler = webpack(webpackConfig);
 
     app.use(webpackDevMiddleware(compiler, {
-        //noInfo:true,
+        noInfo:true,
         contentBase: './dist',
         publicPath: '/assets/'
     }));
+
     app.use(webpackHotMiddleware(compiler));
-    app.use(fallback(__dirname + '/dist/index.html'));
+    app.get('*',function(req,res){
+        res.sendFile(__dirname + '/dist/index.html');
+    })
     app.listen(PORT,HOST,function(){
         console.log(`server is running at:${HOST}:${PORT}`);
     });
