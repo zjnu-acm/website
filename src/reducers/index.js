@@ -3,12 +3,14 @@
  */
 import {combineReducers} from 'redux';
 import user from './user';
+import loginDialog from './loginDialog';
 const rootReducer = combineReducers({
-    dialogOpen: user.dialogOpen,
-    isLogin: user.isLogin
+   user,
+    loginDialog
 });
 
 export default rootReducer;
+
 
 // initialState
 const initialState = {

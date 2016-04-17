@@ -5,7 +5,8 @@ import * as types from '../constants/ActionTypes';
 
 export function openLoginDialog() {
     return {
-        type: types.OPEN_LOGIN_DIALOG
+        type: types.OPEN_LOGIN_DIALOG,
+        errorMessage:''
     }
 }
 
@@ -17,7 +18,12 @@ export function closeLoginDialog() {
 
 export function userLogin(username,password){
     console.log(username,password);
+    //do something to verify user identity
     return {
-        type:types.USER_LOGIN
+        type:types.USER_LOGGED_IN,
+        username,
+        logged:true,
+        avatar:'A',
+        id:0
     }
 }

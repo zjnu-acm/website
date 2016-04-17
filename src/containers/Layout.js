@@ -7,13 +7,16 @@ import MyRawTheme from '../myRawTheme';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 
-import SignDialog from '../components/SignDialog';
+import SignDialog from './SignDialog';
 import NavMenu from '../components/NavMenu';
 import NavInfo from '../components/NavInfo';
 
-import {connect} from 'react-redux'
-import * as NavBarActions from '../actions/navbar';
+import {openLoginDialog} from '../actions';
+
+import {connect} from 'react-redux';
+
 import {bindActionCreators} from 'redux';
+
 
 @ThemeDecorator(ThemeManager.getMuiTheme(MyRawTheme))
 class Layout extends React.Component {
@@ -22,17 +25,17 @@ class Layout extends React.Component {
     }
     
     static propTypes={
+        user:React.PropTypes.object.isRequired,
         openLoginDialog:React.PropTypes.func.isRequired,
-        closeLoginDialog:React.PropTypes.func.isRequired,
-        dialogOpen:React.PropTypes.bool.isRequired
     }
     
     render() {
-        const {openLoginDialog,isLogin,dialogOpen,closeLoginDialog}=this.props;
+        console.log(this.props);
+        const {user,openLoginDialog}=this.props;
         return (
             <div className="body-wrapper">
                 <Paper rounded={false} zDepth={1} className="m-navbar">
-                    <NavInfo isLogin={isLogin} openLoginDialog={openLoginDialog}/>
+                    <NavInfo user={user} openLoginDialog={openLoginDialog}/>
                     <NavMenu />
                 </Paper>
                 {this.props.children}
@@ -40,7 +43,7 @@ class Layout extends React.Component {
                 <Paper rounded={false} className="footer">
                     <span>Powered by ZJNU ACM Team ©2010-2015. Code licensed under the Apache License, Version 2.0. Design and Code by: <a className="unstyle" href="#">Kevin Tan</a> | <a className="unstyle" href="#">Zhan HuangBin.</a></span>
                 </Paper>
-                <SignDialog closeLoginDialog={closeLoginDialog} dialogOpen={dialogOpen}/>
+                <SignDialog />
             </div>
         )
     }
@@ -49,14 +52,15 @@ class Layout extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        dialogOpen: state.dialogOpen,
-        isLogin: state.isLogin
+        user: state.user
     }
 }
 
-//将action的所有方法绑定到props上
+
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(NavBarActions, dispatch)
+    console.log(openLoginDialog);
+    //bindActionCreators 接收单个action creator时，会直接返回对应的action，而mapDispatchToProps需要返回一个object才能与props合并的。于是它会自动执行这个函数。
+    return  bindActionCreators({openLoginDialog}, dispatch);;
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout)
+export default connect(mapStateToProps,mapDispatchToProps)(Layout);

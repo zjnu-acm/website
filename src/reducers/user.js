@@ -11,6 +11,7 @@ import * as types from '../constants/ActionTypes';
  id:''
  }
  */
+
 export default function user(state = {logged: false, username: '', avatar: '', id: ''}, action) {
     switch (action.type) {
         case types.USER_LOGGED_IN:

@@ -21,10 +21,10 @@ export default class NavInfo extends React.Component {
     };
     static propTypes={
         openLoginDialog:React.PropTypes.func.isRequired,
-        isLogin:React.PropTypes.bool.isRequired
+        user:React.PropTypes.object.isRequired
     }
     render() {
-        const {isLogin,openLoginDialog} = this.props;
+        const {user,openLoginDialog} = this.props;
         return (
             <div className="u-navinfo">
                 <div className="container">
@@ -39,13 +39,13 @@ export default class NavInfo extends React.Component {
                             </div>
                         </li>
 
-                        <li style={{display:isLogin?'block':'none'}}>
-                            <Notifications/>
+                        <li style={{display:user.logged?'block':'none'}}>
+                            <Notifications />
                         </li>
-                        <li style={{display:isLogin?'block':'none'}}>
+                        <li style={{display:user.logged?'block':'none'}}>
                             <UserAvatar />
                         </li>
-                        <li style={{display:!isLogin?'block':'none'}}>
+                        <li style={{display:!user.logged?'block':'none'}}>
                             <IconButton className="item"
                                         onTouchTap={openLoginDialog}><PersonIcon/></IconButton>
                         </li>
