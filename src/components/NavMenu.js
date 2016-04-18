@@ -6,30 +6,23 @@ import React from 'react';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 
-import {browserHistory} from 'react-router';
-
 export default class extends React.Component {
-    state = {
-        value: window.location.pathname.substr(1)
+    static propTypes={
+        currentTab:React.PropTypes.string.isRequired,
+        switchTab:React.PropTypes.func.isRequired
     }
-    handleTabChange = (value)=> {
-        this.setState({
-            value
-        });
-        browserHistory.push('/' + value);
-    };
-
     render() {
+        const {switchTab,currentTab}=this.props;
         return (
-            <Tabs rounded={false} value={this.state.value} onChange={this.handleTabChange}
+            <Tabs rounded={false} value={currentTab} onChange={switchTab}
                   className="container u-navmenu">
-                <Tab value='Home' label="Home"></Tab>
-                <Tab value='ProblemList' label="ProblemList"></Tab>
-                <Tab value='Status' label="Status"></Tab>
-                <Tab value='RankList' label="RankList"></Tab>
-                <Tab value='Contest' label="Contest"></Tab>
-                <Tab value='Discuss' label="Discuss"></Tab>
-                <Tab value='FAQ' label="FAQ"></Tab>
+                <Tab value='home' label="Home"></Tab>
+                <Tab value='problems' label="ProblemList"></Tab>
+                <Tab value='status' label="Status"></Tab>
+                <Tab value='ranks' label="RankList"></Tab>
+                <Tab value='contests' label="Contest"></Tab>
+                <Tab value='discuss' label="Discuss"></Tab>
+                <Tab value='faq' label="FAQ"></Tab>
             </Tabs>
         )
     }

@@ -18,6 +18,7 @@ export default class extends React.Component {
     }
     onSubmit=()=>{
         this.props.userLogin(this.refs.username.getValue(),this.refs.password.getValue());
+        this.props.closeLoginDialog();
     }
     render() {
         const {closeLoginDialog,loginDialog, ...others} = this.props;
@@ -42,11 +43,14 @@ export default class extends React.Component {
                 modal={true}
                 open={loginDialog.open}>
                 <TextField
+                    style={{width:'100%'}}
                     hintText="Your Student ID"
                     ref="username"
                     floatingLabelText="Username"
                 /><br/>
                 <TextField
+                    style={{width:'100%'}}
+                    onEnterKeyDown={this.onSubmit}
                     hintText="Your Password"
                     ref="password"
                     floatingLabelText="Password"

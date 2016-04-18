@@ -43,7 +43,7 @@ export default class NavInfo extends React.Component {
                             <Notifications />
                         </li>
                         <li style={{display:user.logged?'block':'none'}}>
-                            <UserAvatar />
+                            <UserAvatar user={user}/>
                         </li>
                         <li style={{display:!user.logged?'block':'none'}}>
                             <IconButton className="item"

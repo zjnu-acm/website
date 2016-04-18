@@ -11,7 +11,7 @@ import SignDialog from './SignDialog';
 import NavMenu from '../components/NavMenu';
 import NavInfo from '../components/NavInfo';
 
-import {openLoginDialog} from '../actions';
+import {openLoginDialog,switchTab} from '../actions';
 
 import {connect} from 'react-redux';
 
@@ -27,16 +27,18 @@ class Layout extends React.Component {
     static propTypes={
         user:React.PropTypes.object.isRequired,
         openLoginDialog:React.PropTypes.func.isRequired,
+        currentTab:React.PropTypes.string.isRequired,
+        switchTab:React.PropTypes.func.isRequired
     }
     
     render() {
         console.log(this.props);
-        const {user,openLoginDialog}=this.props;
+        const {currentTab,switchTab,user,openLoginDialog}=this.props;
         return (
             <div className="body-wrapper">
                 <Paper rounded={false} zDepth={1} className="m-navbar">
                     <NavInfo user={user} openLoginDialog={openLoginDialog}/>
-                    <NavMenu />
+                    <NavMenu currentTab={currentTab} switchTab={switchTab}/>
                 </Paper>
                 {this.props.children}
 
@@ -52,15 +54,18 @@ class Layout extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        currentTab:state.currentTab
     }
 }
 
 
 function mapDispatchToProps(dispatch) {
-    console.log(openLoginDialog);
     //bindActionCreators 接收单个action creator时，会直接返回对应的action，而mapDispatchToProps需要返回一个object才能与props合并的。于是它会自动执行这个函数。
-    return  bindActionCreators({openLoginDialog}, dispatch);;
+    return  bindActionCreators({
+        openLoginDialog,
+        switchTab
+    }, dispatch);;
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Layout);

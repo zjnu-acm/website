@@ -3,7 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+p{
+  margin-bottom:15px;
+}
 body {
   font-size:14px;
   line-height:1.6em;
@@ -11,6 +13,10 @@ body {
   background-color: #f5f5f5;
 }
 
+.clearfix{
+  display:table;
+  zoom:1;
+}
 .clearfix:after {
   content: " ";
   display: block;
@@ -27,10 +33,30 @@ body {
   float: right;
 }
 
-a.unstyle {
-  color: inherit;
+.text-center{
+  text-align:center;
 }
-
+.text-left{
+  text-align:left;
+}
+.text-right{
+  text-align:right;
+}
+.text-ellipsis{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  width:100%;
+  white-space: nowrap;
+}
+.text-muted{
+  color:#a9a9a9;
+}
+.s-plainLink a{
+  color:inherit;
+}
+.s-plainLink.a{
+  color:inherit;
+}
 .container {
   @extend .clearfix;
   width: 1200px;
@@ -58,6 +84,7 @@ a.unstyle {
 .u-panel {
   padding: 10px 30px;
   margin-bottom: 30px;
+  width:100%;
 }
 
 ul.list-float {
@@ -94,7 +121,7 @@ table.text-center td, table.text-center th {
 .label{
   font-size:0.8em;
   min-width:3rem;
-  padding:3 6px;
+  padding: 6px;
   text-align:center;
   line-height:1.6em;
   color:#fff;

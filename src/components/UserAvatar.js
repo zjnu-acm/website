@@ -19,12 +19,16 @@ export default class extends React.Component {
     state = {
         userMenuOpen: false
     }
+    static propTypes={
+        user:React.PropTypes.object.isRequired
+    }
     handleUserMenuOpen = (event)=> {
         this.setState({
             userMenuOpen: true,
             anchorEl: event.currentTarget
         })
     };
+
     handleUserMenuClose = ()=> {
         this.setState({
             userMenuOpen: false
@@ -32,24 +36,24 @@ export default class extends React.Component {
     };
     handleLogout = ()=> {
         this.setState({
-            userMenuOpen: false,
-            isLogin: false
+            userMenuOpen: false
         })
     };
 
     render() {
+        const {user} = this.props;
         return (
-            <div className="item" style={{marginTop:(88-56)/2+'px',marginLeft:'12px'}}>
+            <div className="item" id={user.id} style={{marginTop:(88-56)/2+'px',marginLeft:'12px'}}>
                 <FlatButton
                     onTouchTap={this.handleUserMenuOpen}
                     backgroundColor='rgba(0, 0, 0, 0.09)'
                     hoverColor={'rgba(0, 0, 0, 0.2)'}
                     rippleColor={'rgba(0,0,0,0.3)'}
                     style={{lineHeight:'56px',color:'#fff',padding:'0 12px'}}>
-                    Kevin Tan
+                    {user.username}
                     <Avatar backgroundColor={colors.teal400}
                             style={{display:'inline-block',verticalAlign:'middle',marginTop:'-4px',marginLeft:'16px'}}>
-                        K
+                        {user.avatar}
                     </Avatar>
 
                 </FlatButton>

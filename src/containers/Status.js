@@ -11,28 +11,26 @@ import TableHeader from 'material-ui/lib/table/table-header';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 
-import TextField from 'material-ui/lib/text-field';
-import SearchIcon from 'material-ui/lib/svg-icons/action/search';
 
 import Verdict from '../components/Verdict';
 
-import VerdictStr from '../constants/Verdicts';
+import {verdicts} from '../constants/index';
 
 import Pagination from '../components/Pagination';
 
 export default class extends React.Component {
     render() {
-        const verdictList = Object.keys(VerdictStr);
+        const verdictList = Object.keys(verdicts);
         
         const len = verdictList.length;
         let TabRows = [];
         for (let i = 0; i < 50; i++) {
             TabRows.push(
                 <TableRow key={"row"+i}>
-                    <TableRowColumn width="140px"><a  className="unstyle" href="'#">vjudge{i + 1}</a></TableRowColumn>
+                    <TableRowColumn width="140px"><a  className="s-plainLink" href="'#">vjudge{i + 1}</a></TableRowColumn>
                     <TableRowColumn><a href="#">{1000 + i}</a></TableRowColumn>
                     <TableRowColumn width="200px"><Verdict
-                        result={VerdictStr[verdictList[Math.floor(Math.random()*len)]]}/></TableRowColumn>
+                        result={verdicts[verdictList[Math.floor(Math.random()*len)]]}/></TableRowColumn>
                     <TableRowColumn>600 MS</TableRowColumn>
                     <TableRowColumn>9492 KB</TableRowColumn>
                     <TableRowColumn><a href="#">C++</a></TableRowColumn>

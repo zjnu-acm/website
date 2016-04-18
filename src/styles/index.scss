@@ -4,3 +4,10 @@
 @import 'navbar';
 
 @import 'pagination';
+
+#page-contest{
+  @import 'contest';
+}
+#page-discuss{
+  @import 'discuss';
+}

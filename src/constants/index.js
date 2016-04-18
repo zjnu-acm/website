@@ -1,7 +1,8 @@
 /**
  * Created by kevin on 16-4-8.
  */
-export default {
+
+export const verdicts = {
     Running: 'Running',
     Pending: 'Pending',
     Accepted: 'Accepted',
@@ -12,4 +13,14 @@ export default {
     OutputLimitExceeded: 'Output Limit Exceeded',
     ComplicationError: 'Complication Error',
     RuntimeError: 'Runtime Error'
+}
+
+export const tabs = {
+    home: 'home',
+    problems: 'problems',
+    status: 'status',
+    ranks: 'ranks',
+    contests: 'contests',
+    discuss: 'discuss',
+    faq: 'faq'
 }

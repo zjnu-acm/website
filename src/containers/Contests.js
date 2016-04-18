@@ -2,7 +2,7 @@
  * Created by kevin on 16-4-4.
  */
 import React from 'react';
-
+import {Link} from 'react-router';
 import Paper from 'material-ui/lib/paper';
 import Table from 'material-ui/lib/table/table';
 import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
@@ -25,9 +25,9 @@ export default class extends React.Component {
         for (let i = 0; i < 50; i++) {
             TabRows.push(
                 <TableRow key={"row"+i}>
-                    <TableRowColumn width="100px">{1+i}</TableRowColumn>
+                    <TableRowColumn width="100px">{1 + i}</TableRowColumn>
                     <TableRowColumn>
-                        {users[i]}
+                        <Link to={"/contests/"+i }>{users[i]}</Link>
                     </TableRowColumn>
                     <TableRowColumn>
                         {nicknames[i]}

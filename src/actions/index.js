@@ -27,3 +27,10 @@ export function userLogin(username,password){
         id:0
     }
 }
+
+export function switchTab(dest){
+    return {
+        type:types.SWITCH_TAB,
+        dest
+    }
+}
