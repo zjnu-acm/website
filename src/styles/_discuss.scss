@@ -4,7 +4,6 @@ $leftWidth: 200px;
   position:relative;
   margin-bottom:20px;
   @extend .clearfix;
-  width:100%;
   border-left:$leftWidth solid #f9f9f9;
   .side{
     float:left;

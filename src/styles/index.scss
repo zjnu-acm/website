@@ -1,13 +1,16 @@
 @import 'variable';
 @import 'global';
-
 @import 'navbar';
-
 @import 'pagination';
 
-#page-contest{
+#page-contest {
   @import 'contest';
 }
-#page-discuss{
+
+#page-discuss {
   @import 'discuss';
+}
+
+#page-home {
+  @import 'home';
 }

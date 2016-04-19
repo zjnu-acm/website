@@ -23,17 +23,16 @@ export default class App extends React.Component {
                 <Route path="/" component={Layout}>
                     <IndexRoute component={Home}/>
                     <Route path="/home" component={Home}/>
-                    <Route component={Main}>
-                        <Route path="/problems" component={Problems}/>
-                        <Route path="/status" component={Status}/>
-                        <Route path="/ranks" component={Ranks}/>
-                        <Route path="/contests" component={Contests} />
-                        <Route path="/contests/:id" component={Contest}>
-                            <IndexRoute component={ContestOverview} />
-                            <Route path="/contests/:id/overview" component={ContestOverview} />
-                        </Route>
-                        <Route path="/discuss" component={Discuss} />
+                    <Route path="/problems" component={Problems}/>
+                    <Route path="/status" component={Status}/>
+                    <Route path="/ranks" component={Ranks}/>
+                    <Route path="/contests" component={Contests}/>
+                    <Route path="/contests/:id" component={Contest}>
+                        <IndexRoute component={ContestOverview}/>
+                        <Route path="/contests/:id/overview" component={ContestOverview}/>
                     </Route>
+                    <Route path="/discuss" component={Discuss}/>
+                    
                     <Route path="/repos" component={Repos}>
                         <Route path="/repos/:userName/:repoName" component={Repo}/>
                     </Route>

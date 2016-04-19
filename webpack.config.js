@@ -35,7 +35,7 @@ module.exports = {
             {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'},
             //{test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports?jQuery=jquery' }
             {test: /\.(css|sass|scss)$/, loader: "style!css!sass"},
-            //{test:/\.(png|jvendorpg)$/,loader:"url-loader?limit=10000&name=[name].[ext]"},
+            {test:/\.(png|jvendorpg)$/,loader:"url-loader?limit=10000&name=[name].[ext]"},
             //{test:/\.jade$/,loader:"jade"}
         ]
     },
