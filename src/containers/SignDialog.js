@@ -34,7 +34,6 @@ export default class extends React.Component {
                 onTouchTap={this.onSubmit}
             />,
         ];
-   
         return (
             <Dialog
                 {...others}
@@ -70,5 +69,5 @@ function mapDispatchToProps(dispatch){
     return bindActionCreators({
         closeLoginDialog,
         userLogin
-    },dispatch);;
+    },dispatch);
 }

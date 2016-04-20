@@ -24,6 +24,7 @@ export default class NavInfo extends React.Component {
         user:React.PropTypes.object.isRequired
     }
     render() {
+
         const {user,openLoginDialog} = this.props;
         return (
             <div className="u-navinfo">
@@ -54,5 +55,4 @@ export default class NavInfo extends React.Component {
             </div>
         )
     }
-
 }

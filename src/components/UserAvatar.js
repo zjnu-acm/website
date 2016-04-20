@@ -50,10 +50,12 @@ export default class extends React.Component {
                     hoverColor={'rgba(0, 0, 0, 0.2)'}
                     rippleColor={'rgba(0,0,0,0.3)'}
                     style={{lineHeight:'56px',color:'#fff',padding:'0 12px'}}>
-                    {user.username}
+                    {user.nickname}
                     <Avatar backgroundColor={colors.teal400}
-                            style={{display:'inline-block',verticalAlign:'middle',marginTop:'-4px',marginLeft:'16px'}}>
-                        {user.avatar}
+                            style={{display:'inline-block',verticalAlign:'middle',marginTop:'-4px',marginLeft:'16px'}}
+                            src={user.avatarUrl}
+                    >
+
                     </Avatar>
 
                 </FlatButton>

@@ -27,8 +27,8 @@ const initialState = {
     },
     user: {
         logged: false,
-        username: '',
-        avatar: '',
-        id: ''
+        nickname: '',
+        avatarUrl: '',
+        userId: ''
     }
 }

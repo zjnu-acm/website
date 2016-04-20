@@ -32,7 +32,6 @@ class Layout extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         const {currentTab, switchTab, user, openLoginDialog}=this.props;
         return (
             <div>

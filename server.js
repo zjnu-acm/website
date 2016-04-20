@@ -1,6 +1,8 @@
 'use strict'
 
 const webpack = require('webpack');
+const router = require('./router');
+const cookieParser = require('cookie-parser');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 var app = new (require('express'))();
@@ -32,9 +34,9 @@ if(compile){
     }));
 
     app.use(webpackHotMiddleware(compiler));
-    app.get('*',function(req,res){
-        res.sendFile(__dirname + '/dist/index.html');
-    })
+    app.use(cookieParser())
+    app.use('/',router);
+    
     app.listen(PORT,HOST,function(){
         console.log(`server is running at:${HOST}:${PORT}`);
     });

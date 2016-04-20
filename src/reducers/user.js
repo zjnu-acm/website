@@ -12,21 +12,22 @@ import * as types from '../constants/ActionTypes';
  }
  */
 
-export default function user(state = {logged: false, username: '', avatar: '', id: ''}, action) {
+export default function user(state = {logged: false, nickname: '', avatarUrl: '', userId: ''}, action) {
+    console.log(action);
     switch (action.type) {
         case types.USER_LOGGED_IN:
             return Object.assign({}, state, {
                 logged: true,
-                username: action.username,
-                avatar: action.avatar,
-                id: action.id
+                nickname: action.nickname,
+                avatarUrl: action.avatarUrl,
+                userId: action.userId
             });
         case types.USER_LOGIN_FAILED:
             return Object.assign({}, state, {
                 logged: false,
-                username: '',
+                nickname: '',
                 avatar: '',
-                id: ''
+                userId: ''
             });
         default:
             return state;

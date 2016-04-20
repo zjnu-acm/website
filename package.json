@@ -10,6 +10,8 @@
   "author": "Kevin Tan",
   "license": "ISC",
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
+    "js-cookie": "^2.1.1",
     "material-ui": "^0.14.4",
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
@@ -29,21 +31,22 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-1": "^6.5.0",
     "clean-webpack-plugin": "^0.1.8",
+    "cookie-parser": "^1.4.1",
     "copy-webpack-plugin": "^1.1.1",
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
     "express-history-api-fallback": "^2.0.0",
+    "file-loader": "^0.8.5",
     "fs-extra": "^0.26.7",
     "html-webpack-plugin": "^2.15.0",
     "http-server": "^0.8.5",
     "node-sass": "^3.4.2",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.12.13",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1",
-    "webpack-hot-middleware": "^2.10.0",
-    "file-loader":"^0.8.5",
-    "url-loader":"^0.5.7"
+    "webpack-hot-middleware": "^2.10.0"
   }
 }
