@@ -22,14 +22,14 @@ export default class NavInfo extends React.Component {
     static propTypes={
         openLoginDialog:React.PropTypes.func.isRequired,
         user:React.PropTypes.object.isRequired
-    }
+    };
     render() {
 
         const {user,openLoginDialog} = this.props;
         return (
             <div className="u-navinfo">
                 <div className="container">
-                    <h1>Zhejiang Normal University JudgeOnline</h1>
+                    <h1>Zhejiang Normal University Online Judge</h1>
                     <ul className="list-float u-tools">
                         <li><Search /></li>
                         <li>
