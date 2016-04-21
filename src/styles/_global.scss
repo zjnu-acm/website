@@ -87,7 +87,13 @@ body {
   padding: 10px 30px;
   margin-bottom: 30px;
 }
-
+.panel-head{
+  margin-top: -10px;
+  margin-left: -30px;
+  margin-right: -30px;
+  background-color: #F5F5F5;
+  padding:10px 30px;
+}
 
 table.text-center td, table.text-center th {
   text-align: center !important;

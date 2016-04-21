@@ -16,8 +16,11 @@ export default class extends React.Component {
         closeLoginDialog: React.PropTypes.func.isRequired,
         userLogin: React.PropTypes.func.isRequired
     }
-    onSubmit = ()=> {
-        this.props.userLogin(this.refs.username.getValue(), this.refs.password.getValue());
+    onSubmit = (event)=> {
+        console.log(event.which === 13);
+        if (event.which === 13) {
+            this.props.userLogin(this.refs.username.getValue(), this.refs.password.getValue());
+        }
     }
 
     render() {
@@ -51,7 +54,7 @@ export default class extends React.Component {
                 /><br/>
                 <TextField
                     style={{width:'100%'}}
-                    onEnterKeyDown={this.onSubmit}
+                    onKeyDown={this.onSubmit}
                     hintText="Your Password"
                     ref="password"
                     floatingLabelText="Password"

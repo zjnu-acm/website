@@ -13,12 +13,9 @@ import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
-import {List, ListItem} from 'material-ui/List';
-
 import Divider from 'material-ui/Divider';
 
 import IconButton from 'material-ui/IconButton';
-import FlatButton from 'material-ui/FlatButton';
 
 export default class extends React.Component {
     state = {
@@ -38,7 +35,6 @@ export default class extends React.Component {
     };
 
     render() {
-        console.log(colors);
         const badgeStyle = {
             background: colors.deepOrange500,
             color: '#fff',

@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from 'material-ui/styles';
 import * as colors from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
 
@@ -29,6 +28,7 @@ export default class extends React.Component {
     };
 
     handleUserMenuClose = ()=> {
+        console.log(this.state);
         this.setState({
             userMenuOpen: false
         })

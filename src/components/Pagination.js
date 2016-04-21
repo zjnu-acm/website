@@ -3,8 +3,8 @@
  */
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-//import ChevronLeftIcon from 'material-ui/lib/svg-icons/navigation/chevron-left';
-//import ChevronRightIcon from 'material-ui/lib/svg-icons/navigation/chevron-right';
+import ChevronLeftIcon from 'material-ui/svg-icons/navigation/chevron-left';
+import ChevronRightIcon from 'material-ui/svg-icons/navigation/chevron-right';
 
 export default class extends React.Component {
     static propTypes = {
@@ -18,12 +18,16 @@ export default class extends React.Component {
         onChange: ()=> {
         }
     };
-
     render() {
-
+        const style={
+            svg:{
+                height:'28px',
+                fill:'#666'
+            }
+        }
         return (
-            <ReactPaginate previousLabel="&laquo;"
-                           nextLabel="&raquo;"
+            <ReactPaginate previousLabel={<ChevronLeftIcon style={style.svg}/>}
+                           nextLabel={<ChevronRightIcon style={style.svg}/>}
                            breakLabel={<a href="">...</a>}
                            pageNum={this.props.totPages}
                            initialSelected={this.props.activeIndex}
