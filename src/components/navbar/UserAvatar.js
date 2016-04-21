@@ -1,6 +1,3 @@
-/**
- * Created by kevin on 16-4-5.
- */
 import React from 'react';
 import styles from 'material-ui/lib/styles';
 
@@ -10,18 +7,19 @@ import Popover from 'material-ui/lib/popover/popover';
 
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
-import Divider from 'material-ui/lib/divider';
 import FlatButton from 'material-ui/lib/flat-button';
 
-
+import Work from 'material-ui/lib/svg-icons/action/work';
+import ExitToApp from 'material-ui/lib/svg-icons/action/exit-to-app'
 const colors = styles.Colors;
 export default class extends React.Component {
     state = {
         userMenuOpen: false
     }
-    static propTypes={
-        user:React.PropTypes.object.isRequired
+    static propTypes = {
+        user: React.PropTypes.object.isRequired
     }
+
     handleUserMenuOpen = (event)=> {
         this.setState({
             userMenuOpen: true,
@@ -35,29 +33,43 @@ export default class extends React.Component {
         })
     };
     handleLogout = ()=> {
-        this.setState({
-            userMenuOpen: false
-        })
+
     };
 
     render() {
         const {user} = this.props;
+        const colors = {
+            //normal: 'rgba(0, 0, 0, 0.09)',
+            hover: 'rgba(0, 0, 0, 0.2)',
+            ripple: 'rgba(0,0,0,0.3)'
+        }
+        const Style = {
+            lineHeight: '48px',
+            color: '#fff',
+            paddingLeft: '12px',
+            paddingRight: '12px'
+        }
+        const AvatarStyle = {
+            display: 'inline-block',
+            verticalAlign: 'middle',
+            marginTop: '-4px',
+            marginRight: '16px'
+        }
+
         return (
-            <div className="item" id={user.id} style={{marginTop:(88-56)/2+'px',marginLeft:'12px'}}>
+            <div>
                 <FlatButton
                     onTouchTap={this.handleUserMenuOpen}
-                    backgroundColor='rgba(0, 0, 0, 0.09)'
-                    hoverColor={'rgba(0, 0, 0, 0.2)'}
-                    rippleColor={'rgba(0,0,0,0.3)'}
-                    style={{lineHeight:'56px',color:'#fff',padding:'0 12px'}}>
-                    {user.nickname}
+                    //backgroundColor={colors.normal}
+                    //hoverColor={colors.normal}
+
+                    rippleColor={colors.hover}
+                    style={Style}>
                     <Avatar backgroundColor={colors.teal400}
-                            style={{display:'inline-block',verticalAlign:'middle',marginTop:'-4px',marginLeft:'16px'}}
+                            style={AvatarStyle}
                             src={user.avatarUrl}
-                    >
-
-                    </Avatar>
-
+                    />
+                    {user.nickname}
                 </FlatButton>
                 <Popover
                     open={this.state.userMenuOpen}
@@ -69,13 +81,14 @@ export default class extends React.Component {
                 >
                     <div style={styles.popover}>
                         <List>
-                            <ListItem primaryText="the first Message"/>
-                            <ListItem primaryText="the second Message"/>
-                            <ListItem primaryText="the last Message"/>
+                            <ListItem
+                                leftIcon={<Work />}
+                                primaryText="Profile"/>
+                            <ListItem
+                                leftIcon={<ExitToApp />}
+                                onTouchTap={this.handleUserMenuClose}
+                                primaryText="Exit"/>
                         </List>
-                        <Divider />
-                        <FlatButton onTouchTap={this.handleLogout} label="Exit"
-                                    style={{width:'100%',height:'50px',color:colors.red300}}/>
                     </div>
                 </Popover>
             </div>

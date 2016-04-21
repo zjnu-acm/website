@@ -14,7 +14,7 @@ import TableBody from 'material-ui/lib/table/table-body';
 import TextField from 'material-ui/lib/text-field';
 import SearchIcon from 'material-ui/lib/svg-icons/action/search';
 
-import Pagination from '../components/Pagination';
+import Pagination from 'Pagination';
 
 export default class extends React.Component {
     componentDidMount = ()=> {

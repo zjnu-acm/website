@@ -14,7 +14,7 @@ import TableBody from 'material-ui/lib/table/table-body';
 import TextField from 'material-ui/lib/text-field';
 import SearchIcon from 'material-ui/lib/svg-icons/action/search';
 
-import Pagination from '../components/Pagination';
+import Pagination from 'Pagination';
 
 const users = ["rrtyui", "vjudge4", "vjudge2", "vjudge1", "vjudge5", "vjudge3", "mathlover", "huantwofat", "19891101", "qian99", "islands", "syiml", "a569329637", "bnmjtz", "last_one", "flag", "Heart_Blue", "Napoleon", "poursoul", "TaoSama"];
 const nicknames = ["Sithope", "马孟起", "张翼德", "关云长", "黄汉升", "赵子龙", "mathlover", "huantwofat", "19891101", "baka", "islands", "T^T", "gsq", "__M子__", "last_one", "flag", "Heart Blue", "Napoleon", "Luna", "陆文韬"];

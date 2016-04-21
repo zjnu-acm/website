@@ -18,20 +18,19 @@
       line-height: $navbar1Height;
       float: left;
     }
-    ul.u-tools {
+
+    ul.box-tools {
       float: right;
-      .item {
-        display: inline-block;
-        vertical-align: middle;
-        //display:flex !important;
-        //align-items:center;
-        margin-top: ($navbar1Height - 48px)/2;
-      }
+      height:100%;
+      list-style:none;
+      display:flex;
+      align-items:center;
       & svg {
         fill: #fff !important;
       }
     }
   }
+
 
   //NavMenu
   .u-navmenu > div {

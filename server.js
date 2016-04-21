@@ -8,7 +8,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 var app = new (require('express'))();
 let webpackConfig = require('./webpack.config');
 const fs = require('fs-extra');
-const PORT = '8080';
+const PORT = '3000';
 const HOST = '0.0.0.0';
 const fallback= require('express-history-api-fallback');
 const compile = process.argv.findIndex((a) => a.toLowerCase() === '-c') !== -1;

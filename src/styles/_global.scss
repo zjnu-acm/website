@@ -45,8 +45,12 @@ body {
   width:100%;
   white-space: nowrap;
 }
+
 .text-muted{
   color:#a9a9a9;
+}
+.text-danger{
+  color: #ff1f29;
 }
 .s-plainLink a{
   color:inherit;
@@ -83,15 +87,6 @@ body {
 .u-panel {
   padding: 10px 30px;
   margin-bottom: 30px;
-}
-
-ul.list-float {
-  @extend .clearfix;
-  list-style: none;
-  padding-left: 0;
-  & > li {
-    float: left;
-  }
 }
 
 

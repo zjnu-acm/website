@@ -4,42 +4,49 @@
 import React from 'react';
 
 import styles from 'material-ui/lib/styles';
-import Badge from 'material-ui/lib/badge'
-import NotificationsIcon from 'material-ui/lib/svg-icons/social/notifications';
+import Badge from '../../../node_modules/material-ui/lib/badge'
+import NotificationsIcon from '../../../node_modules/material-ui/lib/svg-icons/social/notifications';
 
-import Popover from 'material-ui/lib/popover/popover';
+import Popover from '../../../node_modules/material-ui/lib/popover/popover';
 
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
+import List from '../../../node_modules/material-ui/lib/lists/list';
+import ListItem from '../../../node_modules/material-ui/lib/lists/list-item';
 
-import Divider from 'material-ui/lib/divider';
+import Divider from '../../../node_modules/material-ui/lib/divider';
 
-import IconButton from 'material-ui/lib/icon-button';
-import FlatButton from 'material-ui/lib/flat-button';
+import IconButton from '../../../node_modules/material-ui/lib/icon-button';
+import FlatButton from '../../../node_modules/material-ui/lib/flat-button';
 
 const colors = styles.Colors;
 export default class extends React.Component {
-    state={
-        open:false
+    state = {
+        open: false
     }
+
     handleTouchTap = (event) => {
         this.setState({
             open: true,
             anchorEl: event.currentTarget,
         });
     };
-
     handleRequestClose = () => {
         this.setState({
             open: false,
         });
     };
+
     render() {
+        const badgeStyle = {
+            background: colors.deepOrange500,
+            color: '#fff',
+            top: '0px',
+            right: '0',
+            textAlign: 'center'
+        }
         return (
             <Badge badgeContent={5}
-                   style={{marginTop:'-4px',paddingLeft:'0',paddingRight:'0'}}//12+20-24-12
-                   className="item"
-                   badgeStyle={{background:colors.deepOrange500,color:'#fff',top:'20px',right:'0'}}>
+                   style={{padding:'0'}}
+                   badgeStyle={badgeStyle}>
                 <IconButton onTouchTap={this.handleTouchTap}>
                     <NotificationsIcon />
                 </IconButton>

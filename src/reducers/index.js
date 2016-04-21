@@ -3,13 +3,12 @@
  */
 import {combineReducers} from 'redux';
 import user from './user';
-import loginDialog from './loginDialog';
+import * as dialogs from './Dialog';
 import currentTab from './currentTab';
-const rootReducer = combineReducers({
+const rootReducer = combineReducers(Object.assign({
     user,
-    loginDialog,
     currentTab
-});
+},dialogs));
 
 export default rootReducer;
 
@@ -19,11 +18,11 @@ const initialState = {
     currentTab: 'home',
     loginDialog: {
         open: false,
-        err: ''
+        error: ''
     },
     registerDialog: {
         open: false,
-        err: ''
+        error: ''
     },
     user: {
         logged: false,

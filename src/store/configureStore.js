@@ -4,8 +4,9 @@
 import {createStore,applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import reducer from '../reducers';
-
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+import createLogger from 'redux-logger';
+const logger = createLogger();
+const createStoreWithMiddleware = applyMiddleware(thunk,logger)(createStore);
 export default function(initialState){
     const store =createStoreWithMiddleware(reducer,initialState);
     if(module.hot){

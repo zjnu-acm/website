@@ -4,27 +4,16 @@
 import React from 'react';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import Layout from './Layout'
-import Repos from './Repos';
-import Repo from './Repo';
 import Home from './Home';
 import Problems from './Problems';
 import Status from './Status';
 import Ranks from './Ranks';
 import Contests from './Contests';
-import Contest from './Contest';
-import ContestOverview from './Contest/ContestOverview';
+import Contest from './contest';
+import ContestOverview from './contest/ContestOverview';
 import Discuss from './Discuss';
-import {connect} from 'react-redux';
-import {initialize} from '../actions';
 
-@connect()
 export default class App extends React.Component {
-    //组件挂载之时
-    componentDidMount=()=>{
-        //触发初始化事件
-        this.props.dispatch(initialize());
-    }
-
     render() {
         return (
             <Router history={browserHistory}>

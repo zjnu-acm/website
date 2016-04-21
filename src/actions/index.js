@@ -4,10 +4,10 @@
 import * as types from '../constants/ActionTypes';
 import fetch from 'isomorphic-fetch';
 import cookie from 'js-cookie';
-export function openLoginDialog() {
+export function openLoginDialog(error = '') {
     return {
         type: types.OPEN_LOGIN_DIALOG,
-        errorMessage: ''
+        error: error
     }
 }
 
@@ -16,30 +16,41 @@ export function closeLoginDialog() {
         type: types.CLOSE_LOGIN_DIALOG
     }
 }
-function getQueryString(query){
-    return Object.keys(query)
-        .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(query[key]))
-        .join("&")
-        .replace(/%20/g, "+");
-}
+
 export function userLogin(username, password) {
     //do something to verify user identity
-    return dispatch =>{
-        fetch('/account/login?'+getQueryString({username,password}))
+    return (dispatch, getState) => {
+        fetch('/account/login?' + window.getQueryString({username, password}))
             .then(response => response.json())
             .then(function (user) {
-                if(user.status==='success'){
-                    dispatch({
-                        type:types.USER_LOGGED_IN,
-                        nickname:user.data.nickname,
-                        avatarUrl:user.data.avatarUrl,
-                        userId:user.data.userId,
+                const state = getState();
+                if ('errorCode' in user) {
+                    dispatch({type: types.USER_LOGIN_FAILED})
+                    if (state.loginDialog.open) {
+                        //显示错误信息
+                        dispatch({
+                            type: types.OPEN_LOGIN_DIALOG,
+                            error: user.message
+                        });
+                    }
+                } else {
+                    //加入cookie
+                    cookie.set('token',user.token);
+                    cookie.set('user',{
+                        nickname:user.nickname,
+                        avatarUrl:user.avatarUrl,
+                        userId:user.userId
                     });
-                }else{
                     dispatch({
-                        type:types.USER_LOGIN_FAILED,
-                        error:user.data.error
-                    })
+                        type: types.USER_LOGGED_IN,
+                        nickname: user.nickname,
+                        avatarUrl: user.avatarUrl,
+                        userId: user.userId
+                    });
+                    //如果登陆面板打开,将他关闭
+                    if (state.loginDialog.open) {
+                        dispatch({type: types.CLOSE_LOGIN_DIALOG});
+                    }
                 }
             })
     }
@@ -48,10 +59,7 @@ export function userLogin(username, password) {
 export function initialize() {
     let user = cookie.get('user');
     if (typeof user === 'undefined') {
-        return {
-            type: types.USER_LOGIN_FAILED,
-            error: null
-        }
+        return {type: types.USER_LOGIN_FAILED}
     }
     user = JSON.parse(user);
     return {

@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const path = require('path');
 module.exports = {
     entry: {
         vendor: ['react', 'react-router', 'react-dom', 'material-ui'],
@@ -38,6 +40,14 @@ module.exports = {
             {test:/\.(png|jvendorpg)$/,loader:"url-loader?limit=10000&name=[name].[ext]"},
             //{test:/\.jade$/,loader:"jade"}
         ]
+    },
+    resolve:{
+        root:[
+            path.resolve('./src/components/')
+        ],
+        alias:{
+            actions:path.resolve('./src/actions/')
+        }
     },
     plugins: [
         new webpack.BannerPlugin(`This file is created by Kevin Tan ${(new Date()).toLocaleDateString()}`),
