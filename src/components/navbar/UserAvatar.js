@@ -1,16 +1,17 @@
 import React from 'react';
 import styles from 'material-ui/styles';
-import colors from 'material-ui/styles/colors';
+import * as colors from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
 
 import Popover from 'material-ui/Popover';
 
-import {List, ListItem} from 'material-ui/List';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
 
 import FlatButton from 'material-ui/FlatButton';
 
-import Work from 'material-ui/svg-icons/action/work';
-import ExitToApp from 'material-ui/svg-icons/action/exit-to-app'
+import WorkIcon from 'material-ui/svg-icons/action/work';
+import ExitToAppIcon  from 'material-ui/svg-icons/action/exit-to-app'
 
 export default class extends React.Component {
     state = {
@@ -62,7 +63,6 @@ export default class extends React.Component {
                     onTouchTap={this.handleUserMenuOpen}
                     //backgroundColor={colors.normal}
                     //hoverColor={colors.normal}
-
                     rippleColor={bgcolors.hover}
                     style={Style}>
                     <Avatar backgroundColor={colors.teal400}
@@ -79,17 +79,12 @@ export default class extends React.Component {
                     targetOrigin={{horizontal: 'middle', vertical: 'top'}}
                     onRequestClose={this.handleUserMenuClose}
                 >
-                    <div style={styles.popover}>
-                        <List>
-                            <ListItem
-                                leftIcon={<Work />}
-                                primaryText="Profile"/>
-                            <ListItem
-                                leftIcon={<ExitToApp />}
-                                onTouchTap={this.handleUserMenuClose}
-                                primaryText="Exit"/>
-                        </List>
-                    </div>
+                    <Menu>
+                        <MenuItem primaryText="Profile" leftIcon={<WorkIcon/>}/>
+                        <MenuItem primaryText="Exit" leftIcon={<ExitToAppIcon /> }
+                                  onTouchTap={this.handleUserMenuClose}/>
+                    </Menu>
+
                 </Popover>
             </div>
         )

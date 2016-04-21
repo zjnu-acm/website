@@ -13,7 +13,6 @@ body {
   background-color: #f5f5f5;
 }
 
-
 .clearfix:after {
   content: " ";
   display: block;
@@ -96,7 +95,7 @@ table.text-center td, table.text-center th {
 
 .footer {
   background-color: #212121 !important;
-  color: #999999;
+  color: #999999 !important;
   text-align: center;
   line-height: $footerHeight;
   height: $footerHeight;

@@ -10,6 +10,9 @@ import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 
 import Popover from 'material-ui/Popover';
 
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+
 import {List, ListItem} from 'material-ui/List';
 
 import Divider from 'material-ui/Divider';
@@ -57,22 +60,32 @@ export default class extends React.Component {
                     targetOrigin={{horizontal: 'middle', vertical: 'top'}}
                     onRequestClose={this.handleRequestClose}
                 >
-                    <div style={styles.popover}>
-                        <List subheader="system notifications">
-                            <ListItem primaryText="the first Message"/>
-                            <ListItem primaryText="the second Message"/>
-                            <ListItem primaryText="the last Message"/>
-                        </List>
-                        <Divider />
-                        <List subheader="user notifications">
-                            <ListItem primaryText="the first Message"/>
-                        </List>
-                        <Divider />
-                        <FlatButton label="clear all notifications"
-                                    style={{width:'100%',height:'50px',color:colors.deepOrange500}}/>
-                    </div>
+                   <Menu>
+                       <MenuItem primaryText="Bill Has Relyed to you"/>
+                       <MenuItem primaryText="Job news"/>
+                       <Divider/>
+                       <MenuItem
+                           style={{color:colors.deepOrange500}}
+                           primaryText="clear all notifications"/>
+                   </Menu>
                 </Popover>
             </Badge>
         )
     }
 }
+/*
+ <div style={styles.popover}>
+ <List subheader="system notifications">
+ <ListItem primaryText="the first Message"/>
+ <ListItem primaryText="the second Message"/>
+ <ListItem primaryText="the last Message"/>
+ </List>
+ <Divider />
+ <List subheader="user notifications">
+ <ListItem primaryText="the first Message"/>
+ </List>
+ <Divider />
+ <FlatButton label="clear all notifications"
+ style={{width:'100%',height:'50px',color:colors.deepOrange500}}/>
+ </div>
+ */

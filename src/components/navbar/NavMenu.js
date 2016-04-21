@@ -12,7 +12,8 @@ export default class extends React.Component {
     render() {
         const {switchTab,currentTab}=this.props;
         return (
-            <Tabs rounded={false} value={currentTab} onChange={switchTab}
+            <Tabs value={currentTab} onChange={switchTab}
+                  tabItemContainerStyle={{height:'48px'}}
                   className="container u-navmenu">
                 <Tab value='home' label="Home"></Tab>
                 <Tab value='problems' label="ProblemList"></Tab>

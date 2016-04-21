@@ -4,8 +4,11 @@
 import React from 'react';
 import {Link} from 'react-router';
 
+import Paper from 'material-ui/Paper';
+
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 const imgUrl = require('../images/material-bg.png');
@@ -76,7 +79,7 @@ export default class extends React.Component {
             <div id="page-home">
                 <div className="row">
                     <div className="col-main">
-                        <Card>
+                        <Card style={{overflow:'hidden'}}>
                             <CardMedia
                                 style={{height:'340px'}}
                                 overlay={<CardTitle title="Welcome to Zhejiang Normal University ACM Online Judge System!"
@@ -85,27 +88,36 @@ export default class extends React.Component {
                                 <div>Downloads: <a href="#">C-Free5.0</a>,<a href="#"> VC6</a></div>
                                 </div>} />}
                             >
-                                <img style={{marginTop:'-130px'}} src={imgUrl}/>
+                                <img src={imgUrl}/>
                             </CardMedia>
                         </Card>
 
                         <div className="box1 row">
                             <div className="box2">
-                                <List zDepth={1} subheader="Latest Contests">
-                                    {list1}
-                                </List>
+                                <Paper>
+                                    <List>
+                                        <Subheader inset={false}>Latest Contests</Subheader>
+                                        {list1}
+                                    </List>
+                                </Paper>
                             </div>
                             <div className="box3">
-                                <List zDepth={1} subheader="Latest Posts">
-                                    {list2}
-                                </List>
+                                <Paper>
+                                    <List>
+                                        <Subheader inset={false}>Latest Posts</Subheader>
+                                        {list2}
+                                    </List>
+                                </Paper>
                             </div>
                         </div>
                     </div>
                     <div className="col-right">
-                        <List zDepth={1} subheader="Top 10">
-                            {list}
-                        </List>
+                        <Paper>
+                            <List>
+                                <Subheader inset={false}>Top 10</Subheader>
+                                {list}
+                            </List>
+                        </Paper>
                     </div>
                 </div>
             </div>
