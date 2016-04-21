@@ -3,26 +3,15 @@
  */
 import React from 'react';
 import {Link} from 'react-router';
-import Paper from 'material-ui/lib/paper';
 
-import Avatar from 'material-ui/lib/avatar';
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
-import Divider from 'material-ui/lib/divider';
-
-import Card from 'material-ui/lib/card/card';
-import CardActions from 'material-ui/lib/card/card-actions';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardMedia from 'material-ui/lib/card/card-media';
-import CardTitle from 'material-ui/lib/card/card-title';
-import FlatButton from 'material-ui/lib/flat-button';
-import CardText from 'material-ui/lib/card/card-text';
-
+import Avatar from 'material-ui/Avatar';
+import {List, ListItem} from 'material-ui/List';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 const imgUrl = require('../images/material-bg.png');
-import Mail from 'material-ui/lib/svg-icons/content/mail';
-import ActionInfo from 'material-ui/lib/svg-icons/action/info';
-import CommunicationChatBubble from 'material-ui/lib/svg-icons/communication/chat-bubble';
+import Mail from 'material-ui/svg-icons/content/mail';
+import ActionInfo from 'material-ui/svg-icons/action/info';
+import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 
 export default class extends React.Component {
     render() {

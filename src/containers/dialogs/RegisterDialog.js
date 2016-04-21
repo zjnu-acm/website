@@ -2,9 +2,9 @@
  * Created by kevin on 16-4-5.
  */
 import React from 'react';
-import Dialog from 'material-ui/lib/dialog';
-import FlatButton from 'material-ui/lib/flat-button';
-import TextField from 'material-ui/lib/text-field';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 import {closeLoginDialog, userLogin} from 'actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';

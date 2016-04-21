@@ -3,11 +3,10 @@
  */
 import React from 'react';
 
-import Paper from '../../../node_modules/material-ui/lib/paper';
-import LinearProgress from '../../../node_modules/material-ui/lib/linear-progress';
+import Paper from 'material-ui/Paper';
+import LinearProgress from 'material-ui/LinearProgress';
+import {Tabs, Tab} from 'material-ui/Tabs';
 
-import Tabs from '../../../node_modules/material-ui/lib/tabs/tabs';
-import Tab from '../../../node_modules/material-ui/lib/tabs/tab';
 export default class extends React.Component {
     render() {
         console.log('id',this.props.params.id);

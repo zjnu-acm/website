@@ -1,17 +1,17 @@
 import React from 'react';
-import styles from 'material-ui/lib/styles';
+import styles from 'material-ui/styles';
+import colors from 'material-ui/styles/colors';
+import Avatar from 'material-ui/Avatar';
 
-import Avatar from 'material-ui/lib/avatar';
+import Popover from 'material-ui/Popover';
 
-import Popover from 'material-ui/lib/popover/popover';
+import {List, ListItem} from 'material-ui/List';
 
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
-import FlatButton from 'material-ui/lib/flat-button';
+import FlatButton from 'material-ui/FlatButton';
 
-import Work from 'material-ui/lib/svg-icons/action/work';
-import ExitToApp from 'material-ui/lib/svg-icons/action/exit-to-app'
-const colors = styles.Colors;
+import Work from 'material-ui/svg-icons/action/work';
+import ExitToApp from 'material-ui/svg-icons/action/exit-to-app'
+
 export default class extends React.Component {
     state = {
         userMenuOpen: false
@@ -38,7 +38,7 @@ export default class extends React.Component {
 
     render() {
         const {user} = this.props;
-        const colors = {
+        const bgcolors = {
             //normal: 'rgba(0, 0, 0, 0.09)',
             hover: 'rgba(0, 0, 0, 0.2)',
             ripple: 'rgba(0,0,0,0.3)'
@@ -63,7 +63,7 @@ export default class extends React.Component {
                     //backgroundColor={colors.normal}
                     //hoverColor={colors.normal}
 
-                    rippleColor={colors.hover}
+                    rippleColor={bgcolors.hover}
                     style={Style}>
                     <Avatar backgroundColor={colors.teal400}
                             style={AvatarStyle}

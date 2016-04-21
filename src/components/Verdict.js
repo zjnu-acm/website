@@ -2,8 +2,7 @@
  * Created by kevin on 16-4-5.
  */
 import React from 'react';
-import styles from 'material-ui/lib/styles';
-const colors = styles.Colors;
+import colors from 'material-ui/styles/colors';
 export default class extends React.Component{
     static propTypes={
         result:React.PropTypes.string.isRequired

@@ -3,16 +3,11 @@
  */
 import React from 'react';
 
-import Paper from 'material-ui/lib/paper';
-import Table from 'material-ui/lib/table/table';
-import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
-import TableRow from 'material-ui/lib/table/table-row';
-import TableHeader from 'material-ui/lib/table/table-header';
-import TableRowColumn from 'material-ui/lib/table/table-row-column';
-import TableBody from 'material-ui/lib/table/table-body';
+import Paper from 'material-ui/Paper';
 
-import TextField from 'material-ui/lib/text-field';
-import SearchIcon from 'material-ui/lib/svg-icons/action/search';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import TextField from 'material-ui/TextField'
+import SearchIcon from 'material-ui/svg-icons/action/search';
 
 import Pagination from 'Pagination';
 
@@ -32,24 +27,25 @@ export default class extends React.Component {
         //     target.classList.remove('fixed');
         // }
     }
-
+    getRatio(ac,submit){
+        if(1*submit === 0)return '100%';
+        const rate = ((ac/submit)*100).toFixed(2);
+        return rate+`(${ac}/${submit})`;
+    }
     render() {
-        let TabRows = [];
-        for (let i = 0; i < 50; i++) {
-            TabRows.push(
-                <TableRow key={"row"+i}>
-                    <TableRowColumn width="100px">{1000 + i}</TableRowColumn>
-                    <TableRowColumn width="600px">A + B Problem ({i + 1})
-                        <span className="pull-right">
-                            <span className="label">Math</span>
-                            <span className="label">Brute Force</span>
-                        </span>
-                    </TableRowColumn>
-                    <TableRowColumn>Tester</TableRowColumn>
-                    <TableRowColumn>57.39% (1235/2152)</TableRowColumn>
-                </TableRow>
-            )
-        }
+        const tableData = Array.from({length: 30}, (obj, index)=> {
+            return {
+                problemId: 1000 + index,
+                title: 'A+B Problem',
+                tags: ['Math', 'Brute Force'],
+                difficulty: '40%',
+                static: {
+                    ac: 1235,
+                    submit: 2152
+                },
+                date: (new Date()).toLocaleDateString()
+            }
+        });
         return (
             <div>
                 <Paper className="u-panel clearfix">
@@ -66,18 +62,34 @@ export default class extends React.Component {
                                    hintStyle={{paddingLeft:'48px'}} hintText="Filter"/>
                     </div>
                 </Paper>
+
+
                 <Paper className="u-panel">
                     <Table style={{marginBottom:'20px'}}>
                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                            <TableHeaderColumn colSpan="6" tooltip="Super Header" style={{textAlign: 'center'}}>
+                                Super Header
+                            </TableHeaderColumn>
                             <TableRow>
-                                <TableHeaderColumn width="100px">ID</TableHeaderColumn>
-                                <TableHeaderColumn width="600px">Title</TableHeaderColumn>
-                                <TableHeaderColumn>Source</TableHeaderColumn>
-                                <TableHeaderColumn>Ratio(AC/submit)</TableHeaderColumn>
+                                <TableHeaderColumn>ID</TableHeaderColumn>
+                                <TableHeaderColumn colSpan="2">Title</TableHeaderColumn>
+                                <TableHeaderColumn>Difficulty</TableHeaderColumn>
+                                <TableHeaderColumn>Ratio(AC/Submit)</TableHeaderColumn>
+                                <TableHeaderColumn>Updated Date</TableHeaderColumn>
                             </TableRow>
                         </TableHeader>
-                        <TableBody displayRowCheckbox={false}>
-                            {TabRows}
+                        <TableBody displayRowCheckbox={false} showRowHover={true}>
+                            {tableData.map((row, index)=> {
+                                <TableRow key={index}>
+                                    <TableRowColumn>{row.problemId}</TableRowColumn>
+                                    <TableRowColumn>{row.title}</TableRowColumn>
+                                    <TableRowColumn>{row.tags.map(tag=><div
+                                        className="label">{tag}</div>)}</TableRowColumn>
+                                    <TableRowColumn>{row.difficulty}</TableRowColumn>
+                                    <TableRowColumn>{this.getRatio(row.ac,row.submit)}</TableRowColumn>
+                                    <TableRowColumn>{row.date}</TableRowColumn>
+                                </TableRow>
+                            })}
                         </TableBody>
                     </Table>
                 </Paper>

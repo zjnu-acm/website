@@ -3,8 +3,8 @@
  */
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import ChevronLeftIcon from 'material-ui/lib/svg-icons/navigation/chevron-left';
-import ChevronRightIcon from 'material-ui/lib/svg-icons/navigation/chevron-right';
+//import ChevronLeftIcon from 'material-ui/lib/svg-icons/navigation/chevron-left';
+//import ChevronRightIcon from 'material-ui/lib/svg-icons/navigation/chevron-right';
 
 export default class extends React.Component {
     static propTypes = {

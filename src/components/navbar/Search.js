@@ -3,11 +3,11 @@
  */
 import React from 'react';
 
-import IconButton from 'material-ui/lib/icon-button';
+import IconButton from 'material-ui/IconButton';
 
-import TextField from 'material-ui/lib/text-field';
-import SearchIcon from 'material-ui/lib/svg-icons/action/search';
-import ClearIcon from 'material-ui/lib/svg-icons/content/clear';
+import TextField from 'material-ui/TextField';
+import SearchIcon from 'material-ui/svg-icons/action/search';
+import ClearIcon from 'material-ui/svg-icons/content/clear';
 
 
 export default class extends React.Component{

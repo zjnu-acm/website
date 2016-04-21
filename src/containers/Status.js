@@ -3,18 +3,13 @@
  */
 import React from 'react';
 
-import Paper from 'material-ui/lib/paper';
-import Table from 'material-ui/lib/table/table';
-import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
-import TableRow from 'material-ui/lib/table/table-row';
-import TableHeader from 'material-ui/lib/table/table-header';
-import TableRowColumn from 'material-ui/lib/table/table-row-column';
-import TableBody from 'material-ui/lib/table/table-body';
+import Paper from 'material-ui/Paper';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 
 import Verdict from '../components/Verdict';
 
-import {verdicts} from '../constants/index';
+import {verdicts} from '../constants';
 
 import Pagination from '../components/Pagination';
 

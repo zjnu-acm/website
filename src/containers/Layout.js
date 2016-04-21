@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper';
 //import ThemeManager from 'material-ui/lib/styles/theme-manager';
 //import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 
+
 import SignDialog from './dialogs/SignDialog';
 import NavMenu from 'navbar/NavMenu';
 import NavInfo from 'navbar/NavInfo';
@@ -17,8 +18,13 @@ import {connect} from 'react-redux';
 
 import {bindActionCreators} from 'redux';
 
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+const lightMuiTheme = getMuiTheme(lightBaseTheme);
+
 @connect(mapStateToProps, mapDispatchToProps)
-//@ThemeDecorator(ThemeManager.getMuiTheme(MyRawTheme))
 export default class Layout extends React.Component {
     constructor(props) {
         props.initialize();
@@ -34,27 +40,29 @@ export default class Layout extends React.Component {
     render() {
         const {currentTab, switchTab, user, openLoginDialog}=this.props;
         return (
-            <div>
-                <Paper rounded={false} zDepth={1} className="m-navbar">
-                    <div className="u-navinfo">
-                        <div className="container">
-                            <h1>Zhejiang Normal University Online Judge</h1>
-                            <NavInfo user={user} openLoginDialog={openLoginDialog} />
+            <MuiThemeProvider muiTheme={lightMuiTheme}>
+                <div>
+                    <Paper rounded={false} zDepth={1} className="m-navbar">
+                        <div className="u-navinfo">
+                            <div className="container">
+                                <h1>Zhejiang Normal University Online Judge</h1>
+                                <NavInfo user={user} openLoginDialog={openLoginDialog} />
+                            </div>
                         </div>
+                        <NavMenu currentTab={currentTab} switchTab={switchTab}/>
+                    </Paper>
+
+                    <div className="container content">
+                        {this.props.children}
                     </div>
-                    <NavMenu currentTab={currentTab} switchTab={switchTab}/>
-                </Paper>
-                
-                <div className="container content">
-                    {this.props.children}
-                </div>
-                
-                <Paper rounded={false} className="footer">
+
+                    <Paper rounded={false} className="footer">
                     <span>Powered by ZJNU ACM Team ©2010-2015. Code licensed under the Apache License, Version 2.0. Design and Code by: <a
                         className="unstyle" href="#">Kevin Tan</a> | <a className="unstyle" href="#">Zhan HuangBin.</a></span>
-                </Paper>
-                <SignDialog />
-            </div>
+                    </Paper>
+                    <SignDialog />
+                </div>
+            </MuiThemeProvider>
         )
     }
 }

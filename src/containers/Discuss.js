@@ -2,8 +2,8 @@
  * Created by kevin on 16-4-19.
  */
 import React from 'react';
-import Paper from 'material-ui/lib/paper';
-import Avatar from 'material-ui/lib/avatar';
+import Paper from 'material-ui/Paper';
+import Avatar from 'material-ui/Avatar';
 export default class extends React.Component {
     render() {
         return (

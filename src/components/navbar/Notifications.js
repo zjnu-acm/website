@@ -3,21 +3,20 @@
  */
 import React from 'react';
 
-import styles from 'material-ui/lib/styles';
-import Badge from '../../../node_modules/material-ui/lib/badge'
-import NotificationsIcon from '../../../node_modules/material-ui/lib/svg-icons/social/notifications';
+import styles from 'material-ui/styles';
+import * as colors from 'material-ui/styles/colors'
+import Badge from 'material-ui/Badge';
+import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 
-import Popover from '../../../node_modules/material-ui/lib/popover/popover';
+import Popover from 'material-ui/Popover';
 
-import List from '../../../node_modules/material-ui/lib/lists/list';
-import ListItem from '../../../node_modules/material-ui/lib/lists/list-item';
+import {List, ListItem} from 'material-ui/List';
 
-import Divider from '../../../node_modules/material-ui/lib/divider';
+import Divider from 'material-ui/Divider';
 
-import IconButton from '../../../node_modules/material-ui/lib/icon-button';
-import FlatButton from '../../../node_modules/material-ui/lib/flat-button';
+import IconButton from 'material-ui/IconButton';
+import FlatButton from 'material-ui/FlatButton';
 
-const colors = styles.Colors;
 export default class extends React.Component {
     state = {
         open: false
@@ -36,6 +35,7 @@ export default class extends React.Component {
     };
 
     render() {
+        console.log(colors);
         const badgeStyle = {
             background: colors.deepOrange500,
             color: '#fff',

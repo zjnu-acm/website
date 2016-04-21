@@ -3,17 +3,15 @@
  */
 import React from 'react';
 
+import IconButton from 'material-ui/IconButton';
 
-import IconButton from 'material-ui/lib/icon-button';
+import PersonIcon from 'material-ui/svg-icons/social/person';
 
-import PersonIcon from 'material-ui/lib/svg-icons/social/person';
-
-import TranslateIcon from 'material-ui/lib/svg-icons/action/translate';
+import TranslateIcon from 'material-ui/svg-icons/action/translate';
 
 import Search from './Search';
 import Notifications from './Notifications';
 import UserAvatar from './UserAvatar';
-
 
 export default class NavInfo extends React.Component {
     componentDidMount = ()=> {
