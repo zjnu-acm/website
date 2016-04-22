@@ -5,7 +5,7 @@
 const router = require('express').Router();
 
 //account
-router.get('/account/login', (req, res)=> {
+router.get('/account/login', (req, res,next)=> {
     if (req.query.username == '11550223' && req.query.password == '11550223') {
         res.send({
             userId: 0,
@@ -20,14 +20,6 @@ router.get('/account/login', (req, res)=> {
             message: 'username or password is invalid!'
         });
     }
-});
-
-
-router.use((req, res, next)=> {
-    console.log('Time:', Date.now());
-    console.log('request', req.url);
-    res.sendFile(__dirname + '/dist/index.html');
-    //next();
 });
 
 module.exports = router;

@@ -34,9 +34,18 @@ if(compile){
     }));
 
     app.use(webpackHotMiddleware(compiler));
-    app.use(cookieParser())
-    app.use('/',router);
-    
+    app.use(cookieParser());
+    //logger
+    app.use((req, res, next)=> {
+        console.log('Time:', Date.now());
+        console.log('request', req.url);
+        console.log(req.cookies);
+        next();
+    });
+    app.use('/api',router);
+    app.get('*',(req,res)=>{
+        res.sendFile(__dirname + '/dist/index.html');
+    })
     app.listen(PORT,HOST,function(){
         console.log(`server is running at:${HOST}:${PORT}`);
     });

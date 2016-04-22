@@ -53,6 +53,15 @@ export default class extends React.Component {
             id: {
                 width: '100px'
             },
+            difficulty: {
+                width: '100px'
+            },
+            ratio: {
+                width: '180px'
+            },
+            date: {
+                width: '190px'
+            },
             searchIcon: {
                 fill: '#888',
                 padding: '12px',
@@ -66,35 +75,37 @@ export default class extends React.Component {
             <div>
                 <Paper className="u-panel">
                     <div className="panel-head clearfix">
-                                    <Pagination className="pull-left" totPages={10} activeIndex={2}/>
-                                    <div className="pull-right">
-                                        <SearchIcon style={style.searchIcon}/>
-                                        <TextField inputStyle={{paddingLeft:'48px',verticalAlign:'middle'}}
-                                                   hintStyle={{paddingLeft:'48px'}}
-                                                   underlineStyle={{borderColor:'#cacaca'}}
-                                                   hintText="Filter"/>
-                                    </div>
+                        <Pagination className="pull-left" totPages={10} activeIndex={2}/>
+                        <div className="pull-right">
+                            <SearchIcon style={style.searchIcon}/>
+                            <TextField inputStyle={{paddingLeft:'48px',verticalAlign:'middle'}}
+                                       hintStyle={{paddingLeft:'48px'}}
+                                       underlineStyle={{borderColor:'#cacaca'}}
+                                       hintText="Filter"/>
                         </div>
+                    </div>
                     <Table style={{marginBottom:'20px'}}>
                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                             <TableRow>
                                 <TableHeaderColumn style={style.id}>ID</TableHeaderColumn>
-                                <TableHeaderColumn colSpan="2">Title</TableHeaderColumn>
-                                <TableHeaderColumn>Difficulty</TableHeaderColumn>
-                                <TableHeaderColumn>Ratio(AC/Submit)</TableHeaderColumn>
-                                <TableHeaderColumn>Updated Date</TableHeaderColumn>
+                                <TableHeaderColumn>Title</TableHeaderColumn>
+                                <TableHeaderColumn style={style.difficulty}>Difficulty</TableHeaderColumn>
+                                <TableHeaderColumn style={style.ratio}>Ratio(AC/Submit)</TableHeaderColumn>
+                                <TableHeaderColumn style={style.date}>Updated Date</TableHeaderColumn>
                             </TableRow>
                         </TableHeader>
                         <TableBody displayRowCheckbox={false} showRowHover={true}>
                             {tableData.map((row, index)=> <TableRow key={row.problemId}>
                                     <TableRowColumn style={style.id}>{row.problemId}</TableRowColumn>
-                                    <TableRowColumn>{row.title}</TableRowColumn>
-                                    <TableRowColumn>
-                                        {row.tags.map((tag, index)=><span key={index} className="label">{tag}</span>)}
+                                    <TableRowColumn>{row.title}
+                                        <div className="pull-right">
+                                            {row.tags.map((tag, index)=><span key={index} className="label">{tag}</span>)}
+                                        </div>
                                     </TableRowColumn>
-                                    <TableRowColumn>{row.difficulty}</TableRowColumn>
-                                    <TableRowColumn>{this.getRatio(row.static.ac, row.static.submit)}</TableRowColumn>
-                                    <TableRowColumn>{row.date}</TableRowColumn>
+                                    <TableRowColumn style={style.difficulty}>{row.difficulty}</TableRowColumn>
+                                    <TableRowColumn
+                                        style={style.ratio}>{this.getRatio(row.static.ac, row.static.submit)}</TableRowColumn>
+                                    <TableRowColumn style={style.date}>{row.date}</TableRowColumn>
                                 </TableRow>
                             )}
                         </TableBody>

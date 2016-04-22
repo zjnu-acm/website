@@ -21,6 +21,7 @@ body {
   visibility: hidden;
 }
 
+
 .pull-left {
   float: left;
 }
@@ -113,15 +114,19 @@ table.text-center td, table.text-center th {
 
 
 .label{
-  font-size:0.8em;
+  font-size:12px;
   min-width:3rem;
-  padding: 6px;
+  padding: 4px;
   text-align:center;
   line-height:1.6em;
   color:#fff;
   background-color:#868e94;
   border-radius:2px;
   margin-right:8px;
+  &:last-child{
+    margin-right:0;
+  }
+
 }
 
 .label-success{

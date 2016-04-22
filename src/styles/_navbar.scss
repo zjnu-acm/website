@@ -5,44 +5,32 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  ////NavInfo
-  //.u-navinfo {
-  //  overflow:hidden;
-  //  transition:height .3s ease;
-  //  background-color: $primaryColor;
-  //  height: $navbar1Height;
-  //  color: #fff;
-  //  h1 {
-  //    font-size: 22px;
-  //    font-weight: normal;
-  //    line-height: $navbar1Height;
-  //    float: left;
-  //  }
-  //
-  //  ul.box-tools {
-  //    float: right;
-  //    height:100%;
-  //    list-style:none;
-  //    display:flex;
-  //    align-items:center;
-  //    & svg {
-  //      fill: #fff !important;
-  //    }
-  //  }
-  //}
-  //
-  //
-  ////NavMenu
-  //.u-navmenu > div {
-  // // background-color: #fff !important;
-  //}
-  //.u-navmenu button {
-  //  //background-color: #fff !important;
-  //  //color: #666 !important;
-  //}
+  //AppBar
+  .appbar {
+    overflow:hidden;
+    height:$navbar1Height;
+    transition:height .3s ease;
+    color: #fff;
+    .appbar-title {
+      float: left;
+      font-size: 22px;
+      font-weight: normal;
+      line-height: $navbar1Height;
+    }
+    ul.appbar-menu {
+      float: right;
+      height:100%;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      & svg {
+        fill: #fff !important;
+      }
+    }
+  }
 }
 
-.f-hide-nav .u-navinfo{
+.f-hide-appbar .appbar{
   height:0;
 }
 

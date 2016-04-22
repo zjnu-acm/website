@@ -10,11 +10,10 @@ import Paper from 'material-ui/Paper';
 
 import SignDialog from './dialogs/SignDialog';
 import NavMenu from 'navbar/NavMenu';
-import NavInfo from 'navbar/NavInfo';
+import AppBar from 'navbar/AppBar';
 
 import {initialize, openLoginDialog, switchTab} from '../actions';
 
-import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import {connect} from 'react-redux';
 
@@ -37,42 +36,22 @@ export default class Layout extends React.Component {
         currentTab: React.PropTypes.string.isRequired,
         switchTab: React.PropTypes.func.isRequired
     }
-    /*
-     <Paper rounded={false} zDepth={1} className="m-navbar">
-     <div className="u-navinfo">
-     <div className="container">
-     <h1>Zhejiang Normal University Online Judge</h1>
-     <NavInfo user={user} openLoginDialog={openLoginDialog}/>
-     </div>
-     </div>
-     </Paper>
-     */
+
     render() {
-        const style = {
-            navButton: {
-                color: '#fff'
-            }
-        }
-        console.log(style);
         const {currentTab, switchTab, user, openLoginDialog}=this.props;
         return (
             <MuiThemeProvider muiTheme={defaultTheme}>
                 <div>
-                    <div className="navbar">
-                        <AppBar title="Zhejiang Normal University Online Judge" className="navbar-title">
-                            <FlatButton label="Register" style={style.navButton}/>
-                            <FlatButton label="Login" style={style.navButton}/>
-                        </AppBar>
-                        <Paper>
-                            <MuiThemeProvider muiTheme={navTabTheme}>
-                                <NavMenu className='navbar-menu' currentTab={currentTab} switchTab={switchTab}/>
-                            </MuiThemeProvider>
-                        </Paper>
-                    </div>
+                    <Paper rounded={false} className="navbar">
+                        <AppBar user={user} openLoginDialog={openLoginDialog}/>
+                        <MuiThemeProvider muiTheme={navTabTheme}>
+                            <NavMenu className='navbar-menu' currentTab={currentTab} switchTab={switchTab}/>
+                        </MuiThemeProvider>
+                    </Paper>
+                    
                     <div className="container content">
                         {this.props.children}
                     </div>
-
                     <Paper rounded={false} className="footer">
                     <span>Powered by ZJNU ACM Team ©2010-2015. Code licensed under the Apache License, Version 2.0. Design and Code by: <a
                         className="unstyle" href="#">Kevin Tan</a> | <a className="unstyle" href="#">Zhan HuangBin.</a></span>
