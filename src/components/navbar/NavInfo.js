@@ -13,9 +13,11 @@ import Search from './Search';
 import Notifications from './Notifications';
 import UserAvatar from './UserAvatar';
 
+import {autoHideNavBar} from '../../utils';
+
 export default class NavInfo extends React.Component {
     componentDidMount = ()=> {
-        window.autoHideNavBar();
+        autoHideNavBar();
     };
     static propTypes={
         openLoginDialog:React.PropTypes.func.isRequired,
@@ -44,7 +46,7 @@ export default class NavInfo extends React.Component {
                 </li>
 
                 <li style={{display:!user.logged?'block':'none'}}>
-                    <IconButton className="item" onTouchTap={openLoginDialog}><PersonIcon/></IconButton>
+                    <IconButton onTouchTap={openLoginDialog}><PersonIcon/></IconButton>
                 </li>
             </ul>
         )

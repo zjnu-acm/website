@@ -4,6 +4,7 @@
 import * as types from '../constants/ActionTypes';
 import fetch from 'isomorphic-fetch';
 import cookie from 'js-cookie';
+import {getQueryString} from '../utils';
 export function openLoginDialog(error = '') {
     return {
         type: types.OPEN_LOGIN_DIALOG,
@@ -20,7 +21,7 @@ export function closeLoginDialog() {
 export function userLogin(username, password) {
     //do something to verify user identity
     return (dispatch, getState) => {
-        fetch('/account/login?' + window.getQueryString({username, password}))
+        fetch('/account/login?' + getQueryString({username, password}))
             .then(response => response.json())
             .then(function (user) {
                 const state = getState();

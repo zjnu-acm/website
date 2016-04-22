@@ -28,7 +28,6 @@ export default class extends React.Component {
     };
 
     handleUserMenuClose = ()=> {
-        console.log(this.state);
         this.setState({
             userMenuOpen: false
         })

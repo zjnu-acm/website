@@ -46,7 +46,7 @@ module.exports = {
             path.resolve('./src/components/')
         ],
         alias:{
-            actions:path.resolve('./src/actions/')
+            Actions:path.resolve('./src/actions/')
         }
     },
     plugins: [

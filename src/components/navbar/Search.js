@@ -10,8 +10,8 @@ import SearchIcon from 'material-ui/svg-icons/action/search';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 
 
-export default class extends React.Component{
-    state={
+export default class extends React.Component {
+    state = {
         searchOpen: false
     }
     handleSearchClick = ()=> {
@@ -26,14 +26,14 @@ export default class extends React.Component{
             searchOpen: false
         })
     };
-    render(){
+
+    render() {
         return (
-            <div>
-                <div>
+            <div className="search-group">
+                <div className="search-toggle">
                     <IconButton onTouchTap={this.handleSearchClick}><SearchIcon /></IconButton>
                 </div>
-                <div style={{display:this.state.searchOpen?'inline-block':'none'}}>
-                    <div className="item">
+                <div clasName="search-body" style={{display:this.state.searchOpen?'inline-block':'none'}}>
                         <TextField
                             ref="input"
                             inputStyle={{color:"#fff",paddingRight:'48px'}}
@@ -42,8 +42,7 @@ export default class extends React.Component{
                             underlineFocusStyle={{borderColor:'#fff'}}
                             hintText="Enter Problem Id..."
                         />
-                    </div>
-                    <div className="item">
+                    <div className="search-clear">
                         <IconButton
                             onTouchTap={this.handleSearchClose}
                             style={{marginLeft:'-48px'}}

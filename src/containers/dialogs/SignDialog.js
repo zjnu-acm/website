@@ -5,7 +5,7 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import {closeLoginDialog, userLogin} from 'actions';
+import {closeLoginDialog, userLogin} from 'Actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 

@@ -6,10 +6,8 @@ import {Provider} from 'react-redux';
 import cofigureStore from './store/configureStore';
 const store = cofigureStore();
 
-import global from './global';
 import injectTabEventPlugin from 'react-tap-event-plugin';
 require('./styles/index.scss');
-global();
 injectTabEventPlugin();
 
 render(

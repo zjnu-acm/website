@@ -14,7 +14,7 @@ export default class extends React.Component {
         return (
             <Tabs value={currentTab} onChange={switchTab}
                   tabItemContainerStyle={{height:'48px'}}
-                  className="container u-navmenu">
+                  className="container">
                 <Tab value='home' label="Home"></Tab>
                 <Tab value='problems' label="ProblemList"></Tab>
                 <Tab value='status' label="Status"></Tab>

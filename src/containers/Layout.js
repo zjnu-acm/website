@@ -12,17 +12,17 @@ import SignDialog from './dialogs/SignDialog';
 import NavMenu from 'navbar/NavMenu';
 import NavInfo from 'navbar/NavInfo';
 
-import {initialize,openLoginDialog, switchTab} from '../actions';
+import {initialize, openLoginDialog, switchTab} from '../actions';
 
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
 import {connect} from 'react-redux';
+
 
 import {bindActionCreators} from 'redux';
 
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
-const lightMuiTheme = getMuiTheme(lightBaseTheme);
+import defaultTheme, {navTabTheme} from '../theme/defaultTheme';
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Layout extends React.Component {
@@ -30,28 +30,45 @@ export default class Layout extends React.Component {
         props.initialize();
         super(props);
     }
+
     static propTypes = {
         user: React.PropTypes.object.isRequired,
         openLoginDialog: React.PropTypes.func.isRequired,
         currentTab: React.PropTypes.string.isRequired,
         switchTab: React.PropTypes.func.isRequired
     }
-
+    /*
+     <Paper rounded={false} zDepth={1} className="m-navbar">
+     <div className="u-navinfo">
+     <div className="container">
+     <h1>Zhejiang Normal University Online Judge</h1>
+     <NavInfo user={user} openLoginDialog={openLoginDialog}/>
+     </div>
+     </div>
+     </Paper>
+     */
     render() {
+        const style = {
+            navButton: {
+                color: '#fff'
+            }
+        }
+        console.log(style);
         const {currentTab, switchTab, user, openLoginDialog}=this.props;
         return (
-            <MuiThemeProvider muiTheme={lightMuiTheme}>
+            <MuiThemeProvider muiTheme={defaultTheme}>
                 <div>
-                    <Paper rounded={false} zDepth={1} className="m-navbar">
-                        <div className="u-navinfo">
-                            <div className="container">
-                                <h1>Zhejiang Normal University Online Judge</h1>
-                                <NavInfo user={user} openLoginDialog={openLoginDialog} />
-                            </div>
-                        </div>
-                        <NavMenu currentTab={currentTab} switchTab={switchTab}/>
-                    </Paper>
-
+                    <div className="navbar">
+                        <AppBar title="Zhejiang Normal University Online Judge" className="navbar-title">
+                            <FlatButton label="Register" style={style.navButton}/>
+                            <FlatButton label="Login" style={style.navButton}/>
+                        </AppBar>
+                        <Paper>
+                            <MuiThemeProvider muiTheme={navTabTheme}>
+                                <NavMenu className='navbar-menu' currentTab={currentTab} switchTab={switchTab}/>
+                            </MuiThemeProvider>
+                        </Paper>
+                    </div>
                     <div className="container content">
                         {this.props.children}
                     </div>

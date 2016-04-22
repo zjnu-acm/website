@@ -71,7 +71,7 @@ body {
 
 .content {
   min-height: 100%;
-  padding-top: $navbar1Height + 48px + 60px;
+  padding-top: $navbar1Height + 48px + 20px;
   padding-bottom: 30px;
   position: relative;
 }
@@ -133,5 +133,13 @@ a{
   color:#428bca;
   &:hover{
     text-decoration:underline;
+  }
+}
+
+.search-group{
+  position:relative;
+  .search-toggle,.search-clear,.search-clear,.search-body{
+    display:inline-block;
+    vertical-align:middle;
   }
 }
