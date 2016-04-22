@@ -34,7 +34,7 @@ export function getQueryString(query) {
             .replace(/%20/g, "+");
 }
 
-const prefix = 'api/';
+const prefix = '/api';
 export function request(req) {
     if (req.url[req.url.length - 1] === '/') {
         req.url = req.url.substr(0, req.url.length - 1);
@@ -48,7 +48,8 @@ export function request(req) {
         method: 'GET',
         headers: myHeaders,
         //mode: 'cors',
-        cache: 'default'
+        cache: 'default',
+        credentials:'include'//带上http cookie
     }, req);
     return fetch(url, myInit).then(response=> {
         if (!response.ok)logger({
