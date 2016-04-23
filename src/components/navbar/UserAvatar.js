@@ -17,6 +17,7 @@ export default class extends React.Component {
         userMenuOpen: false
     }
     static propTypes = {
+        userLogout: React.PropTypes.func.isRequired,
         user: React.PropTypes.object.isRequired
     }
 
@@ -27,12 +28,20 @@ export default class extends React.Component {
         })
     };
 
-    handleUserMenuClose = ()=> {
+    CloseMenu = ()=> {
         this.setState({
             userMenuOpen: false
         })
     };
-    handleLogout = ()=> {
+    handleItemTouchTap = (event, menuItem, index)=> {
+        const value = menuItem.props.value;
+        this.CloseMenu();
+        switch (value) {
+            case 'exit':
+                //logout!
+                this.props.userLogout();
+                break;
+        }
 
     };
 
@@ -76,14 +85,13 @@ export default class extends React.Component {
                     anchorEl={this.state.anchorEl}
                     anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
                     targetOrigin={{horizontal: 'middle', vertical: 'top'}}
-                    onRequestClose={this.handleUserMenuClose}
+                    onRequestClose={this.CloseMenu}
                 >
-                    <Menu>
-                        <MenuItem primaryText="Profile" leftIcon={<WorkIcon/>}/>
-                        <MenuItem primaryText="Exit" leftIcon={<ExitToAppIcon /> }
-                                  onTouchTap={this.handleUserMenuClose}/>
-                    </Menu>
 
+                    <Menu onItemTouchTap={this.handleItemTouchTap}>
+                        <MenuItem value='profile' primaryText="Profile" leftIcon={<WorkIcon/>}/>
+                        <MenuItem value='exit' primaryText="Exit" leftIcon={<ExitToAppIcon />}/>
+                    </Menu>
                 </Popover>
             </div>
         )

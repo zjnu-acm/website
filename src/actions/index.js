@@ -18,41 +18,46 @@ export function closeLoginDialog() {
     }
 }
 
-export function userLogin(username, password) {
+export function userLogout(){
+    return(dispatch)=>{
+        request({
+            url:'account/logout',
+            method:'PUT'
+        }).then(function(){
+            dispatch({type:types.USER_LOGGED_OUT});
+        }).catch(function(err){
+            logger('action/index',err);
+            dispatch({type:types.USER_LOGGED_OUT});
+        })
+    }
+}
+
+export function userLogin(userId, password,remember) {
     //do something to verify user identity
     return (dispatch, getState) => {
         request({
             url: 'account/login/',
-            query: {username, password}
+            query: {userId, password,remember}
         }).then(function (user) {
-            const state = getState();
-            if ('errorCode' in user) {
-                dispatch({type: types.USER_LOGIN_FAILED})
-                if (state.loginDialog.open) {
-                    //显示错误信息
-                    dispatch({
-                        type: types.OPEN_LOGIN_DIALOG,
-                        error: user.message
-                    });
-                }
-            } else {
-                //加入cookie
-                cookie.set('token', user.token);
-                cookie.set('user', {
-                    nickname: user.nickname,
-                    avatarUrl: user.avatarUrl,
-                    userId: user.userId
-                });
+            dispatch({
+                type: types.USER_LOGGED_IN,
+                nickname: user.nickname,
+                avatarUrl: user.avatarUrl,
+                userId: user.userId
+            });
+            //如果登陆面板打开,将他关闭
+            if (getState().loginDialog.open) {
+                dispatch({type: types.CLOSE_LOGIN_DIALOG});
+            }
+        }).catch(function(res){
+            logger('actions/index',res);
+            dispatch({type: types.USER_LOGIN_FAILED})
+            if (getState().loginDialog.open) {
+                //显示错误信息
                 dispatch({
-                    type: types.USER_LOGGED_IN,
-                    nickname: user.nickname,
-                    avatarUrl: user.avatarUrl,
-                    userId: user.userId
+                    type: types.OPEN_LOGIN_DIALOG,
+                    error: res.message||res
                 });
-                //如果登陆面板打开,将他关闭
-                if (state.loginDialog.open) {
-                    dispatch({type: types.CLOSE_LOGIN_DIALOG});
-                }
             }
         });
     }
@@ -64,12 +69,18 @@ export function initialize() {
     if (typeof user === 'undefined') {
         return {type: types.USER_LOGIN_FAILED}
     }
-    user = JSON.parse(user);
-    return {
-        type: types.USER_LOGGED_IN,
-        avatarUrl: user.avatarUrl,
-        nickname: user.nickname,
-        userId: user.userId
+    try {
+        user = JSON.parse(user);
+        return {
+            type: types.USER_LOGGED_IN,
+            avatarUrl: user.avatarUrl,
+            nickname: user.nickname,
+            userId: user.userId
+        }
+    }catch(e){
+        logger('action/index:initialize','cookies.user is not validated.');
+        cookie.remove('user');
+        return {type: types.USER_LOGIN_FAILED}
     }
 }
 

@@ -49,17 +49,15 @@ export function request(req) {
         headers: myHeaders,
         //mode: 'cors',
         cache: 'default',
-        credentials:'include'//带上http cookie
+        credentials: 'include'//带上http cookie
     }, req);
     return fetch(url, myInit).then(response=> {
-        if (!response.ok)logger({
-            file: 'utils',
-            line: '48',
-            type: 'warn'
-        }, 'fetch failed,status:', response.status, response.statusText);
-        return response.json();
+        return response.json().then(json => {
+            return response.ok ? json : Promise.reject(json);
+        });
     });
 }
+
 
 /**
  * Simple is object check.
@@ -67,8 +65,9 @@ export function request(req) {
  * @returns {boolean}
  */
 export function isObject(item) {
-    return (item && typeof item === 'object' && !Array.isArray(item) && item !== null);
+    return (!!item && typeof item === 'object' && !Array.isArray(item) && item !== null);
 }
+
 
 /**
  * Deep merge two objects.

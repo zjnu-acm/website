@@ -21,6 +21,7 @@ export default function user(state = {logged: false, nickname: '', avatarUrl: ''
                 avatarUrl: action.avatarUrl,
                 userId: action.userId
             });
+        case types.USER_LOGGED_OUT:
         case types.USER_LOGIN_FAILED://just reset
             return Object.assign({}, state, {
                 logged: false,

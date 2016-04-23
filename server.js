@@ -23,7 +23,7 @@ if(compile){
     });
 }else{
     //start webpack dev server
-    webpackConfig.entry.app.unshift('webpack-hot-middleware/client');
+    webpackConfig.entry.app.unshift('webpack-hot-middleware/client?reload=true');
     webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
     const compiler = webpack(webpackConfig);
 
