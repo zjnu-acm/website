@@ -42,7 +42,6 @@ export default class extends React.Component {
                 this.props.userLogout();
                 break;
         }
-
     };
 
     render() {

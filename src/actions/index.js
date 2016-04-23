@@ -5,39 +5,43 @@ import * as types from '../constants/ActionTypes';
 import cookie from 'js-cookie';
 import {request} from '../utils';
 
-export function openLoginDialog(error = '') {
+
+export function openDialog(name, error = '') {
     return {
-        type: types.OPEN_LOGIN_DIALOG,
-        error: error
+        type: types.OPEN_DIALOG,
+        name,
+        error
     }
 }
 
-export function closeLoginDialog() {
+export function closeDialog(name) {
     return {
-        type: types.CLOSE_LOGIN_DIALOG
+        type: types.CLOSE_DIALOG,
+        name
     }
 }
 
-export function userLogout(){
-    return(dispatch)=>{
+
+export function userLogout() {
+    return (dispatch)=> {
         request({
-            url:'account/logout',
-            method:'PUT'
-        }).then(function(){
-            dispatch({type:types.USER_LOGGED_OUT});
-        }).catch(function(err){
-            logger('action/index',err);
-            dispatch({type:types.USER_LOGGED_OUT});
+            url: 'account/logout',
+            method: 'PUT'
+        }).then(function () {
+            dispatch({type: types.USER_LOGGED_OUT});
+        }).catch(function (err) {
+            logger('action/index', err);
+            dispatch({type: types.USER_LOGGED_OUT});
         })
     }
 }
 
-export function userLogin(userId, password,remember) {
+export function userLogin(userId, password, remember) {
     //do something to verify user identity
     return (dispatch, getState) => {
         request({
             url: 'account/login/',
-            query: {userId, password,remember}
+            query: {userId, password, remember}
         }).then(function (user) {
             dispatch({
                 type: types.USER_LOGGED_IN,
@@ -46,18 +50,15 @@ export function userLogin(userId, password,remember) {
                 userId: user.userId
             });
             //如果登陆面板打开,将他关闭
-            if (getState().loginDialog.open) {
-                dispatch({type: types.CLOSE_LOGIN_DIALOG});
+            if (getState().dialogs.login.open) {
+                dispatch(closeDialog('login'));
             }
-        }).catch(function(res){
-            logger('actions/index',res);
+        }).catch(function (res) {
+            logger('actions/index', res);
             dispatch({type: types.USER_LOGIN_FAILED})
-            if (getState().loginDialog.open) {
+            if (getState().dialogs.login.open) {
                 //显示错误信息
-                dispatch({
-                    type: types.OPEN_LOGIN_DIALOG,
-                    error: res.message||res
-                });
+                dispatch(openDialog('login', res.message || res));
             }
         });
     }
@@ -77,8 +78,8 @@ export function initialize() {
             nickname: user.nickname,
             userId: user.userId
         }
-    }catch(e){
-        logger('action/index:initialize','cookies.user is not validated.');
+    } catch (e) {
+        logger('action/index:initialize', 'cookies.user is not validated.');
         cookie.remove('user');
         return {type: types.USER_LOGIN_FAILED}
     }

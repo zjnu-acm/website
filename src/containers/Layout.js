@@ -3,6 +3,7 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 
 import SignDialog from './dialogs/SignDialog';
+import RegisterDialog from './dialogs/RegisterDialog';
 import NavMenu from 'navbar/NavMenu';
 import AppBar from 'navbar/AppBar';
 
@@ -44,6 +45,7 @@ export default class Layout extends React.Component {
                     
                     {/* float */}
                     <SignDialog />
+                    <RegisterDialog />
                 </div>
             </MuiThemeProvider>
         )

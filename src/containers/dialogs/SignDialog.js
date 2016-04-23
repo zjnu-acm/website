@@ -6,7 +6,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
-import {closeLoginDialog, userLogin} from '../../actions';
+import {closeDialog, userLogin} from '../../actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -14,11 +14,10 @@ import {bindActionCreators} from 'redux';
 export default class extends React.Component {
     static propTypes = {
         loginDialog: React.PropTypes.object.isRequired,
-        closeLoginDialog: React.PropTypes.func.isRequired,
+        closeDialog: React.PropTypes.func.isRequired,
         userLogin: React.PropTypes.func.isRequired
     }
     onSubmit = ()=> {
-        console.log(this.refs.remember);
         this.props.userLogin(this.refs.username.getValue(), this.refs.password.getValue(), this.refs.remember.state.switched);
 
     }
@@ -30,12 +29,12 @@ export default class extends React.Component {
 
 
     render() {
-        const {closeLoginDialog, loginDialog, ...others} = this.props;
+        const {closeDialog, loginDialog, ...others} = this.props;
         const actions = [
             <FlatButton
                 label="Cancel"
                 secondary={true}
-                onTouchTap={closeLoginDialog}
+                onTouchTap={closeDialog}
             />,
             <FlatButton
                 label="Submit"
@@ -85,13 +84,13 @@ export default class extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        loginDialog: state.loginDialog
+        loginDialog: state.dialogs.login
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        closeLoginDialog,
+        closeDialog:closeDialog.bind(this,'login'),
         userLogin
     }, dispatch);
 }
