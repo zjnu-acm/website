@@ -5,13 +5,11 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 import {closeDialog} from '../../actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class extends React.Component {
@@ -20,16 +18,18 @@ export default class extends React.Component {
         closeDialog: React.PropTypes.func.isRequired
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {value: 1};
-    }
-
     onSubmit = ()=> {
         //this.props.userLogin(this.refs.username.getValue(), this.refs.password.getValue());
     }
-    handleChange = (event, index, value) => this.setState({value});
-
+    showFileUploadDialog = ()=>{
+        const input = this.refs.upload.getDOMNode();
+        //create dom event
+        const event = new MouseEvent('click', {
+            'view': window,
+            'bubbles': true,
+            'cancelable': true
+        });
+    }
     render() {
         const {closeDialog, registerDialog, ...others} = this.props;
         const actions = [
@@ -44,9 +44,16 @@ export default class extends React.Component {
                 onTouchTap={this.onSubmit}
             />,
         ];
-        const style={
-            column:{width:'50%',padding:'0 20px'}
+        const style = {
+            column: {width: '50%', padding: '0 20px'},
+            button: {
+            },
+            fileInput:{
+                display:'block',
+                opacity:'0.5'
+            }
         }
+
         const Hint = registerDialog.error.length > 0 ? <div className="text-danger">{registerDialog.error}</div> : '';
         return (
             <Dialog
@@ -58,6 +65,8 @@ export default class extends React.Component {
                 {Hint}
                 <div className="row">
                     <div className="pull-left" style={style.column}>
+                        <RaisedButton onTouchTap ={this.showFileUploadDialog} label="Upload Avatar" primary={true} style={style.button}/>
+                        <input type="file" style={style.fileInput} ref="upload"/>
                         <TextField
                             fullWidth={true}
                             hintText="Your Student ID"
@@ -86,7 +95,13 @@ export default class extends React.Component {
                             ref="classname"
                             floatingLabelText="Major&Class"
                         />
+                        <TextField
+                            fullWidth={true}
+                            hintText="Your Email"
+                            ref="email"
+                            floatingLabelText="Email"/>
                     </div>
+
                 </div>
             </Dialog>
         )
