@@ -54,8 +54,9 @@ export default class extends React.Component {
                 {...others}
                 title="Login"
                 actions={actions}
-                modal={true}
-                open={loginDialog.open}>
+                open={loginDialog.open}
+                onRequestClose={closeDialog}>
+
                 {Hint}
                 <TextField
                     fullWidth={true}

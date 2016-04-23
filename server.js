@@ -43,6 +43,9 @@ if(compile){
         next();
     });
     app.use('/api',router);
+    app.get('/favicon.ico',(req,res)=>{
+        res.sendFile(__dirname+'/dist/favicon.ico');
+    })
     app.get('*',(req,res)=>{
         res.sendFile(__dirname + '/dist/index.html');
     })

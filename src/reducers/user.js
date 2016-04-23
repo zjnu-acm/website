@@ -3,6 +3,7 @@
  */
 
 import * as types from '../constants/ActionTypes';
+import cookie from 'js-cookie';
 /*
  user:{
  logged:false,
@@ -11,8 +12,25 @@ import * as types from '../constants/ActionTypes';
  id:''
  }
  */
+function getInitialUser() {
+    let user = cookie.get('user');
+    try {
+        if (typeof user === 'undefined') {
+            throw Error('user is undefined');
+        }
+        user = JSON.parse(user);
+        return {
+            logged: true,
+            avatarUrl: user.avatarUrl,
+            nickname: user.nickname,
+            userId: user.userId
+        }
+    } catch (e) {
+        return {logged: false, nickname: '', avatarUrl: '', userId: ''}
+    }
+}
 
-export default function user(state = {logged: false, nickname: '', avatarUrl: '', userId: ''}, action) {
+export default function user(state = getInitialUser(), action) {
     switch (action.type) {
         case types.USER_LOGGED_IN:
             return Object.assign({}, state, {

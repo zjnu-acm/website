@@ -39,12 +39,12 @@ export default class extends React.Component {
             background: colors.deepOrange500,
             color: '#fff',
             top: '0px',
-            right: '0',
+            right: '0px',
             textAlign: 'center'
         }
         return (
             <Badge badgeContent={5}
-                   style={{padding:'0'}}
+                   style={{padding:'0px'}}
                    badgeStyle={badgeStyle}>
                 <IconButton onTouchTap={this.handleTouchTap}>
                     <NotificationsIcon />

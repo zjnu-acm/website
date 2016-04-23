@@ -11,6 +11,14 @@ const initialState = {
     register: {
         open: false,
         error: ''
+    },
+    hint: {
+        open: false,
+        error: ''
+    },
+    process:{
+        open:false,
+        erro:''
     }
     //...
 }

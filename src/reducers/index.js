@@ -25,6 +25,10 @@ const initialState = {
         register:{
             open:false,
             error:''
+        },
+        hint: {
+            open: false,
+            text: ''
         }
     },
     user: {

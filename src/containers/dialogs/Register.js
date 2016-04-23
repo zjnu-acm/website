@@ -6,7 +6,8 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {closeDialog} from '../../actions';
+import Dropzone from 'react-dropzone';
+import {userRegister, closeDialog} from '../../actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -15,21 +16,37 @@ import {bindActionCreators} from 'redux';
 export default class extends React.Component {
     static propTypes = {
         registerDialog: React.PropTypes.object.isRequired,
-        closeDialog: React.PropTypes.func.isRequired
+        closeDialog: React.PropTypes.func.isRequired,
+        userRegister: React.PropTypes.func.isRequired
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            files: []
+        }
     }
 
     onSubmit = ()=> {
-        //this.props.userLogin(this.refs.username.getValue(), this.refs.password.getValue());
-    }
-    showFileUploadDialog = ()=>{
-        const input = this.refs.upload.getDOMNode();
-        //create dom event
-        const event = new MouseEvent('click', {
-            'view': window,
-            'bubbles': true,
-            'cancelable': true
+        this.props.userRegister({
+            userId: this.refs.username.getValue(),
+            password: this.refs.password.getValue(),
+            email: this.refs.email.getValue(),
+            nickname: this.refs.nickname.getValue(),
+            classname: this.refs.classname.getValue(),
+            avatar: this.state.files.length ? this.state.files[0] : undefined
         });
     }
+    onDrop = (files)=> {
+        this.setState({
+            files: files
+        });
+    }
+    onOpenClick = ()=> {
+        console.log(this.refs);
+        this.refs.dropzone.open();
+    }
+
     render() {
         const {closeDialog, registerDialog, ...others} = this.props;
         const actions = [
@@ -47,26 +64,34 @@ export default class extends React.Component {
         const style = {
             column: {width: '50%', padding: '0 20px'},
             button: {
+                marginTop: '27px',
+                marginBottom: '37px'
             },
-            fileInput:{
-                display:'block',
-                opacity:'0.5'
+            dropzone: {
+                display: 'none'
             }
         }
 
         const Hint = registerDialog.error.length > 0 ? <div className="text-danger">{registerDialog.error}</div> : '';
+
+        const preview = this.state.files.map((file, index) =>
+            <div key={index} className="img" style={{backgroundImage:`url(${file.preview})`}}/>);
         return (
             <Dialog
                 {...others}
                 title="Register"
                 actions={actions}
-                modal={true}
+                onRequestClose={closeDialog}
                 open={registerDialog.open}>
                 {Hint}
                 <div className="row">
                     <div className="pull-left" style={style.column}>
-                        <RaisedButton onTouchTap ={this.showFileUploadDialog} label="Upload Avatar" primary={true} style={style.button}/>
-                        <input type="file" style={style.fileInput} ref="upload"/>
+                        <RaisedButton onTouchTap={this.onOpenClick} label="Upload Your Avatar" primary={true}
+                                      style={style.button}/>
+                        <Dropzone style={style.dropzone} ref="dropzone" multiple={false} onDrop={this.onDrop}/>
+                        <div className="preview">{preview} </div>
+                    </div>
+                    <div className="pull-right" style={style.column}>
                         <TextField
                             fullWidth={true}
                             hintText="Your Student ID"
@@ -81,8 +106,14 @@ export default class extends React.Component {
                             floatingLabelText="Password"
                             type="password"
                         />
-                    </div>
-                    <div className="pull-right" style={style.column}>
+                        <TextField
+                            fullWidth={true}
+                            onKeyDown={this.onKeyDown}
+                            hintText="Repeat Password"
+                            ref="repeatPassword"
+                            floatingLabelText="Repeat Password"
+                            type="password"
+                        />
                         <TextField
                             fullWidth={true}
                             hintText="Your nickname"
@@ -99,7 +130,8 @@ export default class extends React.Component {
                             fullWidth={true}
                             hintText="Your Email"
                             ref="email"
-                            floatingLabelText="Email"/>
+                            floatingLabelText="Email"
+                        />
                     </div>
 
                 </div>
@@ -116,38 +148,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         closeDialog: closeDialog.bind(this, 'register'),
+        userRegister
     }, dispatch);
 }
-/*
- <Menu desktop={true} width={320}>
- <MenuItem primaryText="Single" insetChildren={true} />
- <MenuItem primaryText="1.15" insetChildren={true} />
- <MenuItem primaryText="Double" insetChildren={true} />
- <MenuItem
- primaryText="Custom: 1.2"
- checked={true}
- rightIcon={<ArrowDropRight />}
- menuItems={[
- <MenuItem
- primaryText="Show"
- rightIcon={<ArrowDropRight />}
- menuItems={[
- <MenuItem primaryText="Show Level 2" />,
- <MenuItem primaryText="Grid lines" checked={true} />,
- <MenuItem primaryText="Page breaks" insetChildren={true} />,
- <MenuItem primaryText="Rules" checked={true} />,
- ]}
- />,
- <MenuItem primaryText="Grid lines" checked={true} />,
- <MenuItem primaryText="Page breaks" insetChildren={true} />,
- <MenuItem primaryText="Rules" checked={true} />,
- ]}
- />
- <Divider />
- <MenuItem primaryText="Add space before paragraph" />
- <MenuItem primaryText="Add space after paragraph" />
- <Divider />
- <MenuItem primaryText="Custom spacing..." />
- </Menu>
-
- */

@@ -16,13 +16,16 @@ import MenuItem from 'material-ui/MenuItem';
 import Search from './Search';
 import Notifications from './Notifications';
 import UserAvatar from './UserAvatar';
-
+import PersonAddIcon from 'material-ui/svg-icons/social/person-add';
+import NearMeIcon from 'material-ui/svg-icons/maps/near-me';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {openDialog,userLogout} from '../../actions';
 import {autoHideNavBar} from '../../utils';
+
+
 
 @muiThemeable()
 @connect(mapStateToProps,mapDispatchToProps)
@@ -55,7 +58,7 @@ export default class extends React.Component {
             open: false,
         });
     };
-    handleItemTouchTap = (event, menuItem, index)=> {
+    handleItemTouchTap = (event, menuItem)=> {
         const value = menuItem.props.value;
         this.handleRequestClose();
         switch (value) {
@@ -95,8 +98,9 @@ export default class extends React.Component {
                     onRequestClose={this.handleRequestClose}
                 >
                     <Menu onItemTouchTap={this.handleItemTouchTap}>
-                        <MenuItem value='login' primaryText="Login" />
-                        <MenuItem value='register' primaryText="Register" />
+                        <MenuItem value='register' primaryText="Register" leftIcon={<PersonAddIcon />} />
+                        <MenuItem value='login' primaryText="Login" leftIcon={<NearMeIcon />}/>
+                        
                     </Menu>
                 </Popover>
             </li>

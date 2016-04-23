@@ -5,18 +5,17 @@ import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {switchTab} from '../../actions';
+import {tabSwitch} from '../../actions';
 @connect(mapStateToProps, mapDispatchToProps)
 export default class extends React.Component {
     static propTypes = {
         currentTab: React.PropTypes.string.isRequired,
-        switchTab: React.PropTypes.func.isRequired
+        tabSwitch: React.PropTypes.func.isRequired
     }
-
     render() {
-        const {switchTab, currentTab}=this.props;
+        const {tabSwitch, currentTab}=this.props;
         return (
-            <Tabs value={currentTab} onChange={switchTab}
+            <Tabs value={currentTab} onChange={tabSwitch}
                   tabItemContainerStyle={{height:'48px'}}
                   className="container">
                 <Tab value='home' label="Home"></Tab>
@@ -38,6 +37,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        switchTab
+        tabSwitch
     }, dispatch)
 }

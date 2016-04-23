@@ -36,14 +36,19 @@ export function getQueryString(query) {
 
 const prefix = '/api';
 export function request(req) {
-    if (req.url[req.url.length - 1] === '/') {
-        req.url = req.url.substr(0, req.url.length - 1);
-    }
-    const url = path.join(prefix, req.url + getQueryString(req.query));
-    const token = cookie.get('token');
+    console.log(req.url);
+    const url = path.join(prefix, req.url.match(/\S*[^\/]/) + getQueryString(req.query));
     var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'text/json');
+    //myHeaders.append('Content-Type', 'text/json');
     myHeaders.append('Accept-Language', 'zh-cn,zh');
+    if (typeof req.body === 'object') {
+        const form = new FormData();
+        for (let key in req.body) {
+            console.log(key,req.body[key]);
+            form.append(key, req.body[key]);
+        }
+        req.body = form;
+    }
     var myInit = Object.assign({
         method: 'GET',
         headers: myHeaders,

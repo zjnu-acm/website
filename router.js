@@ -3,8 +3,14 @@
  */
 'use strict'
 const router = require('express').Router();
-
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 //account
+router.post('/account/register',upload.single('avatar'),(req,res)=>{
+    console.log('files',req.file);
+    console.log('body',req.body);
+    res.send({userId:req.body.userId});
+})
 router.get('/account/login', (req, res, next)=> {
     if (req.query.userId == '11550223' && req.query.password == '11550223') {
         const maxAge = req.query.remember==='true' ? {maxAge: 30* 24 * 60 * 60} :{};

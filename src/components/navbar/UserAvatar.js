@@ -6,7 +6,7 @@ import Popover from 'material-ui/Popover';
 
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-
+import {ListItem} from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
 
 import WorkIcon from 'material-ui/svg-icons/action/work';
@@ -46,38 +46,28 @@ export default class extends React.Component {
 
     render() {
         const {user} = this.props;
-        const bgcolors = {
-            //normal: 'rgba(0, 0, 0, 0.09)',
-            hover: 'rgba(0, 0, 0, 0.2)',
-            ripple: 'rgba(0,0,0,0.3)'
+        const style ={
+            listItem:{
+                color:'#fff'
+            },
+            avatar:{
+                backgroundColor:colors.blue500
+            }
         }
-        const Style = {
-            lineHeight: '48px',
-            color: '#fff',
-            paddingLeft: '12px',
-            paddingRight: '12px'
-        }
-        const AvatarStyle = {
-            display: 'inline-block',
-            verticalAlign: 'middle',
-            marginTop: '-4px',
-            marginRight: '16px'
-        }
+
 
         return (
             <div>
-                <FlatButton
+                <ListItem
                     onTouchTap={this.handleUserMenuOpen}
-                    //backgroundColor={colors.normal}
-                    //hoverColor={colors.normal}
-                    rippleColor={bgcolors.hover}
-                    style={Style}>
-                    <Avatar backgroundColor={colors.teal400}
-                            style={AvatarStyle}
-                            src={user.avatarUrl}
-                    />
-                    {user.nickname}
-                </FlatButton>
+                    primaryText= {user.nickname}
+                    style={style.listItem}
+                    leftAvatar={
+                    user.avatarUrl?<Avatar src={user.avatarUrl} />:
+                    <Avatar style={style.avatar}>{user.nickname[0]}</Avatar>
+                    }
+                />
+
                 <Popover
                     open={this.state.userMenuOpen}
                     animated={false}

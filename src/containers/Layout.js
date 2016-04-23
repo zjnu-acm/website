@@ -4,23 +4,16 @@ import Paper from 'material-ui/Paper';
 
 import LoginDialog from './dialogs/Login';
 import RegisterDialog from './dialogs/Register';
+import HintDialog from './dialogs/Hint';
+import ProcessDialog from './dialogs/Process';
+
 import NavMenu from 'navbar/NavMenu';
 import AppBar from 'navbar/AppBar';
-
-import {initialize} from '../actions';
-
-import {connect} from 'react-redux';
-
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import defaultTheme, {navTabTheme} from '../theme/defaultTheme';
 
-@connect()
 export default class Layout extends React.Component {
-    constructor(props) {
-        props.dispatch(initialize());//初始化
-        super(props);
-    }
     render() {
         return (
             <MuiThemeProvider muiTheme={defaultTheme}>
@@ -46,6 +39,8 @@ export default class Layout extends React.Component {
                     {/* float */}
                     <LoginDialog />
                     <RegisterDialog />
+                    <HintDialog />
+                    <ProcessDialog />
                 </div>
             </MuiThemeProvider>
         )
