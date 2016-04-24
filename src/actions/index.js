@@ -6,17 +6,22 @@ import * as user from './user';
 import * as dialog from './dialog';
 import {request} from '../utils';
 
+import {tabs} from '../constants';
+import {browserHistory} from 'react-router';
+
 export const {userLogout, userLogin, userRegister} = user;
 export const {openDialog, closeDialog} = dialog;
-
-
 export function tabSwitch(dest) {
+    const tab = tabs[dest];
+    if (typeof tab !== 'undefined') {
+        browserHistory.push('/' + tab)
+    }
     return {
-        type: types.TAB_SWITCH,
-        dest
+        type:types.TAB_SWITCH,
+        tab
     }
 }
-//problem
+//problems
 export function getProblemList(desc = {}) {
     return (dispatch, getState)=> {
         const info = getState().problems;
@@ -40,8 +45,35 @@ export function getProblemList(desc = {}) {
                 problems: Object.assign({}, desc, res)
             })
         }).catch(error=> {
+            dispatch(openDialog('hint', 'Something is wrong! you can Retry or Go Back'));
             logger('getProblemList', error);
         })
-
+    }
+}
+export function getProblemDetail(problemId = 0) {
+    return (dispatch, getState)=> {
+        const url = 'problems/' + problemId;
+        request({url}).then((res)=> {
+            dispatch({type:types.CHANGE_PROBLEM, problem:res});
+        }).catch(err=> {
+            logger('getProblemDetail', err);
+            dispatch(openDialog('hint','Something is wrong! you can Retry or Go Back'))
+        })
+    }
+}
+export function submitCode(problemId,language,code){
+    return (dispatch,getState)=>{
+        request({
+            url:'problems/'+problemId+'/submit',
+            body:{
+                language,
+                code
+            },
+            method:'POST'
+        }).then(res=>{
+            dispatch(tabSwitch('status'));
+        }).catch(err=>{
+            dispatch(openDialog('hint','something is wrong!'));
+        })
     }
 }

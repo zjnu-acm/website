@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server",
     "compile": "node server -c",
-    "test":"webpack --config test/webpack.config.test.js && xdg-open test/index.html"
+    "test": "webpack --config test/webpack.config.test.js && xdg-open test/index.html"
   },
   "author": "Kevin Tan",
   "license": "ISC",

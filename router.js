@@ -58,6 +58,41 @@ router.get('/problems', (req, res)=> {
         })
     }
     res.send(resBody);
+});
+
+router.get('/problems/:problemId', (req, res)=> {
+    console.log('problemId', req.params.problemId);
+    res.send({
+        title: '顺序对齐（Align）-中高级',
+        tags: ['DP'],
+        timelimit: {java: '2000MS', others: '1000MS'},
+        memorylimit: {java: '65536K', others: '65536K'},
+        description: `
+        <div class="ptx" lang="en-US"><p>考虑两个字符串右对齐的最佳解法。例如，有一个右对齐方案中字符串是AADDEFGGHC和ADCDEGH。</p>
+            <p>AAD_DEFGGHC</p>
+            <p> ADCDE__GH_</p>   
+            <p>每一个数值匹配的位置值2分，一段连续的空格值-1分。所以总分是匹配点的2倍减去连续空格的段数，在上述给定的例子中，6个位置（A，D，D，E，G，H）匹配，三段空格，所以得分2*6+(-1)*3=9，注意，我们并不处罚左边的不匹配位置。若匹配的位置是两个不同的字符，则既不得分也不失分。</p>
+            <p>请你写个程序找出最佳右对齐方案。</p>
+            </div>
+        `,
+        input: `输入文件包含两行，每行一个字符串，最长50个字符。字符全部是大字字母。`,
+        output: `一行，为最佳对齐的得分。`,
+        sampleInput: `AADDEFGGHC
+ADCDEGH
+        `,
+        sampleOutput: `9`,
+        hint: `LCS`,
+        source: 'ZJNU ACM TEAM',
+        static: {
+            ac: 29,
+            submit: 65
+        }
+    })
+});
+
+router.post('/problems/:problemId/submit', (req, res)=> {
+    console.log('submit', req.param.problemId);
+    res.send({submissionId: '11223'});
 })
 
 module.exports = router;

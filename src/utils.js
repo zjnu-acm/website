@@ -54,7 +54,9 @@ export function serialize(obj, prefix) {
 
 const prefix = '/api';
 export function request(req) {
-    const url = path.join(prefix, req.url.match(/\S*[^\/]/) + '?' + serialize(req.query));
+    const queryStr = serialize(req.query);
+    if (queryStr.length)req.url = req.url.match(/\S*[^\/]/) + '?' + queryStr;
+    const url = path.join(prefix, req.url);
     var myHeaders = new Headers();
     //myHeaders.append('Content-Type', 'text/json');
     myHeaders.append('Accept-Language', 'zh-cn,zh');

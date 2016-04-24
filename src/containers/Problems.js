@@ -23,7 +23,7 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
         const problems = props.problems;
-        if (Array.isArray(problems.title))problems.title = problems.title.join('');
+        if (Array.isArray(problems.filter.title))problems.filter.title = problems.filter.title.join('');
         this.state = {
             searchText: problems.filter ? problems.filter.title || '' : ''
         }

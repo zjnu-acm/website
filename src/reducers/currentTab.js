@@ -3,7 +3,6 @@
  */
 import {TAB_SWITCH} from '../constants/ActionTypes';
 import {tabs} from '../constants';
-import {browserHistory} from 'react-router';
 
 //get initial State from browser
 function getInitialTab() {
@@ -18,11 +17,7 @@ function getInitialTab() {
 export default function currentTab(state = getInitialTab(), action) {
     switch (action.type) {
         case TAB_SWITCH:
-            const tab = tabs[action.dest];
-            if (typeof tab !== 'undefined') {
-                browserHistory.push('/' + tab)
-                return tab
-            }
+            return action.tab||state
         default:
             return state
     }

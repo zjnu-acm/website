@@ -6,8 +6,8 @@ import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import Layout from './Layout'
 import Home from './Home';
 import Problems from './Problems';
-import Problem from './problem/Index';
-
+import Problem from './Problem';
+import Submit from './Submit';
 import Status from './Status';
 import Ranks from './Ranks';
 import Contests from './Contests';
@@ -27,6 +27,8 @@ export default class App extends React.Component {
                     <Route path="/home" component={Home}/>
                     <Route path="/problems" component={Problems}/>
                     <Route path="/problems/:problemId" component={Problem}/>
+                    <Route path="problems/:problemId/submit" component={Submit} />
+                    
                     <Route path="/status" component={Status}/>
                     <Route path="/ranks" component={Ranks}/>
                     <Route path="/contests" component={Contests}/>

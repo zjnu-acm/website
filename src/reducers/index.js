@@ -5,12 +5,13 @@ import {combineReducers} from 'redux';
 import user from './user';
 import dialogs from './dialogs';
 import currentTab from './currentTab';
-import {problems} from './problems';
+import {problems,problem} from './problems';
 const rootReducer = combineReducers(Object.assign({
     user,
     currentTab,
     dialogs,
-    problems
+    problems,
+    problem
 }));
 
 export default rootReducer;
