@@ -11,21 +11,29 @@ import SearchIcon from 'material-ui/svg-icons/action/search';
 
 import Pagination from 'Pagination';
 
+import {connect} from 'react-redux';
+import {getProblemList} from '../actions';
+
+import {bindActionCreators} from 'redux';
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class extends React.Component {
-    componentDidMount = ()=> {
-        //add
-        // console.log('add body event');
-        // document.addEventListener('scroll',this.handleWinScroll);
+    constructor(props) {
+        super(props);
+        this.state = {
+            size: 30,
+            page: 0,
+            filter: []
+        }
     }
-    handleWinScroll = (e)=> {
-        // const target = document.getElementsByClassName('stickyTop')[0];
-        // const top = target.getBoundingClientRect().top;
-        // console.log(document.body.scrollTop,top);
-        // if(top<=48){
-        //     target.classList.add('fixed');
-        // }else{
-        //     target.classList.remove('fixed');
-        // }
+
+    componentDidMount = ()=> {
+        this.props.getProblemList('all', this.state.size, this.state.page, this.state.filter);
+    }
+    static propTypes = {
+        tableData: React.PropTypes.array.isRequired,
+        getProblemList: React.PropTypes.func.isRequired
     }
 
     getRatio(ac, submit) {
@@ -34,20 +42,32 @@ export default class extends React.Component {
         return rate + `(${ac}/${submit})`;
     }
 
-    render() {
-        const tableData = Array.from({length: 30}, (obj, index)=> {
-            return {
-                problemId: 1000 + index,
-                title: 'A+B Problem',
-                tags: ['Math', 'Brute Force'],
-                difficulty: '40%',
-                static: {
-                    ac: 1235,
-                    submit: 2152
-                },
-                date: (new Date()).toLocaleString()
-            }
+    handleKeyDown = (e)=> {
+        if (e.which === 13) {
+            this.setState({
+                filter: [{title: [e.currentTarget.value]}]
+            }, ()=> {
+                this.props.getProblemList('all', this.state.size, this.state.page, this.state.filter);
+            })
+        }
+    }
+
+    handlePaginationChange = (obj)=> {
+        logger(null, obj);
+        const page = obj.selected;
+        //go to page
+        if (page === this.state.page)return;
+        this.setState({
+            page
+        }, ()=> {
+            this.props.getProblemList('all', this.state.size, this.state.page, this.state.filter);
         });
+
+    }
+
+    render() {
+        //sample data
+        const {tableData} = this.props;
 
         const style = {
             id: {
@@ -75,13 +95,16 @@ export default class extends React.Component {
             <div>
                 <Paper className="u-panel">
                     <div className="panel-head clearfix">
-                        <Pagination className="pull-left" totPages={10} activeIndex={2}/>
+                        <Pagination className="pull-left" onChange={this.handlePaginationChange} totPages={10}
+                                    activeIndex={this.state.page}/>
                         <div className="pull-right">
                             <SearchIcon style={style.searchIcon}/>
                             <TextField inputStyle={{paddingLeft:'48px',verticalAlign:'middle'}}
                                        hintStyle={{paddingLeft:'48px'}}
                                        underlineStyle={{borderColor:'#cacaca'}}
-                                       hintText="Filter"/>
+                                       hintText="Filter"
+                                       onKeyDown={this.handleKeyDown}
+                            />
                         </div>
                     </div>
                     <Table style={{marginBottom:'20px'}}>
@@ -94,6 +117,7 @@ export default class extends React.Component {
                                 <TableHeaderColumn style={style.date}>Updated Date</TableHeaderColumn>
                             </TableRow>
                         </TableHeader>
+
                         <TableBody displayRowCheckbox={false} showRowHover={true}>
                             {tableData.map((row, index)=> <TableRow key={row.problemId}>
                                     <TableRowColumn style={style.id}>{row.problemId}</TableRowColumn>
@@ -114,4 +138,14 @@ export default class extends React.Component {
             </div>
         )
     }
+}
+function mapStateToProps(state) {
+    return {
+        tableData: state.problems.list
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getProblemList
+    }, dispatch);
 }

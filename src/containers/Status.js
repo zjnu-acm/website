@@ -16,7 +16,6 @@ import Pagination from '../components/Pagination';
 export default class extends React.Component {
     render() {
         const verdictList = Object.keys(verdicts);
-        
         const len = verdictList.length;
         let TabRows = [];
         for (let i = 0; i < 50; i++) {

@@ -1,48 +1,12 @@
 /**
- * Created by kevin on 16-4-8.
+ * Created by kevin on 16-4-24.
  */
-import {combineReducers} from 'redux';
-import user from './user';
-import dialogs from './dialogs';
-import currentTab from './currentTab';
-import {problems} from './problems';
-const rootReducer = combineReducers(Object.assign({
-    user,
-    currentTab,
-    dialogs,
-    problems
-}));
-
-export default rootReducer;
-
-
-// initialState
-const initialState = {
-    currentTab: 'home',
-    dialogs: {
-        login: {
-            open: false,
-            error: ''
-        },
-        register: {
-            open: false,
-            error: ''
-        },
-        hint: {
-            open: false,
-            text: ''
-        }
-    },
-    user: {
-        logged: false,
-        nickname: '',
-        avatarUrl: '',
-        userId: ''
-    },
-    contest: {},
+import * as types from '../constants/ActionTypes';
+const example = {
     problems: {
         context: 'all or some contestId',
         query: {
+            tot:10,
             size: 30,
             page: 0,
             //other filter
@@ -75,5 +39,24 @@ const initialState = {
             submit: 0
         }
     }
+}
+const initialState = {
+    problems: {
+        context: 'all',
+        query: {
+            totPage:10,
+            page: 0,
+            size: 30
+        },
+        list: []
+    }
+}
 
+export function problems(state = initialState.problems, action) {
+    switch (action.type) {
+        case types.CHANGE_PROBLEM_LIST:
+            return Object.assign({}, state, action.problems);
+        default:
+            return state;
+    }
 }

@@ -25,26 +25,42 @@ export function autoHideNavBar() {
     })
 }
 
-
 export function getQueryString(query) {
     if (isObject(query) === false)return '';
     return '?' + Object.keys(query)
-            .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(query[key]))
+            .map((key) => {
+                if (Array.isArray(query[key])) {
+                    return query[key].reduce((prev, now)=>
+                    '&' + prev + encodeURIComponent(key) + '=' + encodeURIComponent(now), '').substr(1)
+                }
+                return encodeURIComponent(key) + "=" + encodeURIComponent(query[key])
+            })
             .join("&")
             .replace(/%20/g, "+");
+}
+//https://github.com/danieldram/serialize-for-xhr/blob/master/serialize-for-xhr.js
+export function serialize(obj, prefix) {
+    var str = [];
+    for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+            str.push(typeof v == "object" ?
+                serialize(v, k) :
+            encodeURIComponent(k) + "=" + encodeURIComponent(v));
+        }
+    }
+    return str.join("&").replace(/%20/g, "+");
 }
 
 const prefix = '/api';
 export function request(req) {
-    console.log(req.url);
-    const url = path.join(prefix, req.url.match(/\S*[^\/]/) + getQueryString(req.query));
+    const url = path.join(prefix, req.url.match(/\S*[^\/]/) + '?' + serialize(req.query));
     var myHeaders = new Headers();
     //myHeaders.append('Content-Type', 'text/json');
     myHeaders.append('Accept-Language', 'zh-cn,zh');
     if (typeof req.body === 'object') {
         const form = new FormData();
         for (let key in req.body) {
-            console.log(key,req.body[key]);
             form.append(key, req.body[key]);
         }
         req.body = form;

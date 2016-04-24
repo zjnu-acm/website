@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # WebSite
 
 ZJNU-ACM OnlineJudge Web Front-End works. 
@@ -20,7 +19,12 @@ ZJNU-ACM OnlineJudge Web Front-End works.
 ```bash
    node server
 ```
-## Build Static Webpages
+## Build
 ```bash
   node server -c
+```
+
+## Test
+```bash
+    npm test
 ```

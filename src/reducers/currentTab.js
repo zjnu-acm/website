@@ -10,7 +10,8 @@ function getInitialTab() {
     const regex = /[^\/\?\s]+/g;
     const currentPath = window.location.pathname.match(regex);
     //暂时返回第一个path
-    const result = Object.keys(tabs).find(tab => tabs[tab] === currentPath[0]);
+    
+    const result = (currentPath && currentPath.length) ? Object.keys(tabs).find(tab => tabs[tab] === currentPath[0]) : 'home';
     return result;
 }
 
