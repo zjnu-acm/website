@@ -16,27 +16,32 @@ export function tabSwitch(dest) {
         dest
     }
 }
-
 //problem
-export function getProblemList(context = 'all') {
+export function getProblemList(desc = {}) {
     return (dispatch, getState)=> {
-        const state = getState();
-        const problems = state.problems[context];
-        let query = {page:0,size:30}
-        if(typeof problems === 'object'){
-            //query = Object.assign({})
+        const info = getState().problems;
+        if ((typeof desc.context !== 'undefined') && desc.context != info.context) {
+            //切换列表（竞赛a的题目列表切换到竞赛b的题目列表）
+            //TODO 保存之前状态到cookie
+            //初始化
+            desc.page = desc.page || 0;
+            desc.size = desc.size || 30;
+            desc.filter = desc.filter || {};
+        } else for (let key in info) {
+            desc[key] = (typeof desc[key] !== 'undefined') ? desc[key] : info[key];
         }
-        request({
-            url: 'problems',
-            query: query
-        }).then((res)=> {
+        let query = Object.assign({
+            page: desc.page,
+            size: desc.size,
+        }, desc.filter);
+        request({url: 'problems', query}).then((res)=> {
             dispatch({
                 type: types.CHANGE_PROBLEM_LIST,
-                problemSet: {
-                    query: {page, size,total:res.total},
-                    list: res.list
-                }
+                problems: Object.assign({}, desc, res)
             })
+        }).catch(error=> {
+            logger('getProblemList', error);
         })
+
     }
 }

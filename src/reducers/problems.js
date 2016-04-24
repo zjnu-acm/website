@@ -3,32 +3,23 @@
  */
 import * as types from '../constants/ActionTypes';
 
-initGroup = {
-    total:1,
-    page:0,
-    size:30,
-    list:[]
-}
 const initialState = {
-    problems: {
-        all: {
-            total: 10,
-            page: 0,
-            size: 30,
-            list: []
-        }
+    context: 'all',
+    total: 1,
+    page: 0,
+    size: 30,
+    list: [],
+    filter:{
+       // title:''
     }
 }
 
-export function problems(state = initialState.problems, action) {
-    if (state.hasOwnProperty(action.name)) {
-        return Object.assign({}, state, {[action.name]: problemGroup(state[action.name], action)});
-    } else return state;
-}
 
-function problemGroup(state,action){
-    switch(action.type){
+export function problems(state = initialState, action) {
+    switch (action.type) {
         case types.CHANGE_PROBLEM_LIST:
-            return Object.assign({},state,action.problemSet)
+            return Object.assign({}, state, action.problems)
+        default :
+            return state;
     }
 }

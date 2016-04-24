@@ -20,18 +20,18 @@ import {Link} from 'react-router';
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            searchText:props.filter.title.join(' ')
+        const problems = props.problems;
+        if (Array.isArray(problems.title))problems.title = problems.title.join('');
+        this.state = {
+            searchText: problems.filter ? problems.filter.title || '' : ''
         }
-    }
-    componentDidMount = ()=> {
-        this.props.getProblemList('all');
+        this.props.getProblemList();
     }
 
     static propTypes = {
-        tableData: React.PropTypes.array.isRequired,
+        problems: React.PropTypes.object.isRequired,
         getProblemList: React.PropTypes.func.isRequired
     }
 
@@ -41,10 +41,14 @@ export default class extends React.Component {
         return rate + `(${ac}/${submit})`;
     }
 
+    handleTextChange = (e)=> {
+        this.setState({searchText: e.target.value});
+    }
     handleKeyDown = (e)=> {
         if (e.which === 13) {
             //seasrch
             const keywords = e.currentTarget.value;
+            this.props.getProblemList({filter: {title: keywords}})
         }
     }
 
@@ -52,12 +56,13 @@ export default class extends React.Component {
         const page = obj.selected;
         //go to page
         if (page === this.props.page)return;
+        this.props.getProblemList({page});
     }
 
     render() {
         //sample data
-        const {tableData, page, total} = this.props;
-
+        const {problems} = this.props;
+        const tableData = problems.list;
         const style = {
             id: {
                 width: '100px'
@@ -84,15 +89,17 @@ export default class extends React.Component {
             <div>
                 <Paper className="u-panel">
                     <div className="panel-head clearfix">
-                        <Pagination className="pull-left" onChange={this.handlePaginationChange} totPages={total}
-                                    activeIndex={page}/>
+                        <Pagination className="pull-left" onChange={this.handlePaginationChange}
+                                    totPages={problems.total}
+                                    activeIndex={problems.page}/>
                         <div className="pull-right">
                             <SearchIcon style={style.searchIcon}/>
                             <TextField inputStyle={{paddingLeft:'48px',verticalAlign:'middle'}}
                                        hintStyle={{paddingLeft:'48px'}}
                                        underlineStyle={{borderColor:'#cacaca'}}
                                        hintText="Filter"
-                                       value={}
+                                       onChange={this.handleTextChange}
+                                       value={this.state.searchText}
                                        onKeyDown={this.handleKeyDown}
                             />
                         </div>
@@ -112,7 +119,7 @@ export default class extends React.Component {
                             {tableData.map((row, index)=> <TableRow key={row.problemId}>
                                     <TableRowColumn style={style.id}>{row.problemId}</TableRowColumn>
                                     <TableRowColumn>
-                                        <Link to={"/problems/"+row.id}>{row.title}</Link>
+                                        <Link to={"/problems/"+row.problemId}>{row.title}</Link>
                                         <div className="pull-right">
                                             {row.tags.map((tag, index)=><span key={index} className="label">{tag}</span>)}
                                         </div>
@@ -132,9 +139,7 @@ export default class extends React.Component {
 }
 function mapStateToProps(state) {
     return {
-        tableData: state.problems.list,
-        page: state.problems.query.page,
-        total: state.problems.query.total
+        problems: state.problems
     }
 }
 function mapDispatchToProps(dispatch) {

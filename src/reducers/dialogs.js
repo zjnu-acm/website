@@ -18,7 +18,7 @@ const initialState = {
     },
     process:{
         open:false,
-        erro:''
+        error:''
     }
     //...
 }

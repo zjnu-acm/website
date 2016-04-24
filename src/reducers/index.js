@@ -41,13 +41,10 @@ const initialState = {
     },
     contest: {},
     problems: {
-        context: 'all or some contestId',
-        query: {
-            size: 30,
-            page: 0,
-            //other filter
-            problemId: [2, 3, 4]
-        },
+        context:'all',
+        total: 1,
+        page: 0,
+        size: 30,
         list: [{
             problemId: 0,
             title: '',
