@@ -32,7 +32,7 @@ export default class extends React.Component {
                            nextLabel={<ChevronRightIcon style={style.svg}/>}
                            breakLabel={<a href="javascript:void(0)">...</a>}
                            pageNum={totPages}
-                           initialSelected={activeIndex}
+                           forceSelected={activeIndex}
                            marginPagesDisplayed={2}
                            pageRangeDisplayed={5}
                            clickCallback={onChange}

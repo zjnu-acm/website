@@ -6,11 +6,16 @@ import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import Layout from './Layout'
 import Home from './Home';
 import Problems from './Problems';
+import Problem from './problem/Index';
+
 import Status from './Status';
 import Ranks from './Ranks';
 import Contests from './Contests';
-import Contest from './contest';
-import ContestOverview from './contest/ContestOverview';
+
+import Contest from './contest/Index';
+import Overview from './contest/Overview';
+
+
 import Discuss from './Discuss';
 
 export default class App extends React.Component {
@@ -21,12 +26,13 @@ export default class App extends React.Component {
                     <IndexRoute component={Home}/>
                     <Route path="/home" component={Home}/>
                     <Route path="/problems" component={Problems}/>
+                    <Route path="/problems/:problemId" component={Problem}/>
                     <Route path="/status" component={Status}/>
                     <Route path="/ranks" component={Ranks}/>
                     <Route path="/contests" component={Contests}/>
                     <Route path="/contests/:id" component={Contest}>
-                        <IndexRoute component={ContestOverview}/>
-                        <Route path="/contests/:id/overview" component={ContestOverview}/>
+                        <IndexRoute component={Overview}/>
+                        <Route path="/contests/:id/overview" component={Overview}/>
                     </Route>
                     <Route path="/discuss" component={Discuss}/>
                 </Route>

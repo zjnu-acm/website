@@ -11,6 +11,7 @@ router.post('/account/register', upload.single('avatar'), (req, res)=> {
     console.log('body', req.body);
     res.send({userId: req.body.userId});
 })
+
 router.get('/account/login', (req, res, next)=> {
     if (req.query.userId == '11550223' && req.query.password == '11550223') {
         const maxAge = req.query.remember === 'true' ? {maxAge: 30 * 24 * 60 * 60} : {};
@@ -39,20 +40,24 @@ router.put('/account/logout', (req, res, next)=> {
 });
 
 router.get('/problems', (req, res)=> {
-    console.log('problems',req.query);
-    res.send(Array.from({length: 30}, (obj, index)=> {
-        return {
-            problemId: 1000 + index,
-            title: 'A+B Problem',
-            tags: ['Math', 'Brute Force'],
-            difficulty: '40%',
-            static: {
-                ac: 1235,
-                submit: 2152
-            },
-            date: (new Date()).toLocaleString()
-        }
-    }));
+    console.log('problems', req.query);
+    const resBody = {
+        total: 10,
+        list: Array.from({length: 30}, (obj, index)=> {
+            return {
+                problemId: 1000 + index,
+                title: 'A+B Problem',
+                tags: ['Math', 'Brute Force'],
+                difficulty: '40%',
+                static: {
+                    ac: 1235,
+                    submit: 2152
+                },
+                date: (new Date()).toLocaleString()
+            }
+        })
+    }
+    res.send(resBody);
 })
 
 module.exports = router;

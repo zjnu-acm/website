@@ -16,21 +16,20 @@ import {getProblemList} from '../actions';
 
 import {bindActionCreators} from 'redux';
 
+import {Link} from 'react-router';
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class extends React.Component {
-    constructor(props) {
+    constructor(props){
         super(props);
-        this.state = {
-            size: 30,
-            page: 0,
-            filter: []
+        this.state={
+            searchText:props.filter.title.join(' ')
         }
     }
-
     componentDidMount = ()=> {
-        this.props.getProblemList('all', this.state.size, this.state.page, this.state.filter);
+        this.props.getProblemList('all');
     }
+
     static propTypes = {
         tableData: React.PropTypes.array.isRequired,
         getProblemList: React.PropTypes.func.isRequired
@@ -44,30 +43,20 @@ export default class extends React.Component {
 
     handleKeyDown = (e)=> {
         if (e.which === 13) {
-            this.setState({
-                filter: [{title: [e.currentTarget.value]}]
-            }, ()=> {
-                this.props.getProblemList('all', this.state.size, this.state.page, this.state.filter);
-            })
+            //seasrch
+            const keywords = e.currentTarget.value;
         }
     }
 
     handlePaginationChange = (obj)=> {
-        logger(null, obj);
         const page = obj.selected;
         //go to page
-        if (page === this.state.page)return;
-        this.setState({
-            page
-        }, ()=> {
-            this.props.getProblemList('all', this.state.size, this.state.page, this.state.filter);
-        });
-
+        if (page === this.props.page)return;
     }
 
     render() {
         //sample data
-        const {tableData} = this.props;
+        const {tableData, page, total} = this.props;
 
         const style = {
             id: {
@@ -95,14 +84,15 @@ export default class extends React.Component {
             <div>
                 <Paper className="u-panel">
                     <div className="panel-head clearfix">
-                        <Pagination className="pull-left" onChange={this.handlePaginationChange} totPages={10}
-                                    activeIndex={this.state.page}/>
+                        <Pagination className="pull-left" onChange={this.handlePaginationChange} totPages={total}
+                                    activeIndex={page}/>
                         <div className="pull-right">
                             <SearchIcon style={style.searchIcon}/>
                             <TextField inputStyle={{paddingLeft:'48px',verticalAlign:'middle'}}
                                        hintStyle={{paddingLeft:'48px'}}
                                        underlineStyle={{borderColor:'#cacaca'}}
                                        hintText="Filter"
+                                       value={}
                                        onKeyDown={this.handleKeyDown}
                             />
                         </div>
@@ -121,7 +111,8 @@ export default class extends React.Component {
                         <TableBody displayRowCheckbox={false} showRowHover={true}>
                             {tableData.map((row, index)=> <TableRow key={row.problemId}>
                                     <TableRowColumn style={style.id}>{row.problemId}</TableRowColumn>
-                                    <TableRowColumn>{row.title}
+                                    <TableRowColumn>
+                                        <Link to={"/problems/"+row.id}>{row.title}</Link>
                                         <div className="pull-right">
                                             {row.tags.map((tag, index)=><span key={index} className="label">{tag}</span>)}
                                         </div>
@@ -141,7 +132,9 @@ export default class extends React.Component {
 }
 function mapStateToProps(state) {
     return {
-        tableData: state.problems.list
+        tableData: state.problems.list,
+        page: state.problems.query.page,
+        total: state.problems.query.total
     }
 }
 function mapDispatchToProps(dispatch) {

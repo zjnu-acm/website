@@ -16,20 +16,25 @@ export function tabSwitch(dest) {
         dest
     }
 }
+
 //problem
-export function getProblemList(context = 'all', size = 50, page = 0, filter = []) {
+export function getProblemList(context = 'all') {
     return (dispatch, getState)=> {
-        const query = Object.assign({size, page}, ...filter);
+        const state = getState();
+        const problems = state.problems[context];
+        let query = {page:0,size:30}
+        if(typeof problems === 'object'){
+            //query = Object.assign({})
+        }
         request({
             url: 'problems',
             query: query
         }).then((res)=> {
             dispatch({
                 type: types.CHANGE_PROBLEM_LIST,
-                problems: {
-                    context: context,
-                    query: {page, size},
-                    list: res
+                problemSet: {
+                    query: {page, size,total:res.total},
+                    list: res.list
                 }
             })
         })
