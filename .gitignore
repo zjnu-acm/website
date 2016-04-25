@@ -3,3 +3,6 @@ node_modules/
 dist/
 .idea/
 lessons/
+upload/
+release/
+

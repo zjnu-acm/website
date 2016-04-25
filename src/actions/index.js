@@ -21,6 +21,7 @@ export function tabSwitch(dest) {
         tab
     }
 }
+
 //problems
 export function getProblemList(desc = {}) {
     return (dispatch, getState)=> {
@@ -50,6 +51,7 @@ export function getProblemList(desc = {}) {
         })
     }
 }
+
 export function getProblemDetail(problemId = 0) {
     return (dispatch, getState)=> {
         const url = 'problems/' + problemId;
@@ -75,5 +77,11 @@ export function submitCode(problemId,language,code){
         }).catch(err=>{
             dispatch(openDialog('hint','something is wrong!'));
         })
+    }
+}
+
+export function getStatusList(desc={}){
+    return (dispatch,getState)=>{
+        const info = getState().submissions;
     }
 }

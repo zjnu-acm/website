@@ -31,7 +31,7 @@ export default class extends React.Component {
         // problem: React.PropTypes.object.isRequired,
         // getProblemDetail: React.PropTypes.func.isRequired
     }
-    componentDidMount=()=>{
+    componentDidMount = ()=> {
         this.refs.code.focus();
     }
     handleChange = (e, index, value)=> {
@@ -58,6 +58,9 @@ export default class extends React.Component {
             },
             paper: {
                 marginTop: '60px'
+            },
+            dropdown: {
+                width: '150px'
             }
         }
 
@@ -73,7 +76,8 @@ export default class extends React.Component {
                     </ToolbarGroup>
                     <ToolbarGroup>
                         <ToolbarTitle text="Language:"/>
-                        <DropDownMenu value={this.state.langText} onChange={this.handleChange}>
+                        <DropDownMenu autoWidth={false} style={style.dropdown} value={this.state.langText}
+                                      onChange={this.handleChange}>
                             <MenuItem value={1} primaryText="GNU C++"/>
                             <MenuItem value={2} primaryText="GNU C"/>
                             <MenuItem value={3} primaryText="Pascal"/>
@@ -85,8 +89,8 @@ export default class extends React.Component {
                         <RaisedButton label="Submit" primary={true} onTouchTap={this.onSubmit}/>
                     </ToolbarGroup>
                 </Toolbar>
-       <textarea className='codeArea' ref="code" value={this.state.codeText} onChange={this.handleCodeChange}>
- </textarea>
+                <textarea className='codeArea' ref="code" value={this.state.codeText}
+                          onChange={this.handleCodeChange}></textarea>
 
             </Paper>
 

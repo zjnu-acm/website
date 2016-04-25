@@ -92,9 +92,10 @@ export default class extends React.Component {
                         <Pagination className="pull-left" onChange={this.handlePaginationChange}
                                     totPages={problems.total}
                                     activeIndex={problems.page}/>
-                        <div className="pull-right">
+                        <div className="pull-right" style={{width:'300px'}}>
                             <SearchIcon style={style.searchIcon}/>
                             <TextField inputStyle={{paddingLeft:'48px',verticalAlign:'middle'}}
+                                       fullWidth={true}
                                        hintStyle={{paddingLeft:'48px'}}
                                        underlineStyle={{borderColor:'#cacaca'}}
                                        hintText="Filter"
@@ -119,10 +120,10 @@ export default class extends React.Component {
                             {tableData.map((row, index)=> <TableRow key={row.problemId}>
                                     <TableRowColumn style={style.id}>{row.problemId}</TableRowColumn>
                                     <TableRowColumn>
-                                        <Link to={"/problems/"+row.problemId}>{row.title}</Link>
                                         <div className="pull-right">
                                             {row.tags.map((tag, index)=><span key={index} className="label">{tag}</span>)}
                                         </div>
+                                        <Link to={"/problems/"+row.problemId}>{row.title}</Link>
                                     </TableRowColumn>
                                     <TableRowColumn style={style.difficulty}>{row.difficulty}</TableRowColumn>
                                     <TableRowColumn

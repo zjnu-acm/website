@@ -13,7 +13,11 @@ import {verdicts} from '../constants';
 
 import Pagination from '../components/Pagination';
 
+
 export default class extends React.Component {
+    constructor(props){
+        super(props);
+    }
     render() {
         const verdictList = Object.keys(verdicts);
         const len = verdictList.length;
@@ -33,10 +37,8 @@ export default class extends React.Component {
                 </TableRow>
             )
         }
-
         return (
             <div>
-
                 <Paper className="u-panel">
                     <Table className="text-center" style={{marginBottom:'20px'}}>
                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -60,7 +62,6 @@ export default class extends React.Component {
                     <div className="container-wrapper">
                         <Pagination totPages={4} activeIndex={1}/>
                     </div>
-
                 </Paper>
             </div>
         )

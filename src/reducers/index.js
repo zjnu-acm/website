@@ -67,11 +67,17 @@ const initialState = {
         description: '',
         input: '',
         output: '',
+        sampleInput: '',
+        sampleOutput: '',
+        hint: '',
         source: '',
         static: {
             ac: 0,
             submit: 0
         }
+    },
+    submissions:{
+        
     }
 
 }
