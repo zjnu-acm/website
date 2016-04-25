@@ -1,9 +1,6 @@
 /**
  * Created by kevin on 16-4-24.
  */
-/**
- * Created by kevin on 16-4-4.
- */
 import React from 'react';
 
 import Paper from 'material-ui/Paper';

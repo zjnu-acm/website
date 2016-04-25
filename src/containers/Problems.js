@@ -22,14 +22,11 @@ import {Link} from 'react-router';
 export default class extends React.Component {
     constructor(props) {
         super(props);
-        const problems = props.problems;
-        if (Array.isArray(problems.filter.title))problems.filter.title = problems.filter.title.join('');
-        this.state = {
-            searchText: problems.filter ? problems.filter.title || '' : ''
-        }
         this.props.getProblemList();
+        this.state = {
+            searchText:''
+        }
     }
-
     static propTypes = {
         problems: React.PropTypes.object.isRequired,
         getProblemList: React.PropTypes.func.isRequired
@@ -47,8 +44,10 @@ export default class extends React.Component {
     handleKeyDown = (e)=> {
         if (e.which === 13) {
             //seasrch
-            const keywords = e.currentTarget.value;
-            this.props.getProblemList({filter: {title: keywords}})
+            const filter = {};
+            const keywords = this.state.searchText;
+            if(keywords!=='')filter.title = keywords;
+            this.props.getProblemList({filter});
         }
     }
 
@@ -56,7 +55,11 @@ export default class extends React.Component {
         const page = obj.selected;
         //go to page
         if (page === this.props.page)return;
-        this.props.getProblemList({page});
+        //get filter
+        const filter = {};
+        const keywords = this.state.searchText;
+        if(keywords!=='')filter.title = keywords;
+        this.props.getProblemList({page,filter});
     }
 
     render() {

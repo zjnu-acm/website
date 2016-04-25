@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-import {serialize} from '../src/utils';
+import {serialize,isUndefined} from '../src/utils';
 describe('fetch', function () {
     before(function () {
         console.log('test fetch api');
@@ -16,3 +16,14 @@ describe('fetch', function () {
         })
     });
 });
+
+describe('utility',function(){
+    describe('isUndefined',function(){
+        it('should return true',function(){
+            expect(isUndefined(undefined)).to.equal(true);
+        })
+        it('should return false',function(){
+            expect(isUndefined('1')).to.equal(false);
+        })
+    })
+})

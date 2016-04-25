@@ -5,7 +5,6 @@ import * as types from '../constants/ActionTypes';
 
 const initialState = {
     problems: {
-        context: 'all',
         total: 1,
         page: 0,
         size: 30,

@@ -117,3 +117,15 @@ export function mergeDeep(target, ...sources) {
     })
     return target;
 }
+export function filterKey(obj) {
+    const ret = {};
+    for (let key in obj) {
+        if (obj[key] === null || typeof obj[key] === 'undefined')continue;
+        ret[key] = obj[key];
+    }
+    return ret;
+}
+
+export function isUndefined(obj) {
+    return typeof obj === 'undefined';
+}

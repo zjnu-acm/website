@@ -5,13 +5,15 @@ import {combineReducers} from 'redux';
 import user from './user';
 import dialogs from './dialogs';
 import currentTab from './currentTab';
-import {problems,problem} from './problems';
+import {problems, problem} from './problems';
+import {submissions} from './submissions';
 const rootReducer = combineReducers(Object.assign({
     user,
     currentTab,
     dialogs,
     problems,
-    problem
+    problem,
+    submissions
 }));
 
 export default rootReducer;
@@ -42,7 +44,7 @@ const initialState = {
     },
     contest: {},
     problems: {
-        context:'all',
+        context: 'all',
         total: 1,
         page: 0,
         size: 30,
@@ -76,8 +78,6 @@ const initialState = {
             submit: 0
         }
     },
-    submissions:{
-        
-    }
+    submissions: {}
 
 }

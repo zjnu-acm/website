@@ -11,56 +11,159 @@ import Verdict from '../components/Verdict';
 
 import {verdicts} from '../constants';
 
+import TextField from 'material-ui/TextField';
+import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import RaisedButton from 'material-ui/RaisedButton';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+
+
 import Pagination from '../components/Pagination';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
+import {getStatusList} from '../actions';
 
 
+function mapStateToProps(state) {
+    return {submissions: state.submissions}
+}
+function mapDispatchToProps(dipatch) {
+    return bindActionCreators({
+        getStatusList
+    }, dipatch);
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
+        props.getStatusList();
+        this.state = {
+            verdictId: -1,
+            problemId: '',
+            userId: ''
+        };
     }
+
+    handleChange = (event, index, value) => this.setState({verdictId: value});
+    handleUserTextChange = e => this.setState({userId: e.target.value});
+    handleProblemTextChange = e => this.setState({problemId: e.target.value});
+    handleSubmit = ()=> {
+        const filter = {};
+        if (this.state.verdictId !== -1)filter.verdictId = this.state.verdictId;
+        if (this.state.problemId !== '')filter.problemId = this.state.problemId;
+        if (this.state.userId !== '')filter.userId = this.state.userId;
+        this.props.getStatusList({filter})
+    }
+    handlePaginationChange =(obj) =>{
+        const page = obj.selected;
+        //go to page
+        if (page === this.props.page)return;
+        const filter = {};
+        if (this.state.verdictId !== -1)filter.verdictId = this.state.verdictId;
+        if (this.state.problemId !== '')filter.problemId = this.state.problemId;
+        if (this.state.userId !== '')filter.userId = this.state.userId;
+        this.props.getStatusList({page,filter});
+    }
+
     render() {
         const verdictList = Object.keys(verdicts);
         const len = verdictList.length;
-        let TabRows = [];
-        for (let i = 0; i < 50; i++) {
-            TabRows.push(
-                <TableRow key={"row"+i}>
-                    <TableRowColumn width="140px"><a  className="s-plainLink" href="'#">vjudge{i + 1}</a></TableRowColumn>
-                    <TableRowColumn><a href="#">{1000 + i}</a></TableRowColumn>
-                    <TableRowColumn width="200px"><Verdict
-                        result={verdicts[verdictList[Math.floor(Math.random()*len)]]}/></TableRowColumn>
-                    <TableRowColumn>600 MS</TableRowColumn>
-                    <TableRowColumn>9492 KB</TableRowColumn>
-                    <TableRowColumn><a href="#">C++</a></TableRowColumn>
-                    <TableRowColumn>800 B</TableRowColumn>
-                    <TableRowColumn width='200px'>2016-04-05 16:25:20</TableRowColumn>
-                </TableRow>
-            )
+        const {submissions} = this.props;
+        const style = {
+            user: {width: '140px'},
+            problem: {width: '100px'},
+            verdict: {width: '220px'},
+            time: {width: '130px'},
+            memory: {width: '130px'},
+            lang: {width: '140px'},
+            submit: {width: '190px'},
+            text: {marginTop: '4px'},
+            //group:{paddingRight:'0px'}
         }
+
         return (
             <div>
                 <Paper className="u-panel">
+                    <Toolbar className="panel-head">
+                        <ToolbarGroup  style={style.group}>
+                            <ToolbarTitle text="User"/>
+                            <TextField
+                                style={style.text}
+                                //fullWidth={true}
+                                hintText="User Id"
+                                //floatingLabelText="User Id"
+                                value={this.state.userId}
+                                onChange={this.handleUserTextChange}
+                            />
+                        </ToolbarGroup>
+                        <ToolbarGroup style={style.group}>
+                            <ToolbarTitle text="Problem"/>
+                            <TextField
+                                style={style.text}
+                                //fullWidth={true}
+                                hintText="Problem Id"
+                                //floatingLabelText="Problem Id"
+                                value={this.state.problemId}
+                                onChange={this.handleProblemTextChange}
+                            />
+                        </ToolbarGroup>
+                        <ToolbarGroup float={"right"}>
+                            <ToolbarTitle text="Verdict"/>
+                            <DropDownMenu autoWidth={false} style={{width:'240px'}} value={this.state.verdictId}
+                                          onChange={this.handleChange}>
+                                <MenuItem value={-1} primaryText="All"/>
+                                {verdictList.map((verdictName, i)=>
+                                    <MenuItem key={i} value={i} primaryText={verdicts[verdictName]}/>)}
+                            </DropDownMenu>
+                        </ToolbarGroup>
+                        <ToolbarGroup>
+                            <ToolbarSeparator />
+                            <RaisedButton label="Filter" onTouchTap={this.handleSubmit} primary={true}/>
+                        </ToolbarGroup>
+                    </Toolbar>
                     <Table className="text-center" style={{marginBottom:'20px'}}>
                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                             <TableRow>
-                                <TableHeaderColumn width="140px">User</TableHeaderColumn>
-                                <TableHeaderColumn>Problem</TableHeaderColumn>
-                                <TableHeaderColumn width="200px">Verdict</TableHeaderColumn>
-                                <TableHeaderColumn>Time</TableHeaderColumn>
-                                <TableHeaderColumn>Memory</TableHeaderColumn>
-                                <TableHeaderColumn>Lang</TableHeaderColumn>
-                                <TableHeaderColumn>Length</TableHeaderColumn>
-                                <TableHeaderColumn width='200px'>Submit Time</TableHeaderColumn>
+                                <TableHeaderColumn style={style.user}>User</TableHeaderColumn>
+                                <TableHeaderColumn style={style.problem}>Problem</TableHeaderColumn>
+                                <TableHeaderColumn style={style.verdict}>Verdict</TableHeaderColumn>
+                                <TableHeaderColumn style={style.time}>Time</TableHeaderColumn>
+                                <TableHeaderColumn style={style.memory}>Memory</TableHeaderColumn>
+                                <TableHeaderColumn style={style.lang}>Lang</TableHeaderColumn>
+                                <TableHeaderColumn style={style.length}>Length</TableHeaderColumn>
+                                <TableHeaderColumn style={style.submit}>Submit Time</TableHeaderColumn>
                             </TableRow>
                         </TableHeader>
                         <TableBody displayRowCheckbox={false}>
-                            {TabRows}
+                            {submissions.list.map((submission, i)=> <TableRow key={"row"+i}>
+                                    <TableRowColumn style={style.user}>
+                                        <a className="s-plainLink" href="'#">{submission.userId}</a>
+                                    </TableRowColumn>
+                                    <TableRowColumn style={style.problem}>
+                                        <a href="#">{submission.problemId}</a>
+                                    </TableRowColumn>
+                                    <TableRowColumn style={style.verdict}>
+                                        <Verdict result={verdicts[verdictList[submission.verdictId]]}/>
+                                    </TableRowColumn>
+                                    <TableRowColumn style={style.time}>{submission.time}</TableRowColumn>
+                                    <TableRowColumn style={style.memory}>{submission.memory}</TableRowColumn>
+                                    <TableRowColumn style={style.lang}>
+                                        <a href="#">{submission.language}</a>
+                                    </TableRowColumn>
+                                    <TableRowColumn style={style.length}>{submission.length}</TableRowColumn>
+                                    <TableRowColumn style={style.submit}>{submission.submitTime}</TableRowColumn>
+                                </TableRow>
+                            )}
                         </TableBody>
                     </Table>
                 </Paper>
                 <Paper className="u-panel" style={{textAlign:'center'}}>
                     <div className="container-wrapper">
-                        <Pagination totPages={4} activeIndex={1}/>
+                        <Pagination totPages={submissions.total}
+                                    onChange={this.handlePaginationChange}
+                                    activeIndex={submissions.page}/>
                     </div>
                 </Paper>
             </div>

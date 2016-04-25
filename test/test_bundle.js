@@ -90,8 +90,8 @@
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
-		module.hot.accept("!!/home/kevin/project/website/node_modules/mocha-loader/node_modules/css-loader/index.js!/home/kevin/project/website/node_modules/mocha/mocha.css", function() {
-			var newContent = require("!!/home/kevin/project/website/node_modules/mocha-loader/node_modules/css-loader/index.js!/home/kevin/project/website/node_modules/mocha/mocha.css");
+		module.hot.accept("!!/home/kevin/Projects/clanguange/node_modules/mocha-loader/node_modules/css-loader/index.js!/home/kevin/Projects/clanguange/node_modules/mocha/mocha.css", function() {
+			var newContent = require("!!/home/kevin/Projects/clanguange/node_modules/mocha-loader/node_modules/css-loader/index.js!/home/kevin/Projects/clanguange/node_modules/mocha/mocha.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -364,7 +364,6 @@
 	    before(function () {
 	        console.log('test fetch api');
 	    });
-
 	    describe('serialize', function () {
 	        it('normal url', function () {
 	            expect((0, _utils.serialize)({ a: 'what', b: 'the', c: 'fuck' })).to.equal('a=what&b=the&c=fuck');
@@ -373,7 +372,17 @@
 	            expect((0, _utils.serialize)({ a: 'what', b: { c: 'fuck' } })).to.equal('a=what&b%5Bc%5D=fuck');
 	        });
 	        it('array url', function () {
-	            expect((0, _utils.serialize)({ a: 'what', b: [1, 2, 3, 4] })).to.equal('');
+	            expect((0, _utils.serialize)({ a: 'what', b: [1, 2, 3, 4] })).to.equal('a=what&b%5B0%5D=1&b%5B1%5D=2&b%5B2%5D=3&b%5B3%5D=4');
+	        });
+	    });
+	});
+	describe('utility', function () {
+	    describe('isUndefined', function () {
+	        it('should return true', function () {
+	            expect((0, _utils.isUndefined)(undefined)).to.equal(true);
+	        });
+	        it('should return false', function () {
+	            expect((0, _utils.isUndefined)('1')).to.equal(false);
 	        });
 	    });
 	});
@@ -399,6 +408,8 @@
 	exports.request = request;
 	exports.isObject = isObject;
 	exports.mergeDeep = mergeDeep;
+	exports.filterKey = filterKey;
+	exports.isUndefined = isUndefined;
 
 	var _path = __webpack_require__(12);
 
@@ -464,7 +475,9 @@
 
 	var prefix = '/api';
 	function request(req) {
-	    var url = _path2.default.join(prefix, req.url.match(/\S*[^\/]/) + getQueryString(req.query));
+	    var queryStr = serialize(req.query);
+	    if (queryStr.length) req.url = req.url.match(/\S*[^\/]/) + '?' + queryStr;
+	    var url = _path2.default.join(prefix, req.url);
 	    var myHeaders = new Headers();
 	    //myHeaders.append('Content-Type', 'text/json');
 	    myHeaders.append('Accept-Language', 'zh-cn,zh');
@@ -526,6 +539,18 @@
 	        mergeDeepTwo(target, source);
 	    });
 	    return target;
+	}
+	function filterKey(obj) {
+	    var ret = {};
+	    for (var key in obj) {
+	        if (obj[key] === null || typeof obj[key] === 'undefined') continue;
+	        ret[key] = obj[key];
+	    }
+	    return ret;
+	}
+
+	function isUndefined(obj) {
+	    return typeof obj === 'undefined';
 	}
 
 /***/ },

@@ -95,4 +95,23 @@ router.post('/problems/:problemId/submit', (req, res)=> {
     res.send({submissionId: '11223'});
 })
 
+router.get('/submissions', (req, res)=> {
+    console.log(req.query);
+    const reqBody = {
+        total: 10,
+        list: Array.from({length: 30}, (obj, index)=> {
+            return {
+                userId: 'vjudge' + index,
+                problemId: Math.floor(1000 * (Math.random())),
+                verdictId:Math.floor(10*(Math.random())),
+                time:'600 MS',
+                memory:'9492 KB',
+                language:'GNU C++11',
+                length:'800 B',
+                submitTime:'2016-04-05 16:25:20'
+            }
+        })
+    }
+    res.send(reqBody);
+})
 module.exports = router;

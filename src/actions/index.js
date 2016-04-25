@@ -4,7 +4,7 @@
 import * as types from '../constants/ActionTypes';
 import * as user from './user';
 import * as dialog from './dialog';
-import {request} from '../utils';
+import {request, isUndefined} from '../utils';
 
 import {tabs} from '../constants';
 import {browserHistory} from 'react-router';
@@ -17,30 +17,21 @@ export function tabSwitch(dest) {
         browserHistory.push('/' + tab)
     }
     return {
-        type:types.TAB_SWITCH,
+        type: types.TAB_SWITCH,
         tab
     }
 }
 
 //problems
-export function getProblemList(desc = {}) {
+export function getProblemList(desc = {page: 0, size: 30, filter: {}}) {
     return (dispatch, getState)=> {
-        const info = getState().problems;
-        if ((typeof desc.context !== 'undefined') && desc.context != info.context) {
-            //切换列表（竞赛a的题目列表切换到竞赛b的题目列表）
-            //TODO 保存之前状态到cookie
-            //初始化
-            desc.page = desc.page || 0;
-            desc.size = desc.size || 30;
-            desc.filter = desc.filter || {};
-        } else for (let key in info) {
-            desc[key] = (typeof desc[key] !== 'undefined') ? desc[key] : info[key];
-        }
-        let query = Object.assign({
-            page: desc.page,
-            size: desc.size,
-        }, desc.filter);
-        request({url: 'problems', query}).then((res)=> {
+        request({
+            url: 'problems',
+            query: Object.assign({
+                page: desc.page||0,
+                size: desc.size||30,
+            }, desc.filter||{})
+        }).then((res)=> {
             dispatch({
                 type: types.CHANGE_PROBLEM_LIST,
                 problems: Object.assign({}, desc, res)
@@ -56,32 +47,48 @@ export function getProblemDetail(problemId = 0) {
     return (dispatch, getState)=> {
         const url = 'problems/' + problemId;
         request({url}).then((res)=> {
-            dispatch({type:types.CHANGE_PROBLEM, problem:res});
+            dispatch({type: types.CHANGE_PROBLEM, problem: res});
         }).catch(err=> {
             logger('getProblemDetail', err);
-            dispatch(openDialog('hint','Something is wrong! you can Retry or Go Back'))
+            dispatch(openDialog('hint', 'Something is wrong! you can Retry or Go Back'))
         })
     }
 }
-export function submitCode(problemId,language,code){
-    return (dispatch,getState)=>{
+export function submitCode(problemId, language, code) {
+    return (dispatch, getState)=> {
         request({
-            url:'problems/'+problemId+'/submit',
-            body:{
+            url: 'problems/' + problemId + '/submit',
+            body: {
                 language,
                 code
             },
-            method:'POST'
-        }).then(res=>{
+            method: 'POST'
+        }).then(res=> {
             dispatch(tabSwitch('status'));
-        }).catch(err=>{
-            dispatch(openDialog('hint','something is wrong!'));
+        }).catch(err=> {
+            dispatch(openDialog('hint', 'something is wrong!'));
         })
     }
 }
 
-export function getStatusList(desc={}){
-    return (dispatch,getState)=>{
-        const info = getState().submissions;
+export function getStatusList(desc = {page: 0, size: 30, filter: {}}) {
+    logger('getStatusList',desc);
+    return (dispatch, getState)=> {
+        request({
+            url: 'submissions',
+            query: Object.assign({
+                page: desc.page||0,
+                size: desc.size||30,
+            }, desc.filter||{})
+        }).then(res=> {
+            console.log(Object.assign({}, desc, res));
+            dispatch({
+                type: types.CHANGE_SUBMISSION_LIST,
+                submissions: Object.assign({}, desc, res)
+            })
+        }).catch(error=> {
+            dispatch(openDialog('hint', 'Something is wrong! you can Retry or Go Back'));
+            logger('getProblemList', error);
+        })
     }
 }
