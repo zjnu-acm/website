@@ -2,7 +2,7 @@
  * Created by kevin on 16-4-4.
  */
 import React from 'react';
-
+import {Link} from 'react-router';
 import Paper from 'material-ui/Paper';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
@@ -82,7 +82,6 @@ export default class extends React.Component {
             text: {marginTop: '4px'},
             //group:{paddingRight:'0px'}
         }
-
         return (
             <div>
                 <Paper className="u-panel">
@@ -142,7 +141,7 @@ export default class extends React.Component {
                                         <a className="s-plainLink" href="'#">{submission.userId}</a>
                                     </TableRowColumn>
                                     <TableRowColumn style={style.problem}>
-                                        <a href="#">{submission.problemId}</a>
+                                        <Link to={"/problems/"+submission.problemId}>{submission.problemId}</Link>
                                     </TableRowColumn>
                                     <TableRowColumn style={style.verdict}>
                                         <Verdict result={verdicts[verdictList[submission.verdictId]]}/>
@@ -150,7 +149,7 @@ export default class extends React.Component {
                                     <TableRowColumn style={style.time}>{submission.time}</TableRowColumn>
                                     <TableRowColumn style={style.memory}>{submission.memory}</TableRowColumn>
                                     <TableRowColumn style={style.lang}>
-                                        <a href="#">{submission.language}</a>
+                                        <Link to={"/status/"+submission.submissionId}>{submission.language}</Link>
                                     </TableRowColumn>
                                     <TableRowColumn style={style.length}>{submission.length}</TableRowColumn>
                                     <TableRowColumn style={style.submit}>{submission.submitTime}</TableRowColumn>

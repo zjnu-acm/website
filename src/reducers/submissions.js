@@ -19,6 +19,7 @@ const initialState = {
         memory: '',
         language: '',
         length:'',
+        code:'',
         submitTime: '',
         compileError: ''
     }
@@ -28,6 +29,14 @@ export function submissions(state = initialState.submissions, action) {
     switch (action.type) {
         case types.CHANGE_SUBMISSION_LIST:
             return Object.assign({},state,action.submissions);
+        default:
+            return state;
+    }
+}
+export function submission(state=initialState.submission,action){
+    switch(action.type){
+        case types.CHANGE_SUBMISSION:
+            return Object.assign({},state,action.submission);
         default:
             return state;
     }

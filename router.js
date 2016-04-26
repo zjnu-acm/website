@@ -101,8 +101,9 @@ router.get('/submissions', (req, res)=> {
         total: 10,
         list: Array.from({length: 30}, (obj, index)=> {
             return {
+                submissionId:'100'+index,
                 userId: 'vjudge' + index,
-                problemId: Math.floor(1000 * (Math.random())),
+                problemId: Math.floor(1000 * (Math.random())+1000),
                 verdictId:Math.floor(10*(Math.random())),
                 time:'600 MS',
                 memory:'9492 KB',
@@ -113,5 +114,27 @@ router.get('/submissions', (req, res)=> {
         })
     }
     res.send(reqBody);
+})
+
+router.get('/submissions/:submissionId',(req,res)=>{
+    res.send({
+        userId:'vjudge1',
+        problemId: Math.floor(1000 * (Math.random())+1000),
+        verdictId:Math.floor(10*(Math.random())),
+        time:'600 MS',
+        memory:'9492 KB',
+        language:'GNU C++11',
+        length:'800 B',
+        submitTime:'2016-04-05 16:25:20',
+        code:`#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+int main(){
+    cin>>a>>b;
+    cout<<a+b<<endl;
+}
+        `
+    })
 })
 module.exports = router;

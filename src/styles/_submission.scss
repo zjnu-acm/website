@@ -1,0 +1,30 @@
+  &{
+    padding-top:40px;
+    padding-bottom:60px;
+  }
+.box-info{
+  width:100%;
+  text-align:center;
+  width:1000px;
+  margin:0 auto 40px;
+  tr{
+    line-height:30px;
+    font-size:16px;
+
+    b{
+      margin-right:8px;
+    }
+    text-align:left;
+  }
+}
+
+pre .hljs{
+  border: 1px solid #eee;
+  border-radius:4px;
+  background-color:#F3F6FB;
+  width:1000px;
+  margin:0 auto;
+  padding:10px 20px;
+  font-size:18px;
+  min-height:600px;
+}

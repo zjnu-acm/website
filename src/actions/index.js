@@ -92,3 +92,14 @@ export function getStatusList(desc = {page: 0, size: 30, filter: {}}) {
         })
     }
 }
+
+export function getStatusDetail(submissionId){
+    return (dispatch,getState)=>{
+        request({url:'submissions/'+submissionId}).then(res=>{
+            dispatch({type:types.CHANGE_SUBMISSION,submission:res});
+        }).catch(err=> {
+            logger('getStatusDetail', err);
+            dispatch(openDialog('hint', 'Something is wrong! you can Retry or Go Back'))
+        })
+    }
+}

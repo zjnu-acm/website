@@ -62,11 +62,11 @@ export default class extends React.Component {
                     </div>
                     <div style={{display:problem.sampleInput?'block':'none'}} className="pb-block">
                         <h2 className="title">Sample Input</h2>
-                        <pre className="detail">{problem.sampleInput}</pre>
+                        <pre className="detail code">{problem.sampleInput}</pre>
                     </div>
                     < div style={{display:problem.sampleOutput?'block':'none'}} className="pb-block">
                         <h2 className="title">Sample Output</h2>
-                        <pre className="detail">{problem.sampleOutput}</pre>
+                        <pre className="detail code">{problem.sampleOutput}</pre>
                     </div>
                     <div style={{display:problem.hint?'block':'none'}} className="pb-block">
                         <h2 className="title">Hint</h2>

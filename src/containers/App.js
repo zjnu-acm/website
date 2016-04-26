@@ -9,6 +9,7 @@ import Problems from './Problems';
 import Problem from './Problem';
 import Submit from './Submit';
 import Status from './Status';
+import Submission from './Submission';
 import Ranks from './Ranks';
 import Contests from './Contests';
 
@@ -30,6 +31,7 @@ export default class App extends React.Component {
                     <Route path="problems/:problemId/submit" component={Submit} />
                     
                     <Route path="/status" component={Status}/>
+                    <Route path="/status/:submissionId" component={Submission}/>
                     <Route path="/ranks" component={Ranks}/>
                     <Route path="/contests" component={Contests}/>
                     <Route path="/contests/:id" component={Contest}>
