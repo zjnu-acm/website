@@ -101,32 +101,32 @@ router.get('/submissions', (req, res)=> {
         total: 10,
         list: Array.from({length: 30}, (obj, index)=> {
             return {
-                submissionId:'100'+index,
+                submissionId: '100' + index,
                 userId: 'vjudge' + index,
-                problemId: Math.floor(1000 * (Math.random())+1000),
-                verdictId:Math.floor(10*(Math.random())),
-                time:'600 MS',
-                memory:'9492 KB',
-                language:'GNU C++11',
-                length:'800 B',
-                submitTime:'2016-04-05 16:25:20'
+                problemId: Math.floor(1000 * (Math.random()) + 1000),
+                verdictId: Math.floor(10 * (Math.random())),
+                time: '600 MS',
+                memory: '9492 KB',
+                language: 'GNU C++11',
+                length: '800 B',
+                submitTime: '2016-04-05 16:25:20'
             }
         })
     }
     res.send(reqBody);
 })
 
-router.get('/submissions/:submissionId',(req,res)=>{
+router.get('/submissions/:submissionId', (req, res)=> {
     res.send({
-        userId:'vjudge1',
-        problemId: Math.floor(1000 * (Math.random())+1000),
-        verdictId:Math.floor(10*(Math.random())),
-        time:'600 MS',
-        memory:'9492 KB',
-        language:'GNU C++11',
-        length:'800 B',
-        submitTime:'2016-04-05 16:25:20',
-        code:`#include<iostream>
+        userId: 'vjudge1',
+        problemId: Math.floor(1000 * (Math.random()) + 1000),
+        verdictId: Math.floor(10 * (Math.random())),
+        time: '600 MS',
+        memory: '9492 KB',
+        language: 'GNU C++11',
+        length: '800 B',
+        submitTime: '2016-04-05 16:25:20',
+        code: `#include<iostream>
 #include<cstdio>
 #include<cstring>
 using namespace std;
@@ -135,6 +135,37 @@ int main(){
     cout<<a+b<<endl;
 }
         `
+    })
+})
+
+router.get('/contests', (req, res)=> {
+    console.log(req.query);
+    const reqBody = {
+        total: 10,
+        list: Array.from({length: 30}, (obj, index)=> {
+            return {
+                contestId: '100' + index,
+                title: '第九届浙江省大学生ACM程序设计竞赛',
+                startTime: '2016-04-05 16:25:20',
+                duration: '5:00:00',
+                status: Math.floor(Math.random() * 3),//0-pending,1-running,2-ended
+                attendsCount: Math.floor(Math.random() * 1000)
+            }
+        })
+    }
+    res.send(reqBody);
+})
+router.get('/contests/:contestId', (req, res)=> {
+    res.send({
+        title: '第九届浙江省大学生ACM程序设计竞赛',
+        startTime: new Date('2016-04-28 02:00:00'),
+        endTime: new Date('2016-04-28 02:25:00'),
+        statusId: 1,
+        attendsCount: Math.floor(Math.random() * 1000),
+        host: {
+            userId: '11550223',
+            nickname: 'Kevin Tan'
+        }
     })
 })
 module.exports = router;

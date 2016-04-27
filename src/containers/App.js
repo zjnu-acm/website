@@ -34,9 +34,9 @@ export default class App extends React.Component {
                     <Route path="/status/:submissionId" component={Submission}/>
                     <Route path="/ranks" component={Ranks}/>
                     <Route path="/contests" component={Contests}/>
-                    <Route path="/contests/:id" component={Contest}>
+                    <Route path="/contests/:contestId" component={Contest}>
                         <IndexRoute component={Overview}/>
-                        <Route path="/contests/:id/overview" component={Overview}/>
+                        <Route path="/contests/:contestId/overview" component={Overview}/>
                     </Route>
                     <Route path="/discuss" component={Discuss}/>
                 </Route>

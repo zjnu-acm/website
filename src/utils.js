@@ -4,6 +4,7 @@
 import path from 'path';
 import fetch from 'isomorphic-fetch';
 import cookie from 'js-cookie';
+import leftPad from 'left-pad';
 let getCurrentScroll = () => {
     return document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
 }
@@ -117,15 +118,34 @@ export function mergeDeep(target, ...sources) {
     })
     return target;
 }
-export function filterKey(obj) {
-    const ret = {};
-    for (let key in obj) {
-        if (obj[key] === null || typeof obj[key] === 'undefined')continue;
-        ret[key] = obj[key];
-    }
-    return ret;
+
+export function parseDateTime(date) {
+    if(obj.isString(date))date = Date.parse(date);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
+    return [year, leftPad(month, 2, 0), leftPad(day, 2, 0)].join('-') + ' '
+        + [leftPad(hour, 2, 0), leftPad(minute, 2, 0), leftPad(second, 2, 0)].join(':');
 }
 
-export function isUndefined(obj) {
-    return typeof obj === 'undefined';
+var isType = function (name) {
+    return function (v) {
+        return Object.prototype.toString.call(v) === '[object ' + name + ']';
+    }
+}
+export const obj = {
+    isNumber: isType('Number'),
+    isObject: isType('Object'),
+    isFunction: isType('Function'),
+    isString: isType('String'),
+    isUndefined: isType('Undefined'),
+    isBoolean: isType('Boolean'),
+    isArray: isType('Array'),
+    isNull: isType('Null'),
+    isUndefinedorNull: function (v) {
+        return this.isNull(v) || this.isUndefined(v);
+    }
 }

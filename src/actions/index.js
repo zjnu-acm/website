@@ -4,14 +4,18 @@
 import * as types from '../constants/ActionTypes';
 import * as user from './user';
 import * as dialog from './dialog';
-import {request, isUndefined} from '../utils';
+import * as contest from './contest';
+import {request} from '../utils';
 
 import {tabs} from '../constants';
 import {browserHistory} from 'react-router';
 
 export const {userLogout, userLogin, userRegister} = user;
 export const {openDialog, closeDialog} = dialog;
+export const {getContestList,getContestDetail} = contest;
+
 export function tabSwitch(dest) {
+    //TODO 分离切换标签与路由
     const tab = tabs[dest];
     if (typeof tab !== 'undefined') {
         browserHistory.push('/' + tab)

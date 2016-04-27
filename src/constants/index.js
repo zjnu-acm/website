@@ -14,7 +14,11 @@ export const verdicts = {
     ComplicationError: 'Complication Error',
     RuntimeError: 'Runtime Error'
 }
-
+export const status = [
+    'Pending',
+    'Running',
+    'Ended'
+]
 export const tabs = {
     home: 'home',
     problems: 'problems',

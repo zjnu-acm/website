@@ -7,6 +7,7 @@ import dialogs from './dialogs';
 import currentTab from './currentTab';
 import {problems, problem} from './problems';
 import {submissions,submission} from './submissions';
+import {contests,contest} from './contests';
 const rootReducer = combineReducers(Object.assign({
     user,
     currentTab,
@@ -14,7 +15,10 @@ const rootReducer = combineReducers(Object.assign({
     problems,
     problem,
     submissions,
-    submission
+    submission,
+    contests,
+    contest
+
 }));
 
 export default rootReducer;
