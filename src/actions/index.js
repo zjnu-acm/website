@@ -7,24 +7,21 @@ import * as dialog from './dialog';
 import * as contest from './contest';
 import {request} from '../utils';
 
-import {tabs} from '../constants';
 import {browserHistory} from 'react-router';
 
 export const {userLogout, userLogin, userRegister} = user;
 export const {openDialog, closeDialog} = dialog;
-export const {getContestList,getContestDetail} = contest;
+export const {getContestList, getContestDetail,getContestProblemList,getContestStatusList} = contest;
 
-export function tabSwitch(dest) {
-    //TODO 分离切换标签与路由
-    const tab = tabs[dest];
-    if (typeof tab !== 'undefined') {
-        browserHistory.push('/' + tab)
-    }
+//切换tab
+export function switchTab(tab, name = 'head') {
     return {
         type: types.TAB_SWITCH,
-        tab
+        tab,
+        name
     }
 }
+
 
 //problems
 export function getProblemList(desc = {page: 0, size: 30, filter: {}}) {
@@ -32,9 +29,9 @@ export function getProblemList(desc = {page: 0, size: 30, filter: {}}) {
         request({
             url: 'problems',
             query: Object.assign({
-                page: desc.page||0,
-                size: desc.size||30,
-            }, desc.filter||{})
+                page: desc.page || 0,
+                size: desc.size || 30,
+            }, desc.filter || {})
         }).then((res)=> {
             dispatch({
                 type: types.CHANGE_PROBLEM_LIST,
@@ -58,6 +55,19 @@ export function getProblemDetail(problemId = 0) {
         })
     }
 }
+export function getContestProblemDetail(contestId,problemOrder = 'A'){
+    logger('getContestProblemDetail',contestId);
+    return (dispatch, getState)=> {
+        const url = `contests/${contestId}/problems/${problemOrder}`;
+        request({url}).then((res)=> {
+            dispatch({type: types.CHANGE_PROBLEM, problem: res});
+        }).catch(err=> {
+            logger('getProblemDetail', err);
+            dispatch(openDialog('hint', 'Something is wrong! you can Retry or Go Back'))
+        })
+    }
+}
+
 export function submitCode(problemId, language, code) {
     return (dispatch, getState)=> {
         request({
@@ -68,24 +78,40 @@ export function submitCode(problemId, language, code) {
             },
             method: 'POST'
         }).then(res=> {
-            dispatch(tabSwitch('status'));
+            browserHistory.push(`/status`);
+            dispatch(switchTab('status'));
         }).catch(err=> {
             dispatch(openDialog('hint', 'something is wrong!'));
         })
     }
 }
-
+export function submitContestCode(contestId,problemOrder, language, code) {
+    return (dispatch, getState)=> {
+        request({
+            url: `contests/${contestId}/problems/${problemOrder}/submit`,
+            body: {
+                language,
+                code
+            },
+            method: 'POST'
+        }).then(res=> {
+            browserHistory.push(`/contests/${contestId}/status`);
+            dispatch(switchTab('status','contest'));
+        }).catch(err=> {
+            dispatch(openDialog('hint', 'something is wrong!'));
+        })
+    }
+}
 export function getStatusList(desc = {page: 0, size: 30, filter: {}}) {
-    logger('getStatusList',desc);
+    logger('getStatusList', desc);
     return (dispatch, getState)=> {
         request({
             url: 'submissions',
             query: Object.assign({
-                page: desc.page||0,
-                size: desc.size||30,
-            }, desc.filter||{})
+                page: desc.page || 0,
+                size: desc.size || 30,
+            }, desc.filter || {})
         }).then(res=> {
-            console.log(Object.assign({}, desc, res));
             dispatch({
                 type: types.CHANGE_SUBMISSION_LIST,
                 submissions: Object.assign({}, desc, res)
@@ -97,10 +123,20 @@ export function getStatusList(desc = {page: 0, size: 30, filter: {}}) {
     }
 }
 
-export function getStatusDetail(submissionId){
-    return (dispatch,getState)=>{
-        request({url:'submissions/'+submissionId}).then(res=>{
-            dispatch({type:types.CHANGE_SUBMISSION,submission:res});
+export function getStatusDetail(submissionId) {
+    return (dispatch, getState)=> {
+        request({url: 'submissions/' + submissionId}).then(res=> {
+            dispatch({type: types.CHANGE_SUBMISSION, submission: res});
+        }).catch(err=> {
+            logger('getStatusDetail', err);
+            dispatch(openDialog('hint', 'Something is wrong! you can Retry or Go Back'))
+        })
+    }
+}
+export function getContestStatusDetail(contestId,submissionId){
+    return (dispatch, getState)=> {
+        request({url: `contests/${contestId}/submissions/${submissionId}`}).then(res=> {
+            dispatch({type: types.CHANGE_SUBMISSION, submission: res});
         }).catch(err=> {
             logger('getStatusDetail', err);
             dispatch(openDialog('hint', 'Something is wrong! you can Retry or Go Back'))

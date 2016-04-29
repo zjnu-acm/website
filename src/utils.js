@@ -120,7 +120,7 @@ export function mergeDeep(target, ...sources) {
 }
 
 export function parseDateTime(date) {
-    if(obj.isString(date))date = Date.parse(date);
+    if (obj.isString(date))date = Date.parse(date);
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
@@ -129,6 +129,38 @@ export function parseDateTime(date) {
     const second = date.getSeconds();
     return [year, leftPad(month, 2, 0), leftPad(day, 2, 0)].join('-') + ' '
         + [leftPad(hour, 2, 0), leftPad(minute, 2, 0), leftPad(second, 2, 0)].join(':');
+}
+/**
+ * 获得两个日期之间的差，并format为('{d}day hh:mm:ss')格式
+ * @constructor
+ */
+export function DateSubtract(date1, date2) {
+    if (!obj.isDate(date1))date1 = new Date(date1);
+    if (!obj.isDate(date2))date2 = new Date(date2);
+    if (date1 < date2) {
+        const date3 = date1;
+        date1 = date2;
+        date2 = date3;
+    }
+    let delta = date1.getTime() - date2.getTime();
+    const one = {
+        second: 1000,
+        minute: 60 * 1000,
+        hour: 60 * 60 * 1000,
+        day: 24 * 60 * 60 * 1000
+    }
+    let day = '';
+    if (delta >= one.day) {
+        day = Math.floor(delta / one.day);
+        delta -= day * one.day;
+        day = day + 'day ';
+    }
+    const hour = Math.floor(delta / one.hour);
+    delta -= hour * one.hour;
+    const minute = Math.floor(delta / one.minute);
+    delta -= minute * one.minute;
+    const second = Math.floor(delta / one.second);
+    return day + [hour, minute, second].map(num => leftPad(num, 2, 0)).join(':');
 }
 
 var isType = function (name) {
@@ -145,6 +177,7 @@ export const obj = {
     isBoolean: isType('Boolean'),
     isArray: isType('Array'),
     isNull: isType('Null'),
+    isDate: isType('Date'),
     isUndefinedorNull: function (v) {
         return this.isNull(v) || this.isUndefined(v);
     }

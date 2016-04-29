@@ -60,8 +60,7 @@ router.get('/problems', (req, res)=> {
     res.send(resBody);
 });
 
-router.get('/problems/:problemId', (req, res)=> {
-    console.log('problemId', req.params.problemId);
+router.get('*/problems/:problemId', (req, res)=> {
     res.send({
         title: '顺序对齐（Align）-中高级',
         tags: ['DP'],
@@ -90,7 +89,7 @@ ADCDEGH
     })
 });
 
-router.post('/problems/:problemId/submit', (req, res)=> {
+router.post('*/problems/:problemId/submit', (req, res)=> {
     console.log('submit', req.param.problemId);
     res.send({submissionId: '11223'});
 })
@@ -116,10 +115,11 @@ router.get('/submissions', (req, res)=> {
     res.send(reqBody);
 })
 
-router.get('/submissions/:submissionId', (req, res)=> {
+router.get('*/submissions/:submissionId', (req, res)=> {
     res.send({
         userId: 'vjudge1',
         problemId: Math.floor(1000 * (Math.random()) + 1000),
+        problemOrder: String.fromCharCode('A'.charCodeAt(0) + Math.floor(11*(Math.random()))),
         verdictId: Math.floor(10 * (Math.random())),
         time: '600 MS',
         memory: '9492 KB',
@@ -137,7 +137,6 @@ int main(){
         `
     })
 })
-
 router.get('/contests', (req, res)=> {
     console.log(req.query);
     const reqBody = {
@@ -146,8 +145,8 @@ router.get('/contests', (req, res)=> {
             return {
                 contestId: '100' + index,
                 title: '第九届浙江省大学生ACM程序设计竞赛',
-                startTime: '2016-04-05 16:25:20',
-                duration: '5:00:00',
+                startTime: '2016-04-05 12:00:20',
+                endTime: '2016-04-05 17:00:20',
                 status: Math.floor(Math.random() * 3),//0-pending,1-running,2-ended
                 attendsCount: Math.floor(Math.random() * 1000)
             }
@@ -167,5 +166,38 @@ router.get('/contests/:contestId', (req, res)=> {
             nickname: 'Kevin Tan'
         }
     })
+})
+
+router.get('/contests/:contestId/problems', (req, res)=> {
+    console.log(req.url);
+    res.send(Array.from({length:11},(obj,i)=>{
+        return {
+            problemOrder: String.fromCharCode('A'.charCodeAt(0) + i),
+            title:'A + B Problem',
+            static:{
+                ac:12,
+                submit:25
+            }
+        }
+    }))
+})
+router.get('/contests/:contestId/submissions', (req, res)=> {
+    const reqBody = {
+        total: 10,
+        list: Array.from({length: 30}, (obj, index)=> {
+            return {
+                submissionId: '100' + index,
+                userId: 'vjudge' + index,
+                problemOrder: String.fromCharCode('A'.charCodeAt(0) + index),
+                verdictId: Math.floor(10 * (Math.random())),
+                time: '600 MS',
+                memory: '9492 KB',
+                language: 'GNU C++11',
+                length: '800 B',
+                submitTime: '2016-04-05 16:25:20'
+            }
+        })
+    }
+    res.send(reqBody);
 })
 module.exports = router;

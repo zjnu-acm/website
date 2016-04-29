@@ -3,48 +3,27 @@
  */
 import React from 'react';
 import {parseDateTime} from '../../utils';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
+import Status from 'Status';
+import {status} from '../../constants';
 export default class extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            currentTime: new Date()
-        }
     }
-
-    componentDidMount = ()=> {
-        setInterval(()=>{
-            this.setState({
-                currentTime: new Date()
-            });
-        },1000)
-    }
-
     render() {
-        let TabRows = [];
-        for (let i = 0; i < 10; i++) {
-            TabRows.push(
-                <TableRow key={"row"+i}>
-                    <TableRowColumn width="100px">{String.fromCharCode('A'.charCodeAt(0) + i)}</TableRowColumn>
-                    <TableRowColumn width="100px"><a href="#">{1000 + i}</a></TableRowColumn>
-                    <TableRowColumn width="500px"><a href="#">A + B Problem ({i + 1})</a></TableRowColumn>
-                    <TableRowColumn><a href="#">12</a>/<a href="#">25</a></TableRowColumn>
-                </TableRow>
-            )
-        }
+        const {contest,currentTime} = this.props;
         return (
             <div>
                 <div className="box-board clearfix">
-                    <ul className="list-left">
-                        <li><span className="item">Current Time:</span> </li>
-                        <li><span className="item">Start Time:</span> </li>
-                        <li><span className="item">End Time:</span> 2016-04-18 17:00:00</li>
+                     <ul className="list-left">
+                        <li><span className="item">Current Time:</span> {parseDateTime(currentTime)} </li>
+                        <li><span className="item">Start Time:</span> {parseDateTime(contest.startTime)}</li>
+                        <li><span className="item">End Time:</span> {parseDateTime(contest.endTime)}</li>
                     </ul>
                     <ul className="list-right">
                         <li><span className="item">Contest Type:</span> Public</li>
-                        <li><span className="item">Contest Status:</span> Running</li>
-                        <li><span className="item">Manager:</span> coach</li>
+                        <li><span className="item">Contest Status:</span> <Status name={status[contest.statusId]} /></li>
+                        <li><span className="item">Manager:</span> <a href="#">{contest.host.nickname}</a></li>
                     </ul>
                 </div>
             </div>

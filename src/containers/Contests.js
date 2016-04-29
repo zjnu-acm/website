@@ -16,7 +16,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import TextField from 'material-ui/TextField';
 import SearchIcon from 'material-ui/svg-icons/action/search';
-
+import {parseDateTime,DateSubtract} from '../utils';
 import Pagination from '../components/Pagination';
 
 function mapStateToProps(state) {
@@ -123,7 +123,7 @@ export default class extends React.Component {
                                         {contest.startTime}
                                     </TableRowColumn>
                                     <TableRowColumn style={style.duration}>
-                                        {contest.duration}
+                                        {DateSubtract(contest.startTime,contest.endTime)}
                                     </TableRowColumn>
                                     <TableRowColumn style={style.attends}>
                                         {contest.attendsCount}

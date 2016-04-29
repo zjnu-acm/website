@@ -20,11 +20,6 @@ export const status = [
     'Ended'
 ]
 export const tabs = {
-    home: 'home',
-    problems: 'problems',
-    status: 'status',
-    ranks: 'ranks',
-    contests: 'contests',
-    discuss: 'discuss',
-    faq: 'faq'
+    head: ['home', 'problems', 'status', 'ranks', 'contests', 'discuss', 'faq'],
+    contest: ['overview', 'problems', 'status', 'ranks', 'discuss']
 }

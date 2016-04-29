@@ -25,13 +25,15 @@ export default class extends React.Component {
         }
         const style = {
             label: {
-                backgroundColor: ret,
-                color: '#fff',
-                lineHeight: '23px',
-                padding: '0 8px',
-                borderRadius:'2px',
+                // backgroundColor: ret,
+                // color: '#fff',
+                // lineHeight: '23px',
+                // padding: '0 2px',
+                // borderRadius:'2px'
+                color:ret,
                 fontWeight:'bold',
-                textAlign:'center'
+                textAlign:'center',
+                display:'inline-block'
             }
         }
         return <div style={style.label}>{this.props.name}</div>

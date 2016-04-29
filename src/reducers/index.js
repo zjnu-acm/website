@@ -4,21 +4,23 @@
 import {combineReducers} from 'redux';
 import user from './user';
 import dialogs from './dialogs';
-import currentTab from './currentTab';
+import navTab from './navTab';
 import {problems, problem} from './problems';
 import {submissions,submission} from './submissions';
-import {contests,contest} from './contests';
+import {contests,contest,cproblems,csubmission,csubmissions} from './contests';
 const rootReducer = combineReducers(Object.assign({
     user,
-    currentTab,
+    navTab,
     dialogs,
     problems,
     problem,
     submissions,
     submission,
     contests,
-    contest
-
+    contest,
+    cproblems,
+    csubmission,
+    csubmissions
 }));
 
 export default rootReducer;

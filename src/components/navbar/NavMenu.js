@@ -2,20 +2,27 @@
  * Created by kevin on 16-4-5.
  */
 import React from 'react';
+import {browserHistory} from 'react-router';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {tabSwitch} from '../../actions';
+import {switchTab} from '../../actions';
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class extends React.Component {
     static propTypes = {
-        currentTab: React.PropTypes.string.isRequired,
-        tabSwitch: React.PropTypes.func.isRequired
+        headTab: React.PropTypes.string.isRequired,
+        switchTab: React.PropTypes.func.isRequired
     }
+    handleChange = (value)=> {
+        this.props.switchTab(value);
+        browserHistory.push('/'+value);
+    }
+
     render() {
-        const {tabSwitch, currentTab}=this.props;
+        const {headTab}=this.props;
         return (
-            <Tabs value={currentTab} onChange={tabSwitch}
+            <Tabs value={headTab} onChange={this.handleChange}
                   tabItemContainerStyle={{height:'48px'}}
                   className="container">
                 <Tab value='home' label="Home"></Tab>
@@ -31,12 +38,12 @@ export default class extends React.Component {
 }
 function mapStateToProps(state) {
     return {
-        currentTab: state.currentTab
+        headTab: state.navTab.head
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        tabSwitch
+        switchTab
     }, dispatch)
 }
