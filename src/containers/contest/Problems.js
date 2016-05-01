@@ -5,7 +5,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {getContestProblemList} from '../../actions';
+import {getContestProblemList} from '../../actions/contest';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 function mapStateToProps(state) {

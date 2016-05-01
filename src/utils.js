@@ -120,7 +120,7 @@ export function mergeDeep(target, ...sources) {
 }
 
 export function parseDateTime(date) {
-    if (obj.isString(date))date = Date.parse(date);
+    if (!obj.isDate(date))date = new Date(date);
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();

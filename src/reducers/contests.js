@@ -48,7 +48,7 @@ const initialState = {
         verdictId:0,
         time: '',
         memory: '',
-        language: '',
+        languageId: 0,
         length:'',
         code:'',
         submitTime: '',

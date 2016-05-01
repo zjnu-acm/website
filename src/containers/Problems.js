@@ -12,7 +12,7 @@ import SearchIcon from 'material-ui/svg-icons/action/search';
 import Pagination from 'Pagination';
 
 import {connect} from 'react-redux';
-import {getProblemList} from '../actions';
+import {getProblemList} from '../actions/problem';
 
 import {bindActionCreators} from 'redux';
 

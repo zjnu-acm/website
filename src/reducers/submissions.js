@@ -9,6 +9,18 @@ const initialState = {
         size: 30,
         list: [
             //submission
+            // {
+            //     userId:'',
+            //     problemId:'',
+            //     verdictId:'',
+            //     time:'',
+            //     memory:'',
+            //     language:'',
+            //     accessible:'',
+            //     length:'',
+            //     submitTime:'',
+            //     compileError:''
+            // }
         ]
     },
     submission: {
@@ -17,7 +29,7 @@ const initialState = {
         verdictId:0,
         time: '',
         memory: '',
-        language: '',
+        languageId: '',
         length:'',
         code:'',
         submitTime: '',

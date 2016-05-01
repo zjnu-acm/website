@@ -1,66 +1,38 @@
 /**
- * Created by kevin on 16-4-24.
+ * Created by kevin on 16-5-1.
  */
 import * as types from '../constants/ActionTypes';
 import {request} from '../utils';
-import {openDialog,closeDialog} from './dialog';
-export function userLogout() {
-    return (dispatch)=> {
+import {openDialog} from './dialog';
+export function getUserList(desc = {page: 0, size: 30, filter: {}}) {
+    return dispatch=> {
         request({
-            url: 'account/logout',
-            method: 'PUT'
-        }).then(function () {
-            dispatch({type: types.USER_LOGGED_OUT});
-        }).catch(function (err) {
-            logger('action/index', err);
-            dispatch({type: types.USER_LOGGED_OUT});
+            url: `users`,
+            query: Object.assign({
+                page: desc.page || 0,
+                size: desc.size || 30,
+            }, desc.filter || {})
+        }).then(res=>{
+            dispatch({
+                type:types.CHANGE_USER_LIST,
+                users:Object.assign({},desc,res)
+            })
+        }).catch(error=>{
+            dispatch(openDialog('hint', 'Something is wrong! you can Retry or Go Back'));
+            logger(error);
         })
     }
 }
-
-export function userLogin(userId, password, remember) {
-    //do something to verify user identity
-    return (dispatch, getState) => {
-        request({
-            url: 'account/login/',
-            query: {userId, password, remember}
-        }).then(function (user) {
+export function getUserDetail(userId){
+    return dispatch=>{
+        request({url:`users/${userId}`}).then(res=>{
             dispatch({
-                type: types.USER_LOGGED_IN,
-                nickname: user.nickname,
-                avatarUrl: user.avatarUrl,
-                userId: user.userId
-            });
-            //如果登陆面板打开,将他关闭
-            if (getState().dialogs.login.open) {
-                dispatch(closeDialog('login'));
-            }
-        }).catch(function (res) {
-            dispatch({type: types.USER_LOGIN_FAILED})
-            if (getState().dialogs.login.open) {
-                //显示错误信息
-                dispatch(openDialog('login', res.message || res));
-            }
-        });
-    }
-}
-export function userRegister(body){
-    return (dispatch,getState)=>{
-        if(body.avatar === undefined)delete body.avatar;
-        dispatch(openDialog('process'));
-        setTimeout(function(){
-            request({
-                url:'account/register/',
-                method:'POST',
-                body:body,
-                upload:true,
-            }).then(res=>{
-                //注册成功
-                dispatch(closeDialog('process'));
-                dispatch(closeDialog('register'));
-                dispatch(openDialog('hint','Congrations! Register Success!'));
+                type:types.CHANGE_USER,
+                user:res
             })
-        },2000)
-
+        }).catch(error=>{
+            dispatch(openDialog('hint', 'Something is wrong! you can Retry or Go Back'));
+            logger(error);
+        })
     }
 }

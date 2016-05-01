@@ -6,7 +6,8 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
-import {closeDialog, userLogin} from '../../actions';
+import {closeDialog} from '../../actions/dialog';
+import {login} from '../../actions/account';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -15,18 +16,16 @@ export default class extends React.Component {
     static propTypes = {
         loginDialog: React.PropTypes.object.isRequired,
         closeDialog: React.PropTypes.func.isRequired,
-        userLogin: React.PropTypes.func.isRequired
+        login: React.PropTypes.func.isRequired
     }
     onSubmit = ()=> {
-        this.props.userLogin(this.refs.username.getValue(), this.refs.password.getValue(), this.refs.remember.state.switched);
-
+        this.props.login(this.refs.username.getValue(), this.refs.password.getValue(), this.refs.remember.state.switched);
     }
     onKeyDown = (event)=> {
         if (event.which === 13) {
             this.onSubmit();
         }
     }
-
 
     render() {
         const {closeDialog, loginDialog, ...others} = this.props;
@@ -92,6 +91,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         closeDialog:closeDialog.bind(this,'login'),
-        userLogin
+        login
     }, dispatch);
 }

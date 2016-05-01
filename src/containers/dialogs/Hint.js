@@ -1,12 +1,9 @@
 /**
  * Created by kevin on 16-4-23.
  */
-/**
- * Created by kevin on 16-4-5.
- */
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
-import {closeDialog} from '../../actions';
+import {closeDialog} from '../../actions/dialog';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 

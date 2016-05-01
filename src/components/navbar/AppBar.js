@@ -22,17 +22,27 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {openDialog,userLogout} from '../../actions';
+import {openDialog} from '../../actions/dialog';
+import {logout} from '../../actions/account';
 import {autoHideNavBar} from '../../utils';
 
 
-
+function mapStateToProps(state){
+    return {
+        account:state.account
+    }
+}
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({
+        openDialog,
+        logout
+    },dispatch)
+}
 @muiThemeable()
 @connect(mapStateToProps,mapDispatchToProps)
 export default class extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             open: false,
         };
@@ -42,8 +52,8 @@ export default class extends React.Component {
     };
     static propTypes = {
         openDialog: React.PropTypes.func.isRequired,
-        userLogout:React.PropTypes.func.isRequired,
-        user: React.PropTypes.object.isRequired,
+        logout:React.PropTypes.func.isRequired,
+        account: React.PropTypes.object.isRequired,
         muiTheme:React.PropTypes.object.isRequired
     };
     handleTouchTap = (event) => {
@@ -64,29 +74,23 @@ export default class extends React.Component {
         switch (value) {
             case 'login':
                 //logout!
-                logger('appbar','got login');
                 this.props.openDialog('login');
                 break;
             case 'register':
-                logger('appbar','got register');
                 this.props.openDialog('register');
                 break;
         }
     };
     render() {
-        const {user, userLogout, muiTheme} = this.props;
+        const {account, logout, muiTheme} = this.props;
         const style = {
             head: {
                 backgroundColor: muiTheme.palette.primary1Color
             }
         }
-        const UserMenu = user.logged ? [
-            <li key="notification">
-                <Notifications />
-            </li>,
-            <li key="useravatar">
-                <UserAvatar user={user} userLogout={userLogout}/>
-            </li>
+        const UserMenu = account.logged ? [
+            <li key="notification"><Notifications /></li>,
+            <li key="useravatar"><UserAvatar user={account} logout={logout}/></li>
         ] : [
             <li key="person">
                 <IconButton onTouchTap={this.handleTouchTap}><PersonIcon/></IconButton>
@@ -124,15 +128,4 @@ export default class extends React.Component {
             </div>
         )
     }
-}
-function mapStateToProps(state){
-    return {
-        user:state.user
-    }
-}
-function mapDispatchToProps(dispatch){
-    return bindActionCreators({
-        openDialog,
-        userLogout
-    },dispatch)
 }

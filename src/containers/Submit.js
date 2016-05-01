@@ -2,7 +2,7 @@
  * Created by kevin on 16-4-24.
  */
 import React from 'react';
-
+import {bindActionCreators} from 'redux';
 import Paper from 'material-ui/Paper';
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
@@ -10,17 +10,34 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 import {connect} from 'react-redux';
-import {submitCode} from '../actions';
+import {submitCode} from '../actions/problem';
+import {getLanguageList} from '../actions/language';
 
 import {Link} from 'react-router';
-
-@connect()
+function mapStateToProps(state) {
+    return {
+        languages: state.languages
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        submitCode,
+        getLanguageList
+    }, dispatch);
+}
+@connect(mapStateToProps, mapDispatchToProps)
 export default class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             codeText: '',
-            langText: 1,
+            languageId:0
+        }
+        if (typeof props.languages.all === 'undefined') {
+            props.getLanguageList();
+        } else {
+            logger(props.languages);
+            this.state.languageId = props.languages.all[0].languageId;
         }
     }
 
@@ -33,7 +50,7 @@ export default class extends React.Component {
     }
     handleChange = (e, index, value)=> {
         this.setState({
-            langText: value
+            languageId: value
         })
     }
     handleCodeChange = (e)=> {
@@ -42,8 +59,10 @@ export default class extends React.Component {
         })
     }
     onSubmit = ()=> {
-        const action = submitCode(this.props.params.problemId, this.state.langText, this.state.codeText)
-        this.props.dispatch(action);
+        submitCode(
+            this.props.params.problemId,
+            this.state.languageId,
+            this.state.codeText);
     }
 
     render() {
@@ -62,9 +81,8 @@ export default class extends React.Component {
         }
 
         const problemId = this.props.params.problemId;
-
+        const languages = this.props.languages.all || [];
         return (
-
             <Paper style={style.paper}>
                 <Toolbar>
                     <ToolbarGroup firstChild={false}>
@@ -73,14 +91,9 @@ export default class extends React.Component {
                     </ToolbarGroup>
                     <ToolbarGroup>
                         <ToolbarTitle text="Language:"/>
-                        <DropDownMenu autoWidth={false} style={style.dropdown} value={this.state.langText}
+                        <DropDownMenu autoWidth={false} style={style.dropdown} value={this.state.languageId}
                                       onChange={this.handleChange}>
-                            <MenuItem value={1} primaryText="GNU C++"/>
-                            <MenuItem value={2} primaryText="GNU C"/>
-                            <MenuItem value={3} primaryText="Pascal"/>
-                            <MenuItem value={4} primaryText="Java"/>
-                            <MenuItem value={5} primaryText="VC++"/>
-                            <MenuItem value={6} primaryText="GNU C++11"/>
+                            {languages.map(lang=><MenuItem key={lang.languageId} value={lang.languageId} primaryText={lang.name}/>)}
                         </DropDownMenu>
                         <ToolbarSeparator />
                         <RaisedButton label="Submit" primary={true} onTouchTap={this.onSubmit}/>
@@ -95,5 +108,10 @@ export default class extends React.Component {
     }
 }
 /*
-
+ <MenuItem value={1} primaryText="GNU C++"/>
+ <MenuItem value={2} primaryText="GNU C"/>
+ <MenuItem value={3} primaryText="Pascal"/>
+ <MenuItem value={4} primaryText="Java"/>
+ <MenuItem value={5} primaryText="VC++"/>
+ <MenuItem value={6} primaryText="GNU C++11"/>
  */

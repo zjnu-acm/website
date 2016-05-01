@@ -7,7 +7,8 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dropzone from 'react-dropzone';
-import {userRegister, closeDialog} from '../../actions';
+import {closeDialog} from '../../actions/dialog';
+import {register} from '../../actions/account';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -17,7 +18,7 @@ export default class extends React.Component {
     static propTypes = {
         registerDialog: React.PropTypes.object.isRequired,
         closeDialog: React.PropTypes.func.isRequired,
-        userRegister: React.PropTypes.func.isRequired
+        register: React.PropTypes.func.isRequired
     }
 
     constructor(props) {
@@ -28,7 +29,7 @@ export default class extends React.Component {
     }
 
     onSubmit = ()=> {
-        this.props.userRegister({
+        this.props.register({
             userId: this.refs.username.getValue(),
             password: this.refs.password.getValue(),
             email: this.refs.email.getValue(),
@@ -148,6 +149,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         closeDialog: closeDialog.bind(this, 'register'),
-        userRegister
+        register
     }, dispatch);
 }

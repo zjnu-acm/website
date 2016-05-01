@@ -4,7 +4,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {getContestList} from '../actions';
+import {getContestList} from '../actions/contest';
 import Status from 'Status';
 import {status} from '../constants';
 import {Link} from 'react-router';
@@ -15,7 +15,6 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import RaisedButton from 'material-ui/RaisedButton';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import TextField from 'material-ui/TextField';
-import SearchIcon from 'material-ui/svg-icons/action/search';
 import {parseDateTime,DateSubtract} from '../utils';
 import Pagination from '../components/Pagination';
 
@@ -120,7 +119,7 @@ export default class extends React.Component {
                                         <Status name={status[contest.status%3]}/>
                                     </TableRowColumn>
                                     <TableRowColumn style={style.startTime}>
-                                        {contest.startTime}
+                                        {parseDateTime(contest.startTime)}
                                     </TableRowColumn>
                                     <TableRowColumn style={style.duration}>
                                         {DateSubtract(contest.startTime,contest.endTime)}

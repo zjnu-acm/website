@@ -6,7 +6,7 @@ import {browserHistory} from 'react-router';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {switchTab} from '../../actions';
+import {switchTab} from '../../actions/tab';
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class extends React.Component {

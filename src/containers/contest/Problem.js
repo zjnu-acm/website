@@ -7,7 +7,7 @@ import Paper from 'material-ui/Paper';
 
 import  RaisedButton from 'material-ui/RaisedButton';
 import {connect} from 'react-redux';
-import {getContestProblemDetail} from '../../actions';
+import {getContestProblemDetail} from '../../actions/contest';
 
 import {bindActionCreators} from 'redux';
 

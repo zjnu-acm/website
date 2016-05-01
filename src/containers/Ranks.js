@@ -2,54 +2,100 @@
  * Created by kevin on 16-4-4.
  */
 import React from 'react';
-
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {Link} from 'react-router';
 import Paper from 'material-ui/Paper';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-
 import TextField from 'material-ui/TextField';
-import SearchIcon from 'material-ui/svg-icons/action/search';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import RaisedButton from 'material-ui/RaisedButton';
+import {getUserList} from '../actions/user';
 
 import Pagination from 'Pagination';
 
-const users = ["rrtyui", "vjudge4", "vjudge2", "vjudge1", "vjudge5", "vjudge3", "mathlover", "huantwofat", "19891101", "qian99", "islands", "syiml", "a569329637", "bnmjtz", "last_one", "flag", "Heart_Blue", "Napoleon", "poursoul", "TaoSama"];
-const nicknames = ["Sithope", "马孟起", "张翼德", "关云长", "黄汉升", "赵子龙", "mathlover", "huantwofat", "19891101", "baka", "islands", "T^T", "gsq", "__M子__", "last_one", "flag", "Heart Blue", "Napoleon", "Luna", "陆文韬"];
-const signs = ["风华绝代", "", "", "", "", "", "欢迎来戳mathlover.info", "", "", "", "", "9", "", "", "", "", "死妹控@恋がさくころ桜どき", "", "", ""];
+
+
+function mapStateToProps(state) {
+    return {users: state.users}
+}
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getUserList
+    }, dispatch)
+}
+@connect(mapStateToProps, mapDispatchToProps)
 export default class extends React.Component {
+    constructor(props) {
+        super(props);
+        props.getUserList();
+        this.state={
+            userId:'',
+            classname:''
+        }
+    }
+    getRatio(ac, submit) {
+        if (1 * submit === 0)return '100%';
+        const rate = ((ac / submit) * 100).toFixed(2);
+        return rate + `(${ac}/${submit})`;
+    }
+    handleClassTextChange =e=>this.setState({classname:e.target.value})
+    handleUserTextChange = e=>this.setState({userId:e.target.value})
+    getFilter=()=>{
+        const filter = {};
+        if (this.state.userId !== '')filter.userId = this.state.userId;
+        if (this.state.classname !== '')filter.classname = this.state.classname;
+        return filter;
+    }
+    handleSubmit = ()=> {
+        const filter = this.getFilter();
+        this.props.getUserList({filter})
+    }
+    handlePaginationChange = (obj) => {
+        const page = obj.selected;
+        //go to page
+        if (page === this.props.page)return;
+        const filter = this.getFilter();
+        this.props.getUserList({page, filter});
+    }
     render() {
-        let TabRows = [];
-        for (let i = 0; i < 50; i++) {
-            TabRows.push(
-                <TableRow key={"row"+i}>
-                    <TableRowColumn width="100px">{1+i}</TableRowColumn>
-                    <TableRowColumn>
-                        {users[i]}
-                    </TableRowColumn>
-                    <TableRowColumn>
-                        {nicknames[i]}
-                    </TableRowColumn>
-                    <TableRowColumn style={{width:'300px'}}>{signs[i]}</TableRowColumn>
-                    <TableRowColumn width="250px">Software Engineering(121)</TableRowColumn>
-                    <TableRowColumn width="200px">57.39% (1235/2152)</TableRowColumn>
-                </TableRow>
-            )
+        const {users} = this.props;
+        const style = {
+            user: {width: '140px'},
+            text: {marginTop: '4px'},
+            //group:{paddingRight:'0px'}
         }
         return (
             <div>
-                <Paper className="u-panel clearfix">
-                    <div className="pull-right">
-                        <SearchIcon style={{
-                        fill:'#888',
-                        padding:'12px',
-                        height:'48px',
-                        width:'48px',
-                        verticalAlign:'middle',
-                        marginRight:'-48px'}}/>
-                        <TextField inputStyle={{paddingLeft:'48px',verticalAlign:'middle'}}
-                                   hintStyle={{paddingLeft:'48px'}} hintText="Filter"/>
-                    </div>
-                </Paper>
-
                 <Paper className="u-panel">
+                    <Toolbar className="panel-head">
+                        <ToolbarGroup style={style.group}>
+                            <ToolbarTitle text="User"/>
+                            <TextField
+                                style={style.text}
+                                //fullWidth={true}
+                                hintText="User Id"
+                                //floatingLabelText="User Id"
+                                value={this.state.userId}
+                                onChange={this.handleUserTextChange}
+                            />
+                        </ToolbarGroup>
+                        <ToolbarGroup style={style.group}>
+                            <ToolbarTitle text="Class"/>
+                            <TextField
+                                style={style.text}
+                                //fullWidth={true}
+                                hintText="Class Name"
+                                //floatingLabelText="Problem Id"
+                                value={this.state.classname}
+                                onChange={this.handleClassTextChange}
+                            />
+                        </ToolbarGroup>
+                        <ToolbarGroup>
+                            <ToolbarSeparator />
+                            <RaisedButton label="Filter" onTouchTap={this.handleSubmit} primary={true}/>
+                        </ToolbarGroup>
+                    </Toolbar>
                     <Table style={{marginBottom:'20px'}}>
                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                             <TableRow>
@@ -62,13 +108,26 @@ export default class extends React.Component {
                             </TableRow>
                         </TableHeader>
                         <TableBody displayRowCheckbox={false}>
-                            {TabRows}
+                            {users.list.map((user, i)=> {
+                                return <TableRow key={"row"+i}>
+                                    <TableRowColumn width="100px">{user.rank||(i+1)}</TableRowColumn>
+                                    <TableRowColumn>
+                                        <Link to={`/users/${user.userId}`}>{user.userId}</Link>
+                                    </TableRowColumn>
+                                    <TableRowColumn>
+                                        {user.nickname}
+                                    </TableRowColumn>
+                                    <TableRowColumn style={{width:'300px'}}>{user.signature}</TableRowColumn>
+                                    <TableRowColumn width="250px">{user.classname}</TableRowColumn>
+                                    <TableRowColumn width="200px">{this.getRatio(user.static.ac,user.static.submit)}</TableRowColumn>
+                                </TableRow>
+                            })}
                         </TableBody>
                     </Table>
                 </Paper>
 
                 <Paper className="u-panel text-center">
-                    <Pagination totPages={10} activeIndex={2}/>
+                    <Pagination totPages={users.total} activeIndex={users.page} onChange={this.handlePaginationChange}/>
                 </Paper>
             </div>
         )

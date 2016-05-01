@@ -9,12 +9,13 @@ import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card ,CardMedia, CardTitle} from 'material-ui/Card';
 
-const imgUrl = require('../images/material-bg.png');
 import Mail from 'material-ui/svg-icons/content/mail';
 import ActionInfo from 'material-ui/svg-icons/action/info';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
+
+const imgUrl = require('../images/material-bg.png');
 
 export default class extends React.Component {
     render() {

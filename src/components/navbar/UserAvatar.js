@@ -17,7 +17,7 @@ export default class extends React.Component {
         userMenuOpen: false
     }
     static propTypes = {
-        userLogout: React.PropTypes.func.isRequired,
+        logout: React.PropTypes.func.isRequired,
         user: React.PropTypes.object.isRequired
     }
 
@@ -39,7 +39,7 @@ export default class extends React.Component {
         switch (value) {
             case 'exit':
                 //logout!
-                this.props.userLogout();
+                this.props.logout();
                 break;
         }
     };

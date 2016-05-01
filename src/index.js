@@ -10,8 +10,8 @@ import injectTabEventPlugin from 'react-tap-event-plugin';
 require('./styles/index.scss');
 injectTabEventPlugin();
 //定义一个全局的log函数
-window.logger = function(file='unknown',...msg){
-    console.info('%c[file:%s]','font-weight:bold;color:blue;',file,...msg);
+window.logger = function(...msg){
+    console.error('%c[DEBUG INFO]','font-weight:bold;color:blue;',...msg);
 }
 
 render(

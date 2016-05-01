@@ -12,35 +12,35 @@ import cookie from 'js-cookie';
  id:''
  }
  */
-function getInitialUser() {
-    let user = cookie.get('user');
+function getInitialAccount() {
+    let account = cookie.get('user');
     try {
-        if (typeof user === 'undefined') {
+        if (typeof account === 'undefined') {
             throw Error('user is undefined');
         }
-        user = JSON.parse(user);
+        account = JSON.parse(account);
         return {
             logged: true,
-            avatarUrl: user.avatarUrl,
-            nickname: user.nickname,
-            userId: user.userId
+            avatarUrl: account.avatarUrl,
+            nickname: account.nickname,
+            userId: account.userId
         }
     } catch (e) {
         return {logged: false, nickname: '', avatarUrl: '', userId: ''}
     }
 }
 
-export default function user(state = getInitialUser(), action) {
+export default function account(state = getInitialAccount(), action) {
     switch (action.type) {
-        case types.USER_LOGGED_IN:
+        case types.LOGIN_SUCCESS:
             return Object.assign({}, state, {
                 logged: true,
                 nickname: action.nickname,
                 avatarUrl: action.avatarUrl,
                 userId: action.userId
             });
-        case types.USER_LOGGED_OUT:
-        case types.USER_LOGIN_FAILED://just reset
+        case types.LOGOUT:
+        case types.LOGIN_FAILED://just reset
             return Object.assign({}, state, {
                 logged: false,
                 nickname: '',

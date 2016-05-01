@@ -6,7 +6,6 @@ import {Link} from 'react-router';
 import Paper from 'material-ui/Paper';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
-
 import Verdict from '../components/Verdict';
 
 import {verdicts} from '../constants';
@@ -22,15 +21,19 @@ import Pagination from '../components/Pagination';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {getStatusList} from '../actions';
-
+import {getSubmissionList} from '../actions/submission';
+import {getLanguageList} from '../actions/language';
 
 function mapStateToProps(state) {
-    return {submissions: state.submissions}
+    return {
+        submissions: state.submissions,
+        languages: state.languages
+    }
 }
 function mapDispatchToProps(dipatch) {
     return bindActionCreators({
-        getStatusList
+        getSubmissionList,
+        getLanguageList
     }, dipatch);
 }
 
@@ -38,7 +41,10 @@ function mapDispatchToProps(dipatch) {
 export default class extends React.Component {
     constructor(props) {
         super(props);
-        props.getStatusList();
+        props.getSubmissionList();
+        if (typeof props.languages.all === 'undefined') {
+            props.getLanguageList();
+        }
         this.state = {
             verdictId: -1,
             problemId: '',
@@ -46,6 +52,26 @@ export default class extends React.Component {
         };
     }
 
+    static propTypes = {
+        // submissions:React.PropTypes.shape({
+        //     total:React.PropTypes.number.isRequired,
+        //     page:React.PropTypes.number.isRequired,
+        //     size:React.PropTypes.number.isRequired,
+        //     list:React.PropTypes.arrayOf(React.PropTypes.shape({
+        //         userId:React.PropTypes.string.isRequired,
+        //         problemId:React.PropTypes.number.isRequired,
+        //         verdictId:React.PropTypes.number.isRequired,
+        //         time:React.PropTypes.string.isRequired,
+        //         memory:React.PropTypes.string.isRequired,
+        //         languageId:React.PropTypes.string.isRequired,
+        //         length:React.PropTypes.string.isRequired,
+        //         submitTime:React.PropTypes.string.isRequired,
+        //         accessible:React.PropTypes.bool.isRequired,
+        //         compileError:React.PropTypes.string
+        //     }))
+        // }),
+        // languages:React.PropTypes.object
+    }
     handleChange = (event, index, value) => this.setState({verdictId: value});
     handleUserTextChange = e => this.setState({userId: e.target.value});
     handleProblemTextChange = e => this.setState({problemId: e.target.value});
@@ -54,9 +80,9 @@ export default class extends React.Component {
         if (this.state.verdictId !== -1)filter.verdictId = this.state.verdictId;
         if (this.state.problemId !== '')filter.problemId = this.state.problemId;
         if (this.state.userId !== '')filter.userId = this.state.userId;
-        this.props.getStatusList({filter})
+        this.props.getSubmissionList({filter})
     }
-    handlePaginationChange =(obj) =>{
+    handlePaginationChange = (obj) => {
         const page = obj.selected;
         //go to page
         if (page === this.props.page)return;
@@ -64,13 +90,14 @@ export default class extends React.Component {
         if (this.state.verdictId !== -1)filter.verdictId = this.state.verdictId;
         if (this.state.problemId !== '')filter.problemId = this.state.problemId;
         if (this.state.userId !== '')filter.userId = this.state.userId;
-        this.props.getStatusList({page,filter});
+        this.props.getSubmissionList({page, filter});
     }
 
     render() {
         const verdictList = Object.keys(verdicts);
         const len = verdictList.length;
         const {submissions} = this.props;
+        const languages = this.props.languages.all || [];
         const style = {
             user: {width: '140px'},
             problem: {width: '100px'},
@@ -86,7 +113,7 @@ export default class extends React.Component {
             <div>
                 <Paper className="u-panel">
                     <Toolbar className="panel-head">
-                        <ToolbarGroup  style={style.group}>
+                        <ToolbarGroup style={style.group}>
                             <ToolbarTitle text="User"/>
                             <TextField
                                 style={style.text}
@@ -136,9 +163,12 @@ export default class extends React.Component {
                             </TableRow>
                         </TableHeader>
                         <TableBody displayRowCheckbox={false}>
-                            {submissions.list.map((submission, i)=> <TableRow key={"row"+i}>
+                            {submissions.list.map((submission, i)=> {
+                                let language = languages.find(lang=>lang.languageId === submission.languageId) || 'unknown';
+                                if (language !== 'unknown')language = language.name;
+                                return <TableRow key={"row"+i}>
                                     <TableRowColumn style={style.user}>
-                                        <a className="s-plainLink" href="'#">{submission.userId}</a>
+                                        <Link className="s-plainLink" to={`/users/${submission.userId}`}>{submission.userId}</Link>
                                     </TableRowColumn>
                                     <TableRowColumn style={style.problem}>
                                         <Link to={"/problems/"+submission.problemId}>{submission.problemId}</Link>
@@ -149,12 +179,15 @@ export default class extends React.Component {
                                     <TableRowColumn style={style.time}>{submission.time}</TableRowColumn>
                                     <TableRowColumn style={style.memory}>{submission.memory}</TableRowColumn>
                                     <TableRowColumn style={style.lang}>
-                                        <Link to={"/status/"+submission.submissionId}>{submission.language}</Link>
+                                        {submission.accessible ?
+                                            <Link to={"/status/"+submission.submissionId}>{language}</Link> :
+                                            language
+                                        }
                                     </TableRowColumn>
                                     <TableRowColumn style={style.length}>{submission.length}</TableRowColumn>
                                     <TableRowColumn style={style.submit}>{submission.submitTime}</TableRowColumn>
                                 </TableRow>
-                            )}
+                            })}
                         </TableBody>
                     </Table>
                 </Paper>

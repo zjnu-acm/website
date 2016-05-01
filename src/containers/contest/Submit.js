@@ -2,6 +2,7 @@
  * Created by kevin on 16-4-24.
  */
 import React from 'react';
+import {bindActionCreators} from 'redux';
 
 import Paper from 'material-ui/Paper';
 import MenuItem from 'material-ui/MenuItem';
@@ -10,17 +11,34 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 import {connect} from 'react-redux';
-import {submitContestCode} from '../../actions';
-
+import {contestSubmitCode} from '../../actions/contest';
+import {getLanguageList} from '../../actions/language';
 import {Link} from 'react-router';
 
-@connect()
+function mapStateToProps(state) {
+    return {
+        languages: state.languages
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        contestSubmitCode,
+        getLanguageList
+    }, dispatch);
+}
+@connect(mapStateToProps, mapDispatchToProps)
 export default class extends React.Component {
     constructor(props) {
         super(props);
+        const contestId = this.props.params.contestId;
         this.state = {
             codeText: '',
-            langText: 1,
+            languageId: 0
+        }
+        if (typeof props.languages[contestId] === 'undefined') {
+            props.getLanguageList(contestId);
+        } else {
+            this.state.languageId = props.languages[contestId][0].languageId;
         }
     }
 
@@ -33,7 +51,7 @@ export default class extends React.Component {
     }
     handleChange = (e, index, value)=> {
         this.setState({
-            langText: value
+            languageId: value
         })
     }
     handleCodeChange = (e)=> {
@@ -42,8 +60,11 @@ export default class extends React.Component {
         })
     }
     onSubmit = ()=> {
-        const action = submitContestCode(this.props.params.contestId, this.props.params.problemOrder, this.state.langText, this.state.codeText)
-        this.props.dispatch(action);
+        contestSubmitCode(
+            this.props.params.contestId,
+            this.props.params.problemOrder,
+            this.state.languageId,
+            this.state.codeText);
     }
 
     render() {
@@ -62,6 +83,7 @@ export default class extends React.Component {
         }
 
         const {contestId, problemOrder} = this.props.params;
+        const languages = this.props.languages[contestId]||[];
         return (
             <Paper style={style.paper}>
                 <Toolbar>
@@ -72,14 +94,9 @@ export default class extends React.Component {
                     </ToolbarGroup>
                     <ToolbarGroup>
                         <ToolbarTitle text="Language:"/>
-                        <DropDownMenu autoWidth={false} style={style.dropdown} value={this.state.langText}
+                        <DropDownMenu autoWidth={false} style={style.dropdown} value={this.state.languageId}
                                       onChange={this.handleChange}>
-                            <MenuItem value={1} primaryText="GNU C++"/>
-                            <MenuItem value={2} primaryText="GNU C"/>
-                            <MenuItem value={3} primaryText="Pascal"/>
-                            <MenuItem value={4} primaryText="Java"/>
-                            <MenuItem value={5} primaryText="VC++"/>
-                            <MenuItem value={6} primaryText="GNU C++11"/>
+                            {languages.map(lang=><MenuItem key={lang.languageId} value={lang.languageId} primaryText={lang.name}/>)}
                         </DropDownMenu>
                         <ToolbarSeparator />
                         <RaisedButton label="Submit" primary={true} onTouchTap={this.onSubmit}/>

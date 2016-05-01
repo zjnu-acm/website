@@ -40,12 +40,11 @@ router.put('/account/logout', (req, res, next)=> {
 });
 
 router.get('/problems', (req, res)=> {
-    console.log('problems', req.query);
     const resBody = {
         total: 10,
         list: Array.from({length: 30}, (obj, index)=> {
             return {
-                problemId: 1000 + index,
+                problemId: '' + 1000 + index,
                 title: 'A+B Problem',
                 tags: ['Math', 'Brute Force'],
                 difficulty: '40%',
@@ -59,7 +58,41 @@ router.get('/problems', (req, res)=> {
     }
     res.send(resBody);
 });
-
+/*
+ <MenuItem value={1} primaryText="GNU C++"/>
+ <MenuItem value={2} primaryText="GNU C"/>
+ <MenuItem value={3} primaryText="Pascal"/>
+ <MenuItem value={4} primaryText="Java"/>
+ <MenuItem value={5} primaryText="VC++"/>
+ <MenuItem value={6} primaryText="GNU C++11"/>
+ */
+router.get('*/languages', (req, res)=> {
+    res.send([
+        {
+            languageId: 0,
+            name: 'GNU C++'
+        },
+        {
+            languageId: 1,
+            name: 'GNU C'
+        },
+        {
+            languageId: 2,
+            name: 'Pascal'
+        },
+        {
+            languageId: 3,
+            name: 'Java'
+        },
+        {
+            languageId: 4,
+            name: 'VC++'
+        }, {
+            languageId: 5,
+            name: 'GNU C++11'
+        }
+    ])
+})
 router.get('*/problems/:problemId', (req, res)=> {
     res.send({
         title: '顺序对齐（Align）-中高级',
@@ -106,7 +139,8 @@ router.get('/submissions', (req, res)=> {
                 verdictId: Math.floor(10 * (Math.random())),
                 time: '600 MS',
                 memory: '9492 KB',
-                language: 'GNU C++11',
+                languageId: Math.floor(6 * Math.random()),
+                accessible: true,
                 length: '800 B',
                 submitTime: '2016-04-05 16:25:20'
             }
@@ -119,11 +153,11 @@ router.get('*/submissions/:submissionId', (req, res)=> {
     res.send({
         userId: 'vjudge1',
         problemId: Math.floor(1000 * (Math.random()) + 1000),
-        problemOrder: String.fromCharCode('A'.charCodeAt(0) + Math.floor(11*(Math.random()))),
+        problemOrder: String.fromCharCode('A'.charCodeAt(0) + Math.floor(11 * (Math.random()))),
         verdictId: Math.floor(10 * (Math.random())),
         time: '600 MS',
         memory: '9492 KB',
-        language: 'GNU C++11',
+        languageId: Math.floor(6 * Math.random()),
         length: '800 B',
         submitTime: '2016-04-05 16:25:20',
         code: `#include<iostream>
@@ -170,13 +204,13 @@ router.get('/contests/:contestId', (req, res)=> {
 
 router.get('/contests/:contestId/problems', (req, res)=> {
     console.log(req.url);
-    res.send(Array.from({length:11},(obj,i)=>{
+    res.send(Array.from({length: 11}, (obj, i)=> {
         return {
             problemOrder: String.fromCharCode('A'.charCodeAt(0) + i),
-            title:'A + B Problem',
-            static:{
-                ac:12,
-                submit:25
+            title: 'A + B Problem',
+            static: {
+                ac: 12,
+                submit: 25
             }
         }
     }))
@@ -192,12 +226,49 @@ router.get('/contests/:contestId/submissions', (req, res)=> {
                 verdictId: Math.floor(10 * (Math.random())),
                 time: '600 MS',
                 memory: '9492 KB',
-                language: 'GNU C++11',
                 length: '800 B',
+                accessible: false,
+                languageId: Math.floor(6 * Math.random()),
                 submitTime: '2016-04-05 16:25:20'
             }
         })
     }
     res.send(reqBody);
+})
+
+router.get('/users/', (req, res)=> {
+    const users = ["rrtyui", "vjudge4", "vjudge2", "vjudge1", "vjudge5", "vjudge3", "mathlover", "huantwofat", "19891101", "qian99", "islands", "syiml", "a569329637", "bnmjtz", "last_one", "flag", "Heart_Blue", "Napoleon", "poursoul", "TaoSama"];
+    const nicknames = ["Sithope", "马孟起", "张翼德", "关云长", "黄汉升", "赵子龙", "mathlover", "huantwofat", "19891101", "baka", "islands", "T^T", "gsq", "__M子__", "last_one", "flag", "Heart Blue", "Napoleon", "Luna", "陆文韬"];
+    const signs = ["风华绝代", "", "", "", "", "", "欢迎来戳mathlover.info", "", "", "", "", "9", "", "", "", "", "死妹控@恋がさくころ桜どき", "", "", ""];
+    const length = users.length;
+    const reqBody = {
+        total: 10,
+        list: Array.from({length: 30}, (obj, index)=> {
+            index = index % length;
+            return {
+                rank: index + 1,
+                userId: users[index],
+                nickname: nicknames[index],
+                signature: signs[index],
+                classname: 'Software Engineering(121)',
+                static: {
+                    ac: 1235,
+                    submit: 2152
+                }
+            }
+        })
+    }
+    res.send(reqBody);
+})
+router.get('/users/:userId', (req, res)=> {
+    res.send({
+        userId: '11550223',
+        nickname: 'Kevin Tan',
+        email: 'stkevintan@foxmail.com',
+        classname:'Software Engineering (121)',
+        signature: 'There is a will, there is a way',
+        avatarUrl: 'http://acdream.info/img/avatar/xiexinxinlove/2.jpeg',
+        solved: Array.from({length: 30}, (obj, i)=>1000 + i + '')
+    })
 })
 module.exports = router;

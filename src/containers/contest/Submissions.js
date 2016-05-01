@@ -3,11 +3,11 @@
  */
 import React from 'react';
 import {Link} from 'react-router';
-import Paper from 'material-ui/Paper';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 
 import Verdict from 'Verdict';
+import Pagination from 'Pagination';
 
 import {verdicts} from '../../constants';
 
@@ -18,19 +18,23 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 
-import Pagination from 'Pagination';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {getContestStatusList} from '../../actions';
+import {getContestSubmissionList} from '../../actions/contest';
+import {getLanguageList} from '../../actions/language';
 
 
 function mapStateToProps(state) {
-    return {submissions: state.submissions}
+    return {
+        submissions: state.submissions,
+        languages: state.languages
+    }
 }
 function mapDispatchToProps(dipatch) {
     return bindActionCreators({
-        getStatusList: getContestStatusList
+        getSubmissionList: getContestSubmissionList,
+        getLanguageList
     }, dipatch);
 }
 
@@ -38,7 +42,11 @@ function mapDispatchToProps(dipatch) {
 export default class extends React.Component {
     constructor(props) {
         super(props);
-        props.getStatusList(props.params.contestId);
+        const contestId = props.params.contestId;
+        props.getSubmissionList(contestId);
+        if (typeof props.languages[contestId] === 'undefined') {
+            props.getLanguageList(contestId);
+        }
         this.state = {
             verdictId: -1,
             problemOrder: '',
@@ -54,7 +62,7 @@ export default class extends React.Component {
         if (this.state.verdictId !== -1)filter.verdictId = this.state.verdictId;
         if (this.state.problemOrder !== '')filter.problemOrder = this.state.problemOrder;
         if (this.state.userId !== '')filter.userId = this.state.userId;
-        this.props.getStatusList(this.props.params.contestId, {filter})
+        this.props.getSubmissionList(this.props.params.contestId, {filter})
     }
     handlePaginationChange = (obj) => {
         const page = obj.selected;
@@ -64,14 +72,15 @@ export default class extends React.Component {
         if (this.state.verdictId !== -1)filter.verdictId = this.state.verdictId;
         if (this.state.problemOrder !== '')filter.problemOrder = this.state.problemOrder;
         if (this.state.userId !== '')filter.userId = this.state.userId;
-        this.props.getStatusList(this.props.params.contestId, {page, filter});
+        this.props.getSubmissionList(this.props.params.contestId, {page, filter});
     }
 
     render() {
         const verdictList = Object.keys(verdicts);
-        const len = verdictList.length;
         const {submissions} = this.props;
         const contestId = this.props.params.contestId;
+        const languages = this.props.languages[contestId] || [];
+
         const style = {
             user: {width: '140px'},
             problem: {width: '100px'},
@@ -136,7 +145,10 @@ export default class extends React.Component {
                         </TableRow>
                     </TableHeader>
                     <TableBody displayRowCheckbox={false}>
-                        {submissions.list.map((submission, i)=> <TableRow key={"row"+i}>
+                        {submissions.list.map((submission, i)=> {
+                            let language = languages.find(lang=>lang.languageId === submission.languageId) || 'unknown';
+                            if (language !== 'unknown')language = language.name;
+                            return <TableRow key={"row"+i}>
                                 <TableRowColumn style={style.user}>
                                     <a className="s-plainLink" href="'#">{submission.userId}</a>
                                 </TableRowColumn>
@@ -150,12 +162,16 @@ export default class extends React.Component {
                                 <TableRowColumn style={style.time}>{submission.time}</TableRowColumn>
                                 <TableRowColumn style={style.memory}>{submission.memory}</TableRowColumn>
                                 <TableRowColumn style={style.lang}>
-                                    <Link to={`status/${submission.submissionId}`}>{submission.language}</Link>
+                                    {!submission.accessible ?
+                                        <Link
+                                            to={`/contests/${contestId}/status/`+submission.submissionId}>{language}</Link> :
+                                        language
+                                    }
                                 </TableRowColumn>
                                 <TableRowColumn style={style.length}>{submission.length}</TableRowColumn>
                                 <TableRowColumn style={style.submit}>{submission.submitTime}</TableRowColumn>
                             </TableRow>
-                        )}
+                        })}
                     </TableBody>
                 </Table>
                 <div style={{textAlign:'center'}}>
