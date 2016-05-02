@@ -59,7 +59,7 @@ export default class extends React.Component {
         })
     }
     onSubmit = ()=> {
-        submitCode(
+        this.props.submitCode(
             this.props.params.problemId,
             this.state.languageId,
             this.state.codeText);

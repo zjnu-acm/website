@@ -9,7 +9,9 @@ import {problems, problem} from './problems';
 import {submissions,submission} from './submissions';
 import {users,user} from './users';
 import {contests,contest,cproblems} from './contests';
-import {languages} from './languages'
+import {languages} from './languages';
+import {standings} from './standings';
+import {topics,topic} from './topics';
 const rootReducer = combineReducers(Object.assign({
     account,
     navTab,
@@ -23,7 +25,10 @@ const rootReducer = combineReducers(Object.assign({
     cproblems,
     languages,
     users,
-    user
+    user,
+    standings,
+    topics,
+    topic
 }));
 
 export default rootReducer;

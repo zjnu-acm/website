@@ -17,6 +17,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
+import {parseDateTime} from '../../utils';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -57,22 +58,22 @@ export default class extends React.Component {
     handleChange = (event, index, value) => this.setState({verdictId: value});
     handleUserTextChange = e => this.setState({userId: e.target.value});
     handleProblemTextChange = e => this.setState({problemOrder: e.target.value});
-    handleSubmit = ()=> {
+    getFilter=()=>{
         const filter = {};
-        if (this.state.verdictId !== -1)filter.verdictId = this.state.verdictId;
-        if (this.state.problemOrder !== '')filter.problemOrder = this.state.problemOrder;
-        if (this.state.userId !== '')filter.userId = this.state.userId;
-        this.props.getSubmissionList(this.props.params.contestId, {filter})
+        if (this.state.verdictId!== -1)filter.verdictId = this.state.verdictId;
+        if (this.state.problemOrder.trim() !== '')filter.problemOrder = this.state.problemOrder.trim();
+        if (this.state.userId.trim() !== '')filter.userId = this.state.userId.trim();
+        return filter;
+    }
+    handleSubmit = ()=> {
+        
+        this.props.getSubmissionList(this.props.params.contestId, {filter:this.getFilter()})
     }
     handlePaginationChange = (obj) => {
         const page = obj.selected;
         //go to page
         if (page === this.props.page)return;
-        const filter = {};
-        if (this.state.verdictId !== -1)filter.verdictId = this.state.verdictId;
-        if (this.state.problemOrder !== '')filter.problemOrder = this.state.problemOrder;
-        if (this.state.userId !== '')filter.userId = this.state.userId;
-        this.props.getSubmissionList(this.props.params.contestId, {page, filter});
+        this.props.getSubmissionList(this.props.params.contestId, {page, filter:this.getFilter()});
     }
 
     render() {
@@ -94,7 +95,6 @@ export default class extends React.Component {
         }
         return (
             <div>
-
                 <Toolbar className="panel-head">
                     <ToolbarGroup style={style.group}>
                         <ToolbarTitle text="User"/>
@@ -169,7 +169,7 @@ export default class extends React.Component {
                                     }
                                 </TableRowColumn>
                                 <TableRowColumn style={style.length}>{submission.length}</TableRowColumn>
-                                <TableRowColumn style={style.submit}>{submission.submitTime}</TableRowColumn>
+                                <TableRowColumn style={style.submit}>{parseDateTime(submission.submitTime)}</TableRowColumn>
                             </TableRow>
                         })}
                     </TableBody>

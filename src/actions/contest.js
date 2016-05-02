@@ -38,20 +38,20 @@ export function getContestDetail(contestId) {
     }
 }
 
-export function getContestProblemList(contestId){
-    return (dispatch,getState)=>{
+export function getContestProblemList(contestId) {
+    return (dispatch, getState)=> {
         request({
-            url:'contests/'+contestId+'/problems'
-        }).then(res=>{
+            url: 'contests/' + contestId + '/problems'
+        }).then(res=> {
             dispatch({
-                type:types.CHANGE_CONTEST_PROBLEM_LIST,
-                cproblems:res
+                type: types.CHANGE_CONTEST_PROBLEM_LIST,
+                cproblems: res
             })
         })
     }
 }
-export function getContestProblemDetail(contestId,problemOrder = 'A'){
-    logger('getContestProblemDetail',contestId);
+export function getContestProblemDetail(contestId, problemOrder = 'A') {
+    logger('getContestProblemDetail', contestId);
     return (dispatch, getState)=> {
         const url = `contests/${contestId}/problems/${problemOrder}`;
         request({url}).then((res)=> {
@@ -63,7 +63,7 @@ export function getContestProblemDetail(contestId,problemOrder = 'A'){
     }
 }
 
-export function contestSubmitCode(contestId,problemOrder, language, code) {
+export function contestSubmitCode(contestId, problemOrder, language, code) {
     return (dispatch, getState)=> {
         request({
             url: `contests/${contestId}/problems/${problemOrder}/submit`,
@@ -74,14 +74,14 @@ export function contestSubmitCode(contestId,problemOrder, language, code) {
             method: 'POST'
         }).then(res=> {
             browserHistory.push(`/contests/${contestId}/status`);
-            dispatch(switchTab('status','contest'));
+            dispatch(switchTab('status', 'contest'));
         }).catch(err=> {
             dispatch(openDialog('hint', 'something is wrong!'));
         })
     }
 }
 
-export function getContestSubmissionList(contestId,desc = {page: 0, size: 30, filter: {}}) {
+export function getContestSubmissionList(contestId, desc = {page: 0, size: 30, filter: {}}) {
     return (dispatch, getState)=> {
         request({
             url: `contests/${contestId}/submissions`,
@@ -102,13 +102,33 @@ export function getContestSubmissionList(contestId,desc = {page: 0, size: 30, fi
 }
 
 
-export function getContestSubmissionDetail(contestId,submissionId){
+export function getContestSubmissionDetail(contestId, submissionId) {
     return (dispatch, getState)=> {
         request({url: `contests/${contestId}/submissions/${submissionId}`}).then(res=> {
             dispatch({type: types.CHANGE_SUBMISSION, submission: res});
         }).catch(err=> {
-            logger('getStatusDetail', err);
+            logger(err);
             dispatch(openDialog('hint', 'Something is wrong! you can Retry or Go Back'))
         })
     }
+}
+
+export function getStandingList(contestId, desc = {page: 0, size: 30, filter: {}}) {
+    return dispatch=> {
+        request({
+            url: `/contests/${contestId}/standings`, query: Object.assign({
+                page: desc.page || 0,
+                size: desc.size || 30,
+            }, desc.filter || {})
+        }).then(res=> {
+            dispatch({
+                type: types.CHANGE_STANDING_LIST,
+                standings: Object.assign({}, desc, res)
+            })
+        }).catch(err=> {
+            logger(err);
+            dispatch(openDialog('hint', 'Something is wrong! you can Retry or Go Back'))
+        })
+    }
+
 }

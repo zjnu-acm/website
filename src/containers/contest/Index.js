@@ -80,7 +80,7 @@ export default class extends React.Component {
                     <Tab label="Overview" value='overview'/>
                     <Tab label="ProblemList" value="problems"/>
                     <Tab label="Status" value="status"/>
-                    <Tab label="RankList" value="ranks"/>
+                    <Tab label="Standings" value="standings"/>
                     <Tab label="Discuss" value="discuss"/>
                 </Tabs>
                 <Paper className="u-panel">

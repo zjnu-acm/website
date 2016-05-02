@@ -1,5 +1,16 @@
 $leftWidth: 200px;
-
+&{
+  position:relative;
+}
+.list-post{
+  small{
+    margin-left:8px;
+    color:#949494;
+  }
+  ul li{
+    margin-right:8px;
+  }
+}
 .post{
   position:relative;
   margin-bottom:20px;

@@ -50,7 +50,6 @@ body {
   width:100%;
   white-space: nowrap;
 }
-
 .text-muted{
   color:#a9a9a9;
 }
@@ -60,7 +59,7 @@ body {
 .s-plainLink a{
   color:inherit;
 }
-.s-plainLink.a{
+a.s-plainLink{
   color:inherit;
 }
 

@@ -27,6 +27,9 @@ export default class extends React.Component {
     onSubmit = () =>{
         browserHistory.push(`/problems/${this.props.params.problemId}/submit`);
     }
+    onStatus = ()=>{
+        browserHistory.push(`/status`);
+    }
     render() {
         //sample data
         const {problem} = this.props;
@@ -87,6 +90,7 @@ export default class extends React.Component {
                     <RaisedButton
                         className="pb-btn-status"
                         label="Status"
+                        onTouchTap = {this.onStatus}
                         secondary={true}
                     />
                 </div>

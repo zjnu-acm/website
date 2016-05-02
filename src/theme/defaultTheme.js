@@ -7,7 +7,7 @@ const defaultBaseTheme = {
         primary1Color: colors.indigo500,
         primary2Color: colors.indigo700,
         primary3Color: colors.grey400,
-        accent1Color: colors.blue500,
+        accent1Color: colors.deepOrange500,
         pickerHeaderColor: colors.blue500
     },
     appBar:{
@@ -22,7 +22,10 @@ const navTabBaseTheme = mergeDeep({},defaultBaseTheme,{
     tabs:{
         backgroundColor:colors.white,
         textColor:defaultTheme.palette.textColor,
-        selectedTextColor:colors.black
+        selectedTextColor:colors.black,
+    },
+    inkBar: {
+        backgroundColor: defaultTheme.palette.primary1Color
     }
 })
 export const navTabTheme = getMuiTheme(navTabBaseTheme);

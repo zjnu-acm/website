@@ -20,7 +20,10 @@ import C_Submissions from './contest/Submissions';
 import C_Problem from './contest/Problem';
 import C_Submit from './contest/Submit';
 import C_Submission from './contest/Submission';
-import Discuss from './Discuss';
+import C_Standings from './contest/Standings';
+import Topics from './discuss/Topics';
+import Topic from './discuss/Topic';
+import AddTopic from './discuss/AddTopic';
 
 export default class App extends React.Component {
     render() {
@@ -31,7 +34,7 @@ export default class App extends React.Component {
                     <Route path="/home" component={Home}/>
                     <Route path="/problems" component={Problems}/>
                     <Route path="/problems/:problemId" component={Problem}/>
-                    <Route path="problems/:problemId/submit" component={Submit} />
+                    <Route path="problems/:problemId/submit" component={Submit}/>
                     <Route path="/status" component={Submissions}/>
                     <Route path="/status/:submissionId" component={Submission}/>
                     <Route path="/ranks" component={Ranks}/>
@@ -43,11 +46,15 @@ export default class App extends React.Component {
                         <Route path="overview" component={C_Overview}/>
                         <Route path="problems" component={C_Problems}/>
                         <Route path="problems/:problemOrder" component={C_Problem}/>
-                        <Route path="problems/:problemOrder/submit" component = {C_Submit}/>
+                        <Route path="problems/:problemOrder/submit" component={C_Submit}/>
                         <Route path="status" component={C_Submissions}/>
+                        <Route path="standings" component={C_Standings}/>
                         <Route path="status/:submissionId" component={C_Submission}/>
+                        <Route path="discuss" component={Topics}/>
                     </Route>
-                    <Route path="/discuss" component={Discuss}/>
+                    <Route path="/discuss" component={Topics}/>
+                    <Route path="/discuss/add" component={AddTopic}/>
+                    <Route path="/discuss/:topicId" component={Topic}/>
                 </Route>
             </Router>
         )

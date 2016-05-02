@@ -25,3 +25,14 @@
 #page-user{
   @import 'user';
 }
+#page-standings{
+  table{
+    th,td{
+      padding-left:0 !important;
+      padding-right:0 !important;
+    }
+  }
+  .penalty{
+    font-size:0.6em;
+  }
+}

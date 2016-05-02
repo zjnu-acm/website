@@ -21,6 +21,7 @@ import Pagination from '../components/Pagination';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+import {parseDateTime} from '../utils';
 import {getSubmissionList} from '../actions/submission';
 import {getLanguageList} from '../actions/language';
 
@@ -176,7 +177,7 @@ export default class extends React.Component {
                                     <TableRowColumn style={style.verdict}>
                                         <Verdict result={verdicts[verdictList[submission.verdictId]]}/>
                                     </TableRowColumn>
-                                    <TableRowColumn style={style.time}>{submission.time}</TableRowColumn>
+                     parseDateTime               <TableRowColumn style={style.time}>{submission.time}</TableRowColumn>
                                     <TableRowColumn style={style.memory}>{submission.memory}</TableRowColumn>
                                     <TableRowColumn style={style.lang}>
                                         {submission.accessible ?
@@ -185,7 +186,7 @@ export default class extends React.Component {
                                         }
                                     </TableRowColumn>
                                     <TableRowColumn style={style.length}>{submission.length}</TableRowColumn>
-                                    <TableRowColumn style={style.submit}>{submission.submitTime}</TableRowColumn>
+                                    <TableRowColumn style={style.submit}>{parseDateTime(submission.submitTime)}</TableRowColumn>
                                 </TableRow>
                             })}
                         </TableBody>

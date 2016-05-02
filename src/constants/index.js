@@ -21,5 +21,5 @@ export const status = [
 ]
 export const tabs = {
     head: ['home', 'problems', 'status', 'ranks', 'contests', 'discuss', 'faq'],
-    contest: ['overview', 'problems', 'status', 'ranks', 'discuss']
+    contest: ['overview', 'problems', 'status', 'standings', 'discuss']
 }

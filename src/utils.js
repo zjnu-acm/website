@@ -120,7 +120,14 @@ export function mergeDeep(target, ...sources) {
 }
 
 export function parseDateTime(date) {
-    if (!obj.isDate(date))date = new Date(date);
+    if (!obj.isDate(date)) {
+        const newDate = new Date(date);
+        if (newDate.toString() === 'Invalid Date') {
+            logger('the date string is  invalid');
+            return date;
+        }//无法转换
+        date = newDate;
+    }
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
@@ -137,6 +144,7 @@ export function parseDateTime(date) {
 export function DateSubtract(date1, date2) {
     if (!obj.isDate(date1))date1 = new Date(date1);
     if (!obj.isDate(date2))date2 = new Date(date2);
+    if (date1.toString() === 'Invalid Date' || date2.toString() === 'Invalid Date')return '00:00:00';
     if (date1 < date2) {
         const date3 = date1;
         date1 = date2;
